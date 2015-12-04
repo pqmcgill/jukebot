@@ -12,7 +12,7 @@ module.exports = {
   },
   output: {
     path: outputPath,
-    filename: '.bundle.js'
+    filename: 'bundle.js'
   },
   module: {
     loaders: [
