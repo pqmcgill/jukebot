@@ -1,0 +1,19 @@
+{
+  "name": "jukebot",
+  "version": "1.0.0",
+  "description": "A party music app for everyone!",
+  "main": "App.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pqmcgill/jukebot.git"
+  },
+  "author": "Patrick McGill",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pqmcgill/jukebot/issues"
+  },
+  "homepage": "https://github.com/pqmcgill/jukebot#readme"
+}
