@@ -9,7 +9,7 @@ var App = React.createClass({
   }
 });
 
-var rootInstance = ReactDOM.render(<App />, document.body);
+var rootInstance = ReactDOM.render(<App />, document.getElementById('app'));
 
 // hot loading of modules
 if (module.hot) {
