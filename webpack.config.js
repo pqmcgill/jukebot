@@ -1,8 +1,18 @@
+var path = require('path');
+
+var entryPath = path.resolve(__dirname, './app/App.js'),
+  buildPath = path.resolve(__dirname, './public'),
+  node_modules = path.resolve(__dirname, 'node_modules');
+
 module.exports = {
-  entry: './app/App.js',
+  entry: [
+    'webpack/hot/dev-server',
+    'webpack-dev-server/client?http://localhost:8080',
+    entryPath
+  ],
   output: {
     filename: 'bundle.js',
-    path: './public'
+    path: buildPath 
   },
   module: {
     loaders: [
@@ -13,6 +23,10 @@ module.exports = {
         query: {
           presets: ['es2015', 'react']
         }
+      },
+      {
+        test: /\.js$/,
+        loader: 'react-hot'
       }
     ]
   }
