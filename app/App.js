@@ -1,22 +1,40 @@
-var React = require('react'),
-  ReactDOM = require('react-dom');
+var React = require('react');
+var Login = require('./Login');
+var Main = require('./Main');
+var loginStore = require('./stores/loginStore');
+var $ = require('jquery');
+require('../vendor/rhapsody');
 
 var App = React.createClass({
-  render: function() {
+  componentWillMount () {
+
+    Rhapsody.init({
+      consumerKey: 'NTYyNTRlYjYtMGRiMS00ODcwLWE1NDMtZmY4OTE4MTAxNGE4'
+    });
+
+    var query = window.location.search.substring(1);
+    var pair = query.split('=');
+    if (pair[0] === 'code') {
+      loginStore.setAuthCode(pair[0]);
+      $.get(
+        `localhost:9000/api?code=${pair[1]}`, 
+        function (data) {
+          Rhapsody.member.set({
+            accessToken: data.accessToken,
+            refreshToken: data.refreshToken
+          });
+        });
+    }
+  },
+
+  render () {
+    debugger;
     return (
-      <div>Hello, World!</div>
+      <div>
+        This "This page is under construction" page is under construction.
+      </div>
     );
   }
 });
 
-var rootInstance = ReactDOM.render(<App />, document.getElementById('app'));
-
-// hot loading of modules
-if (module.hot) {
-  require('react-hot-loader/Injection').RootInstanceProvider.injectProvider({
-    getRootInstances () {
-      // Help React Hot Loader figure out the root component instances on the page:
-      return [rootInstance];
-    }
-  });
-}
+module.exports = App;
