@@ -17,7 +17,9 @@ var App = React.createClass({
   login () {
     
     var code = window.location.search.substring(1).split('=');
-    if (!code) { 
+    console.log(code);
+    if (!code[0]) { 
+      console.log('not found');
       window.location.replace('https://api.rhapsody.com/oauth/authorize?client_id=N2RlOGQ5ODgtNjUzMC00NGIzLTllNjQtMGI2NmRhNjVkNTYx&redirect_uri=http://jukebothero.com&response_type=code');
     } else {
     
