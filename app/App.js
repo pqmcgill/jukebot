@@ -22,13 +22,19 @@ var App = React.createClass({
       console.log('not found');
       window.location.replace('https://api.rhapsody.com/oauth/authorize?client_id=N2RlOGQ5ODgtNjUzMC00NGIzLTllNjQtMGI2NmRhNjVkNTYx&redirect_uri=http://jukebothero.com&response_type=code');
     } else {
-    
-      $.post({
-        url: 'http://rocky-castle-7896/api/v1/rhapsody/auth',
-        data: { code: code[1] },
+      $.ajax({
+        type: 'POST',
+        url: 'http://rocky-castle-7896.herokuapp.com/api/v1/rhapsody/auth',
+        contentType: 'application/json',
         dataType: 'json',
-        success (data) {
-          console.log('here', data);
+        data: {
+          code: code[1]
+        },
+        success: function(res) {
+          console.log(res);
+        },
+        error: function(err) {
+          console.log('error', err);
         }
       });
     }
