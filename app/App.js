@@ -26,7 +26,7 @@ var App = React.createClass({
     
       $.post({
         url: 'http://rocky-castle-7896/api/v1/rhapsody/auth',
-        data: { code: code },
+        data: { code: code[1] },
         dataType: 'json',
         success (data) {
           console.log('here', data);
