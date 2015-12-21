@@ -27,9 +27,9 @@ var App = React.createClass({
         url: 'http://rocky-castle-7896.herokuapp.com/api/v1/rhapsody/auth',
         contentType: 'application/json',
         dataType: 'json',
-        data: {
+        data: JSON.stringify({
           code: code[1]
-        },
+        }),
         success: function(res) {
           console.log(res);
         },
