@@ -27,8 +27,5 @@ module.exports = {
         loader: 'imports?jQuery=jquery'
       }
     ]
-  },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin()
-  ]
+  }
 };

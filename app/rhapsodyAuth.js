@@ -1,18 +1,3 @@
-var React = require('react');
-var Login = require('./Login');
-var Main = require('./Main');
-var loginStore = require('./stores/loginStore');
-var $ = require('jquery');
-var Firebase = require('firebase');
-require('../vendor/rhapsody');
-
-var App = React.createClass({
-  getInitialState () {
-    return {
-      username: '',
-      password: ''
-    }
-  },
 
   login () {
     
@@ -39,16 +24,3 @@ var App = React.createClass({
       });
     }
   },
-
-
-  render () {
-    return (
-      <div>
-          <button onClick={ this.login }>login</button>
-        This "This page is under construction" page is under construction.
-      </div>
-    );
-  }
-});
-
-module.exports = App;

@@ -1,10 +1,20 @@
 var React = require('react'),
   ReactDOM = require('react-dom'),
-  App = require('./App');
+  Router = require('react-router').Router,
+  Route = require('react-router').Route,
+  App = require('./components/App'),
+  SignupContainer = require('./components/SignupContainer'),
+  Home = require('./components/Home');
 
-
-
-var rootInstance = ReactDOM.render(<App />, document.getElementById('app'));
+var rootInstance = ReactDOM.render(
+  <Router>
+    <Route path="/" component={ App }>
+      <Route path="login" component={ SignupContainer } />
+      <Route path="home" component={ Home } />
+    </Route>
+  </Router>, 
+  document.getElementById('app')
+);
 
 // hot loading of modules
 if (module.hot) {
