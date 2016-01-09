@@ -4,21 +4,47 @@ const Login = require('./Login');
 const Toggle = require('./Toggle');
 
 const SignupContainer = React.createClass({
+  propTypes: {
+    authenticate: React.PropTypes.func,
+    register: React.PropTypes.func
+  },
 
   getInitialState () {
     return {
-      auth: {
+      credentials: {
         email: '',
-        pwd: '',
+        password: '',
       },
       isSignup: false 
     };
   },
 
-  handleLogin () {
-    this.props.authenticate({
-      email: this.state.email,
-      pwd: this.state.pwd
+  clearAuthValues () {
+    this.setState({
+      credentials: {
+        email: '',
+        password: ''
+      }
+    });
+  },
+
+  handleLogin (cb) {
+    this.props.authenticate(this.state.credentials, (err) => {
+      if (err) { 
+        cb(err); 
+      } else {
+        this.clearAuthValues();
+      }
+    });
+  },
+
+  handleSignup () {
+    this.props.register(this.state.credentials, (err) => {
+      if (err) {
+        cb(err);
+      } else {
+        this.clearAuthValues();
+      }
     });
   },
 
@@ -29,10 +55,24 @@ const SignupContainer = React.createClass({
     });
   },
 
+  handleChange (type, val) {
+    var credentials = this.state.credentials;
+    credentials[type] = val;
+    this.setState({
+      credentials: credentials
+    });
+  },
+
   render () {
     let currentScreen = this.state.isSignup ? 
-      <Signup credentials={ this.state.auth }/> :
-      <Login credentials={ this.state.auth }/>;
+      <Signup credentials={ this.state.credentials }
+        onChange={ this.handleChange }
+        onSignup={ this.handleSignup }
+      /> :
+      <Login credentials={ this.state.credentials }
+        onChange={ this.handleChange }
+        onLogin={ this.handleLogin }
+      />;
 
     return (
       <div>

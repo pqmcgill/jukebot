@@ -35,6 +35,8 @@ const Toggle = React.createClass({
             name='toggle'
             className={ opt }
             id={ opt + i }
+            checked={ opt === this.state.selected }
+            onChange={ this.handleChange }
             value={ opt }
           />
           <label htmlFor={ opt + i }>{ opt }</label>
@@ -44,7 +46,7 @@ const Toggle = React.createClass({
 
     return (
       <div>
-        <form onChange={ this.handleChange }>
+        <form>
           { radioButtons }
         </form>
       </div>

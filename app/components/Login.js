@@ -2,47 +2,30 @@ const React = require('react');
 const Constants = require('../config/constants');
 
 const Login = React.createClass({
-  getInitialState () {
+  PropTypes: {
+    onChange: React.PropTypes.func.isRequired,
+    onLogin: React.PropTypes.func.isRequired,
+    credentials: React.PropTypes.obj
+  },
+
+  getDefaultProps () {
     return {
-      username: '',
-      password: ''
+      credentials: {
+        email: '',
+        password: ''
+      }
     };
   },
 
-  componentDidMount () {
-    console.log('mounted!');
-  },
-
   handleChange (e) {
-    var obj = {};
-    obj[e.target.name] = e.target.value;
-    this.setState(obj);
+    this.props.onChange(e.target.getAttribute('name'), e.target.value);
   },
 
   handleLogin () {
-
-    var success = this.props.login({
-      email: this.state.email,
-      password: this.state.password
-    }, 
-
-    (err, authData) => {
+    this.props.onLogin((err) => {
       if (err) {
-        switch (err.code) {
-          case Constants.firebase.errors.invalidUser:
-            // handle invalid user...
-            break;
-          case Constants.firebase.errors.invalidEmail:
-            // handle invalid email...
-            break;
-          default:
-            // handle unknown error...
-            break;
-          return;
-        }
-      }
-
-
+        console.log(err);
+      } 
     });
   },
 
@@ -55,11 +38,13 @@ const Login = React.createClass({
         <input type="text" 
           name="email" 
           placeholder="email" 
+          value={ this.props.credentials.email }
           onChange={ this.handleChange }
         />
         <input type="text" 
           name="password" 
           placeholder="password"
+          value={ this.props.credentials.password }
           onChange={ this.handleChange }
         />
 
