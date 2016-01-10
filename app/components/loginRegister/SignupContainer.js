@@ -1,9 +1,9 @@
 const React = require('react');
 const Signup = require('./Signup');
 const Login = require('./Login');
-const Toggle = require('./Toggle');
+const Toggle = require('../shared/Toggle');
 
-const firebaseUtil = require('../util/firebaseUtil');
+const firebaseUtil = require('../../util/firebaseUtil');
 
 const SignupContainer = React.createClass({
 

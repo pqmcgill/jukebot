@@ -1,5 +1,5 @@
 const React = require('react');
-const Constants = require('../config/constants');
+const Constants = require('../../config/constants');
 
 const Login = React.createClass({
   PropTypes: {

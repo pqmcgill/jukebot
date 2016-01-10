@@ -1,5 +1,5 @@
 let React = require('react'),
-  firebaseUtil = require('../util/firebaseUtil');
+  firebaseUtil = require('../../util/firebaseUtil');
 
 let Home = React.createClass({
 

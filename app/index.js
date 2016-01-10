@@ -3,8 +3,8 @@ var React = require('react'),
   Router = require('react-router').Router,
   Route = require('react-router').Route,
   App = require('./components/App'),
-  SignupContainer = require('./components/SignupContainer'),
-  Home = require('./components/Home'),
+  SignupContainer = require('./components/loginRegister/SignupContainer'),
+  Home = require('./components/authenticated/Home'),
   { requireAuth, requireUnAuth } = require('./util/authenticate');
 
 var rootInstance = ReactDOM.render(
