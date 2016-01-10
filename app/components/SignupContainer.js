@@ -3,11 +3,9 @@ const Signup = require('./Signup');
 const Login = require('./Login');
 const Toggle = require('./Toggle');
 
+const firebaseUtil = require('../util/firebaseUtil');
+
 const SignupContainer = React.createClass({
-  propTypes: {
-    authenticate: React.PropTypes.func,
-    register: React.PropTypes.func
-  },
 
   getInitialState () {
     return {
@@ -29,21 +27,27 @@ const SignupContainer = React.createClass({
   },
 
   handleLogin (cb) {
-    this.props.authenticate(this.state.credentials, (err) => {
-      if (err) { 
-        cb(err); 
+    firebaseUtil.login(this.state.credentials, (err, authData) => {
+      if (err) {
+        // handle error...
       } else {
-        this.clearAuthValues();
+        const { location } = this.props;
+        if (location.state && location.state.interruptedPath) {
+          console.log('resuming');
+          this.props.history.replaceState(null, location.state.interruptedPath);
+        } else { 
+          this.props.history.pushState(null, '/home');
+        }
       }
     });
   },
 
   handleSignup () {
-    this.props.register(this.state.credentials, (err) => {
+    firebaseUtil.signup(this.state.credentials, (err, authData) => {
       if (err) {
-        cb(err);
+        // handle error...
       } else {
-        this.clearAuthValues();
+        this.props.history.pushState(null, '/home');
       }
     });
   },

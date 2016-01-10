@@ -4,13 +4,14 @@ var React = require('react'),
   Route = require('react-router').Route,
   App = require('./components/App'),
   SignupContainer = require('./components/SignupContainer'),
-  Home = require('./components/Home');
+  Home = require('./components/Home'),
+  { requireAuth, requireUnAuth } = require('./util/authenticate');
 
 var rootInstance = ReactDOM.render(
   <Router>
     <Route path="/" component={ App }>
-      <Route path="login" component={ SignupContainer } />
-      <Route path="home" component={ Home } />
+      <Route path="welcome" component={ SignupContainer } onEnter={ requireUnAuth }/>
+      <Route path="home" component={ Home } onEnter={ requireAuth }/>
     </Route>
   </Router>, 
   document.getElementById('app')
