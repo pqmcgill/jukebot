@@ -47,7 +47,8 @@
   <!-- <marquee scrolldelay="50" truespeed>Coming Soon</marquee> -->
 
   <script type="text/javascript">
-    document.getElementsByTagName('p')[0].style.top = (window.innerHeight / 2) - (93 / 2) + 'px';
+    var p = document.getElementsByTagName('p')[0];
+    p.style.top = (window.innerHeight / 2) - (p.clientHeight / 2) + 'px';
 
     var colors = ['#FF8C00', '#F25D00', '#E62F00', '#D90000', '#A80413', '#760927', '#450D3A'];
 
