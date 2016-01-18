@@ -22,7 +22,7 @@ module.exports = {
   
   // login to rhapsody
   login (code, cb) {
-    console.log(code);
+    
     if (!code) { 
       // redirect to rhapsody login screen
       // pass redirect url back to UI
@@ -62,7 +62,7 @@ module.exports = {
   // return a boolean corresponding to the status of whether any tokens
   // have been initialized
   hasTokens() {
-    return (this.accessToken && this.refreshToken) !== undefined;
+    return this.accessToken && this.refreshToken;
   },
 
   // delete any cached and local token references
@@ -82,8 +82,11 @@ module.exports = {
 
   // public method. Acts as rhapsody authentication controller
   authenticate (code, cb) {
+    this.initTokens();
+
     // setup consumerKey with rhapsody sdk
     if (!this.hasTokens()) {
+      console.log('no tokens');
       this.login(code, (err) => {
         if (err) {
           console.log('there was an error logging into rhapsody:', err);
@@ -101,6 +104,8 @@ module.exports = {
 
       });
     } else {
+      console.log('found tokens');
+      console.log(this.accessToken, this.refreshToken);
       // initialize player and set credentials
       // call final callback upon completion
       this.init(() => {

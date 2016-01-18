@@ -54,7 +54,7 @@ let firebaseUtil = {
     ref.unauth();
     session = null;
     firebaseUtil.onChange(this.isLoggedIn());
-  },
+  }
 
 };
 

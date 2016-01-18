@@ -5,7 +5,8 @@ let React = require('react'),
 let Home = React.createClass({
   getInitialState () {
     return {
-      verifierCode: null
+      verifierCode: null,
+      partyStarted: false
     }
   },
 
@@ -61,13 +62,15 @@ let Home = React.createClass({
 
   // test authenticating with rhapsody and starting player
   createParty (e) {
-    console.log('here');
     if (e) { e.preventDefault(); }
     rhapsodyUtil.authenticate(this.state.code,  (err, res) => {
       if (err) {
         console.log('there was an error logging in...', err);
       } else {
         console.log('logged in...', res);
+        this.setState({
+          partyStarted: true
+        });
       }
     });
   },
@@ -79,12 +82,13 @@ let Home = React.createClass({
   },
 
   render () {
+    let playTrackBtn = this.state.partyStarted ? <button onClick={ this.playTrack }>Say it ain't so</button> : '';
     return (
       <div>
         <h1>Home</h1>
         <button onClick={ this.logout }>logout</button>
         <button onClick={ this.createParty }>Create Party</button>
-        <button onClick={ this.playTrack }>Say it ain't so</button>
+        { playTrackBtn }
       </div>
     );
   }
