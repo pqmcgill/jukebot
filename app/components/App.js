@@ -30,7 +30,6 @@ var App = React.createClass({
   render () {
     return (
       <div>
-        Hello world, this is a test
        { this.props.children }
       </div>
     );
