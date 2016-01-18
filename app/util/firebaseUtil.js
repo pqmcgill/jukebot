@@ -54,6 +54,15 @@ let firebaseUtil = {
     ref.unauth();
     session = null;
     firebaseUtil.onChange(this.isLoggedIn());
+  },
+
+  createParty () {
+    console.log(session.uid);
+    ref.child('parties').push().set({
+      owner: session.uid,
+      pwd: 'test',
+      displayName: '90\'s night jamboree!'
+    });
   }
 
 };

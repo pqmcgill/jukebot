@@ -2,6 +2,8 @@ let React = require('react'),
   firebaseUtil = require('../../util/firebaseUtil'),
   rhapsodyUtil = require('../../util/rhapsodyUtil');
 
+let PartyList = require('./PartyList');
+
 let Home = React.createClass({
   getInitialState () {
     return {
@@ -71,6 +73,7 @@ let Home = React.createClass({
         this.setState({
           partyStarted: true
         });
+        firebaseUtil.createParty();
       }
     });
   },
@@ -89,6 +92,7 @@ let Home = React.createClass({
         <button onClick={ this.logout }>logout</button>
         <button onClick={ this.createParty }>Create Party</button>
         { playTrackBtn }
+        <PartyList />
       </div>
     );
   }
