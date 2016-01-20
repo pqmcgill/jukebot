@@ -85,13 +85,10 @@ let Home = React.createClass({
   },
 
   render () {
-    let playTrackBtn = this.state.partyStarted ? <button onClick={ this.playTrack }>Say it ain't so</button> : '';
     return (
       <div>
         <h1>Home</h1>
         <button onClick={ this.logout }>logout</button>
-        <button onClick={ this.createParty }>Create Party</button>
-        { playTrackBtn }
         <PartyList />
       </div>
     );

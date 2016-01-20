@@ -30,13 +30,21 @@ let PartyList = React.createClass({
     this.firebaseRef.off();
   },
 
+  joinParty (e) {
+    e.preventDefault();
+    console.log('joining party');
+  },
+
   render () {
     let parties;
     if (this.state.parties.length === 0) {
       parties = '';
     } else {
       parties = this.state.parties.map((party, i) => {
-        return <PartyListItem key={i} name={ party.displayName }/>;
+        return <PartyListItem key={i} 
+          name={ party.displayName } 
+          onMyClick={ this.joinParty }
+        />;
       });
     } 
 
