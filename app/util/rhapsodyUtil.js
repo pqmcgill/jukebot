@@ -1,5 +1,5 @@
 let $ = require('jquery');
-let { client_id } = require('./constants');
+let { CLIENT_ID } = require('./constants');
 let firebaseUtil = require('./firebaseUtil');
 
 let log = (e) => {
@@ -26,7 +26,7 @@ module.exports = {
     if (!code) { 
       // redirect to rhapsody login screen
       // pass redirect url back to UI
-      window.location.replace(`https://api.rhapsody.com/oauth/authorize?client_id=${client_id}&redirect_uri=http://localhost:8080&response_type=code&state=continueAuth`);
+      window.location.replace(`https://api.rhapsody.com/oauth/authorize?CLIENT_ID=${CLIENT_ID}&redirect_uri=http://localhost:8080&response_type=code&state=continueAuth`);
     } else {
       // get Access token from separate jukebot express application
       $.ajax({
@@ -119,7 +119,7 @@ module.exports = {
   // initialize rhapsody player
   init (cb) {
       Rhapsody.init({
-        consumerKey: client_id,
+        consumerKey: CLIENT_ID,
         version: 'v1',
         catalog: 'EN'
       });
