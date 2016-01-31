@@ -49,12 +49,46 @@ let getArtistsTopTracks = (options, artId) => {
   return new Promise((resolve, reject) => {
     search(options, url)
       .then((data) => {
-        resolve([{ type: 'topTracks', data: data }]);
+        resolve({ type: 'track', data: data });
       }, (err) => {
         reject(err);
       });
   });
 };
+
+// get an album's tracks
+let getAlbumTracks = (albumId) => {
+  let url = `http://api.rhapsody.com/v1/albums/${albumId}/tracks`;
+  return new Promise((resolve, reject) => {
+    search({}, url)
+      .then((data) => {
+        resolve([{ type: 'track', data: data }]);
+      }, (err) => {
+        reject(err);
+      });
+  });
+};
+
+// get an artist's albums
+let getArtistsAlbums = (artistId) => {
+  let url = `http://api.rhapsody.com/v1/artists/${artistId}/albums?limit=1000`;
+  return new Promise((resolve, reject) => {
+    search({}, url)
+      .then((data) => {
+        resolve({ type: 'album', data: data.filter((d) => { return d.type.id === 0 }) });
+      }, (err) => {
+        reject(err);
+      });
+  });
+}
+
+// gets both artist's top tracks and list of albums
+let getArtistData = (artistId) => {
+  return Promise.all([
+    getArtistsTopTracks({ limit: 6, offset: 0 }, artistId),
+    getArtistsAlbums(artistId)
+  ]);
+}
 
 // takes a string, or Array<String>
 // returns promise 
@@ -84,5 +118,7 @@ let searchByType = (options, type) => {
 module.exports = {
   search: search,
   searchByType: searchByType,
-  getArtistsTopTracks: getArtistsTopTracks
+  getArtistsTopTracks: getArtistsTopTracks,
+  getAlbumTracks: getAlbumTracks,
+  getArtistData: getArtistData
 };
