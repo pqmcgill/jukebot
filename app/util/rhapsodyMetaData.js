@@ -1,5 +1,5 @@
 let $ = require('jquery');
-let { CLIENT_ID, SEARCH_URL } = require('./constants');
+let { CLIENT_ID, SEARCH_URL, TOP_TRACKS_URL } = require('./constants');
 let clone = require('./util').clone;
 
 // General search function
@@ -10,35 +10,49 @@ let clone = require('./util').clone;
 //   limit: <Number>  // simit search results
 //   offset: <Number> // offset serach results
 // }
-let search = (options, cb) => {
-  let { q, offset, limit, type } = options;
+let search = (options, url) => {
+  let { q, offset, limit, type} = options;
   return new Promise((resolve, reject) => {
-    if (q) {
-      $.ajax({
-        url: SEARCH_URL,
-        data: {
-          q: q,
-          offset: offset,
-          limit: limit,
-          type: type
-        },
-        method: 'GET',
-        dataType: 'json',
-        beforeSend (xhr) {
-          xhr.setRequestHeader('apikey', CLIENT_ID);
-          xhr.setRequestHeader('Content-Type', 'application/json');
-        },
-        success (data) {
-          resolve(data);
-        },
-        error (err) {
-          reject(err);
-        }
+    $.ajax({
+      url: url,
+      data: {
+        q: q,
+        offset: offset,
+        limit: limit,
+        type: type
+      },
+      method: 'GET',
+      dataType: 'json',
+      beforeSend (xhr) {
+        xhr.setRequestHeader('apikey', CLIENT_ID);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+      },
+      success (data) {
+        resolve(data);
+      },
+      error (err) {
+        reject(err);
+      }
+    });
+  });
+};
+
+// Get Top Tracks
+// options look like this
+// {
+//  limit: <Number>  // limit search results
+//  offset: <Number> // offset search results
+// }
+let getArtistsTopTracks = (options, artId) => {
+  let { offset, limit } = options;
+  let url = `http://api.rhapsody.com/v1/artists/${artId}/tracks/top`;
+  return new Promise((resolve, reject) => {
+    search(options, url)
+      .then((data) => {
+        resolve([{ type: 'topTracks', data: data }]);
+      }, (err) => {
+        reject(err);
       });
-    }
-    else {
-      resolve([]);
-    }
   });
 };
 
@@ -50,14 +64,16 @@ let searchByType = (options, type) => {
   if (Object.prototype.toString.call(type) !== '[object Array]') {
     type = [type];
   }
+  let url = 'http://api.rhapsody.com/v1/search/typeahead';
   return Promise.all(type.map((t, i) => {
     let cloned_options = clone(options);
     cloned_options.type = t;
     return new Promise((response, reject) => {
-      search(cloned_options).then((data) => {
-        let resObj = Object.create({});
-        resObj[t + 's'] = data;
-        response(resObj);
+      search(cloned_options, url).then((data) => {
+        response({
+          type: t,
+          data: data
+        });
       }, (err) => {
         reject(err);
       });
@@ -67,5 +83,6 @@ let searchByType = (options, type) => {
 
 module.exports = {
   search: search,
-  searchByType: searchByType
+  searchByType: searchByType,
+  getArtistsTopTracks: getArtistsTopTracks
 };

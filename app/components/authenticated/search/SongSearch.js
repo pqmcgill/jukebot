@@ -8,9 +8,7 @@ let debounce = require('../../../util/util').debounce;
 let SongSearch = React.createClass({
   getInitialState () {
     return {
-      tracks: [],
-      artists: [],
-      albums: []
+      lists: []
     };
   },
 
@@ -22,31 +20,46 @@ let SongSearch = React.createClass({
   },
 
   search (e) {
-    console.log('triggered');
     let val = e.target.value;
-    let options = (val.length >= 1) ? { q: val } : {};
-    rhapsodyMeta.searchByType(options, ['track', 'artist', 'album'])
-      .then(this.searchSuccess)
-      .catch(this.searchError);
+    let options = { limit: 10, offset: 0, isTop: true };
+    if (val.length >= 1) {
+      options.q = val;
+      rhapsodyMeta.searchByType(options, ['track', 'album', 'artist'])
+        .then(this.searchSuccess)
+        .catch(this.searchError);
+    } else {
+      this.searchSuccess([]);
+    }
   },
 
   searchSuccess (data) {
+    let lists = [];
     data.forEach((d) => {
-      this.setState(d);
+      lists.push(d);
+    });
+    this.setState({
+      lists: lists
     });
   },
 
   searchError (err) {
     // Handle error...
-    console.log(err);
   },
 
   render () {
+    let lists = this.state.lists.map((list, i) => {
+      return (
+        <SongList key={i}
+          type={ list.type } 
+          data={ list.data } 
+        />
+      );
+    });
     return (
       <div>
         <h1>Song Search</h1>
         <input type="text" onChange={ this.efficientSearch } placeholder="Search..." />
-        <SongList data={ this.state.tracks } />
+        { lists }
       </div>
     );
   }
