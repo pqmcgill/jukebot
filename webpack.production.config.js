@@ -5,6 +5,8 @@ var node_modules = path.resolve(__dirname, 'node_modules'),
   entryPath = path.resolve(__dirname, './app/index.js'),
   outputPath = path.resolve(__dirname, './dist');
 
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+
 module.exports = {
   entry: {
     app: entryPath,
@@ -31,6 +33,11 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin('vendors', 'vendors.js')
+    new webpack.optimize.CommonsChunkPlugin('vendors', 'vendors.js'),
+    new HtmlWebpackPlugin({
+      title: 'Jukebot',
+      template: './index.ejs',
+      inject: true
+    });
   ]
 };

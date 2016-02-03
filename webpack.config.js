@@ -5,6 +5,8 @@ var entryPath = path.resolve(__dirname, './app/index.js'),
   buildPath = path.resolve(__dirname, './public'),
   node_modules = path.resolve(__dirname, 'node_modules');
 
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+
 module.exports = {
   entry: [
     'webpack/hot/dev-server',
@@ -19,7 +21,7 @@ module.exports = {
     loaders: [
       {
         test: /\.js$/,
-        exclude: /(node_modules|vendor)/,
+        exclude: /(node_modules|vendor|construction)/,
         loaders: ['babel?presets[]=react,presets[]=es2015', 'react-hot']
       },
       {
@@ -27,5 +29,10 @@ module.exports = {
         loader: 'imports?jQuery=jquery'
       }
     ]
-  }
+  },
+  plugins: [new HtmlWebpackPlugin({
+    template: './index.ejs',
+    inject: true,
+    title: 'Jukebot'
+  })]
 };
