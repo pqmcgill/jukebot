@@ -41,7 +41,7 @@ module.exports = {
     new webpack.optimize.CommonsChunkPlugin('vendors', 'vendors.js'),
     new HtmlWebpackPlugin({
       title: 'Jukebot',
-      template: './index.ejs',
+      template: './app/index.ejs',
       inject: true
     });
   ]

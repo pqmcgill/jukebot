@@ -42,7 +42,7 @@ module.exports = {
     ]
   },
   plugins: [new HtmlWebpackPlugin({
-    template: './index.ejs',
+    template: './app/index.ejs',
     inject: true,
     title: 'Jukebot'
   })]
