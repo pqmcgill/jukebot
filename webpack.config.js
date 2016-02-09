@@ -19,15 +19,26 @@ module.exports = {
   },
   module: {
     loaders: [
+
+      // babel es6 transpiler
       {
         test: /\.js$/,
         exclude: /(node_modules|vendor|construction)/,
         loaders: ['babel?presets[]=react,presets[]=es2015', 'react-hot']
       },
+
+      // load jquery into rhapsody.js
       {
         test: __dirname + '/vendor/rhapsody.js',
         loader: 'imports?jQuery=jquery'
+      },
+      
+      // SASS
+      {
+        test: /\.scss$/,
+        loader: 'style!css!sass'
       }
+
     ]
   },
   plugins: [new HtmlWebpackPlugin({

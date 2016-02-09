@@ -8,6 +8,8 @@ var React = require('react'),
   SongSearch = require('./components/authenticated/search/SongSearch'),
   { requireAuth, requireUnAuth } = require('./util/authenticate');
 
+require('./style/main.scss');
+
 var rootInstance = ReactDOM.render(
   <Router>
     <Route path="/" component={ App }>

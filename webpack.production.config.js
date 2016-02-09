@@ -29,6 +29,11 @@ module.exports = {
       {
         test: __dirname + '/vendor/rhapsody.js',
         loader: 'imports?jQuery=jquery'
+      },
+      // SASS
+      {
+        test: /\.scss$/,
+        loader: 'style!css!sass'
       }
     ]
   },
