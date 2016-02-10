@@ -13,7 +13,7 @@ let PartyList = React.createClass({
     };
   },
 
-  componentDidMount () {
+  componentWillMount () {
     let partiesRef = new Firebase('https://jukebot.firebaseio.com/parties');
     this.bindAsArray(partiesRef, 'parties');
   },
