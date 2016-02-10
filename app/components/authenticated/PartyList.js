@@ -1,9 +1,12 @@
 let React = require('react'),
+  ReactFireMixin = require('reactfire'),
   firebaseUtil = require('../../util/firebaseUtil');
 
 let PartyListItem = require('./PartyListItem');
 
 let PartyList = React.createClass({
+  mixins: [ ReactFireMixin ],
+
   getInitialState () {
     return {
       parties: []
@@ -11,23 +14,8 @@ let PartyList = React.createClass({
   },
 
   componentDidMount () {
-    this.firebaseRef = new Firebase('https://jukebot.firebaseio.com/parties');
-    this.firebaseRef.on('value', (snapshot) => {
-      let parties = [];
-      snapshot.forEach(function(childSnapshot) {
-        let party = childSnapshot.val();
-        party['.key'] = childSnapshot.key();
-        parties.push(party);
-      });
-      console.log('parties', parties);
-      this.setState({
-        parties: parties
-      });
-    });
-  },
-
-  componentWillUnmount () {
-    this.firebaseRef.off();
+    let partiesRef = new Firebase('https://jukebot.firebaseio.com/parties');
+    this.bindAsArray(partiesRef, 'parties');
   },
 
   joinParty (e) {
