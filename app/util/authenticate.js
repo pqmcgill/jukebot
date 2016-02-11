@@ -3,7 +3,6 @@ let firebaseUtil = require('./firebaseUtil');
 module.exports = {
   requireAuth (nextState, replace) {
     if (!firebaseUtil.isLoggedIn()) {
-      console.log(nextState);
       replace({ 
         pathname: 'welcome', 
         state: {
@@ -15,7 +14,6 @@ module.exports = {
 
   requireUnAuth (nextState, replace) {
     if (firebaseUtil.isLoggedIn()) {
-      console.log(nextState);
       replace({ pathname: 'home' });
     }
   }

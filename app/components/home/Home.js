@@ -16,19 +16,17 @@ let Home = React.createClass({
     e.preventDefault();
     rhapsodyUtil.clearTokens();
     firebaseUtil.logout();
-    console.log(this.props.history);
-    this.props.history.replace('/welcome');
+    this.context.router.replace('/welcome');
   },
 
   // navigate to the list of available parties
   goToPartyList () {
-    console.log(this.context);
-    this.props.router.push('/parties');
+    this.context.router.push('/parties');
   },
 
   // navigate to the party creation page
   goToCreate () {
-    this.props.router.push('/create');
+    this.context.router.push('/create');
   },
 
   render () {
