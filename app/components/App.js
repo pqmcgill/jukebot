@@ -15,7 +15,7 @@ var App = React.createClass({
       console.log('here');
       this.props.history.push('/welcome');
     } else {
-      this.props.history.push('/home');
+      //this.props.history.push('/home');
     }
 
     firebaseUtil.onChange = this.handleAuthChange;

@@ -5,7 +5,10 @@ const Toggle = require('../shared/Toggle');
 
 const firebaseUtil = require('../../util/firebaseUtil');
 
-const SignupContainer = React.createClass({
+let SignupContainer = React.createClass({
+  contextTypes: {
+    router: React.PropTypes.object.isRequired
+  },
 
   getInitialState () {
     return {
@@ -27,19 +30,23 @@ const SignupContainer = React.createClass({
   },
 
   handleLogin (cb) {
-    firebaseUtil.login(this.state.credentials, (err, authData) => {
-      if (err) {
-        // handle error...
-      } else {
-        const { location } = this.props;
-        if (location.state && location.state.interruptedPath) {
-          console.log('resuming');
-          this.props.history.replaceState(null, location.state.interruptedPath);
-        } else { 
-          this.props.history.pushState(null, '/home');
-        }
-      }
-    });
+        firebaseUtil.login(this.state.credentials, (err, authData) => {
+          if (err) {
+            // handle error...
+          } else {
+    //  TODO: Handle redirect from authentication resuming
+    //        const { location } = this.props;
+    //        if (location.state && location.state.interruptedPath) {
+    //          console.log('resuming');
+    //          //this.context.router.replace(null, location.state.interruptedPath);
+    //        } else { 
+    //          console.log(this.context.router);
+    //          this.context.router.push('/home');
+    //        }
+            this.context.router.push('/home');
+          }
+            
+        });
   },
 
   handleSignup () {
@@ -47,7 +54,7 @@ const SignupContainer = React.createClass({
       if (err) {
         // handle error...
       } else {
-        this.props.history.pushState(null, '/home');
+        this.context.router.push('/home');
       }
     });
   },

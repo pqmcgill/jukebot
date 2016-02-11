@@ -4,7 +4,7 @@
   "description": "A party music app for everyone!",
   "main": "App.js",
   "scripts": {
-    "dev": "webpack-dev-server --devtool eval --progress --colors --hot --content-base public",
+    "dev": "webpack-dev-server --devtool eval --progress --colors --hot",
     "build": "NODE_ENV=production webpack -p --config webpack.production.config.js",
     "deploy": "git subtree push --prefix dist origin gh-pages"
   },
@@ -25,9 +25,9 @@
     "history": "^1.13.1",
     "imports-loader": "^0.6.5",
     "jquery": "^2.1.4",
-    "react": "^0.14.3",
+    "react": "^0.14.7",
     "react-dom": "^0.14.3",
-    "react-router": "^1.0.2",
+    "react-router": "^2.0.0",
     "reactfire": "^0.6.0",
     "webpack": "^1.12.9",
     "webpack-dev-server": "^1.14.0"
