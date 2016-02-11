@@ -30,23 +30,20 @@ let SignupContainer = React.createClass({
   },
 
   handleLogin (cb) {
-        firebaseUtil.login(this.state.credentials, (err, authData) => {
-          if (err) {
-            // handle error...
-          } else {
-    //  TODO: Handle redirect from authentication resuming
-    //        const { location } = this.props;
-    //        if (location.state && location.state.interruptedPath) {
-    //          console.log('resuming');
-    //          //this.context.router.replace(null, location.state.interruptedPath);
-    //        } else { 
-    //          console.log(this.context.router);
-    //          this.context.router.push('/home');
-    //        }
-            this.context.router.push('/home');
-          }
-            
-        });
+    firebaseUtil.login(this.state.credentials, (err, authData) => {
+      if (err) {
+        // handle error...
+      } else {
+        let redirect = '/home';
+
+        // check if user got redirected due to unauthenticated call
+        // if so, then redirect to intended state
+        if (this.props.location.state && this.props.location.state.redirectTo) {
+          redirect = this.props.location.state.redirectTo;
+        }
+        this.context.router.push(redirect);
+      }
+    });
   },
 
   handleSignup () {
@@ -60,7 +57,6 @@ let SignupContainer = React.createClass({
   },
 
   handleToggle (selected) {
-    console.log(selected.index === 0 ? false : true);
     this.setState({
       isSignup: selected.index === 0 ? false : true
     });

@@ -11,13 +11,6 @@ var App = React.createClass({
   },
 
   componentWillMount () {
-    if (!this.state.isLoggedIn) {
-      console.log('here');
-      this.props.history.push('/welcome');
-    } else {
-      //this.props.history.push('/home');
-    }
-
     firebaseUtil.onChange = this.handleAuthChange;
   },
 
