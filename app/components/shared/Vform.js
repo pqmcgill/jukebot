@@ -26,10 +26,19 @@ let Vform = React.createClass({
   componentWillMount () {
     // initialize the nested input objects
     this.inputs = {};
+    this.model = {};
+  },
+
+  // Update model on input change
+  componentDidUpdate () {
+    Object.keys(this.inputs).forEach((key) => {
+      this.model[key] = this.inputs[key].state.val
+    });
   },
 
   // Bind component to the form
   attachToForm (component) {
+    console.log(component);
     this.inputs[component.props.name] = component;
   },
 
@@ -46,13 +55,15 @@ let Vform = React.createClass({
     };
   },
 
-  // form submission method
+  // form submission method -- pass this.model to
+  // parent submit function.
+  // handle errors and display necessary server error messages
   handleSubmit (e) {
     e.preventDefault();
     this.setState({
       submitting: true
     }, () => {
-      this.props.submit((err) => {
+      this.props.submit(this.model, (err) => {
         let key = Object.keys(err)[0];
         this.inputs[key].setState({
           serverErrors: [err[key]]
