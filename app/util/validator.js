@@ -1,4 +1,4 @@
-let validator = (validationStr, val) => {
+let validator = (validationStr, val, match) => {
   let typeArry = validationStr.split(':');
   let type = typeArry.shift();
   if (type === 'email') {
@@ -7,6 +7,10 @@ let validator = (validationStr, val) => {
   } else if (type === 'minCharLen') {
     return val.length >= typeArry[0] ? true :
       { msg: `must be at least ${typeArry[0]} characters` }; 
+  } else if (type === 'match' && match) {
+    console.log(typeArry);
+    return val === match ? true :
+      { msg: `${typeArry[0]} does not match` };
   } else {
     return true;
   }

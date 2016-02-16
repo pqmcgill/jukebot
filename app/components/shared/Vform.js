@@ -124,8 +124,16 @@ let Vform = React.createClass({
       let errors = [];
       let isValid = true;
       validation.split(',').forEach((v) => {
-        let result = validator(v, val);
+        let result;
+        // check for match validation
+        if (v.match(/^match/)) {
+          let match = v.split(':')[1];
+          result = validator(v, val, this.inputs[match].state.val);
+        } else {
+          let result = validator(v, val);
+        }
         console.log(result);
+
         if (typeof(result) === 'object') {
           isValid = false;
           if (input.state.wasTouched && input.state.val.length > 0) {

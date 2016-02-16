@@ -43,6 +43,13 @@ let Signup = React.createClass({
             validation="minCharLen:6"
             placeholder="password"
           />
+          <Vinput type="text"
+            name="confirm"
+            type="password"
+            required
+            validation="match:password"
+            placeholder="confirm password"
+          />
         </Vform>
         <Link className="link large" to="/login">Already have an account? Sign in</Link>
       </div>
