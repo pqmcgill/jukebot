@@ -1,51 +1,39 @@
 const React = require('react');
 
-const Signup = React.createClass({
-  propTypes: {
-    credentials: React.PropTypes.object,
-    onChange: React.PropTypes.func.isRequired,
-    onSignup: React.PropTypes.func.isRequired
-  },
+const Link = require('react-router').Link;
 
-  getDefaultProps () {
-    return {
-      credentials: {
-        email: '',
-        password: ''
+const Vform = require('../shared/Vform');
+const Vinput = require('../shared/Vinput');
+
+let Signup = React.createClass({
+  handleSignup (credentials, cb) {
+    this.props.onSignup(credentials, (err) => {
+      if (err) { 
+        console.log(err); 
+        cb(err);
       }
-    };
-  },
-
-  handleSignup () {
-    this.props.onSignup((err) => {
-      if (err) { console.log(err); }
     });
-  },
-
-  handleChange (e) {
-    this.props.onChange(
-      e.target.getAttribute('name'),
-      e.target.value
-    );
   },
 
   render () {
     return (
       <div>
-        <h3>Signup</h3>
-        <input type="text"
-          name="email"
-          placeholder="email"
-          onChange={ this.handleChange }
-          value={ this.props.credentials.email }
-        />
-        <input type="text"
-          name="password"
-          placeholder="password"
-          onChange={ this.handleChange }
-          value={ this.props.credentials.password }
-        />
-        <button onClick={ this.handleSignup }>Sign up</button>
+        <Vform submit={ this.handleSignup } submitBtnTxt="Sign up!">
+          <Vinput type="text"
+            name="email"
+            required
+            validation="email"
+            placeholder="email"
+          />
+          <Vinput type="text"
+            name="password"
+            type="password"
+            required
+            validation="minCharLen:6"
+            placeholder="password"
+          />
+        </Vform>
+        <Link className="link large" to="/login">Already have an account? Sign in</Link>
       </div>
     );
   }

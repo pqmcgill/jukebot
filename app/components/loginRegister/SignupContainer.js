@@ -1,38 +1,18 @@
 const React = require('react');
-const Signup = require('./Signup');
-const Login = require('./Login');
-const Toggle = require('../shared/Toggle');
-
 const firebaseUtil = require('../../util/firebaseUtil');
+
+let logo = require('../../images/jukebot.png');
 
 let SignupContainer = React.createClass({
   contextTypes: {
     router: React.PropTypes.object.isRequired
   },
 
-  getInitialState () {
-    return {
-      credentials: {
-        email: '',
-        password: '',
-      },
-      isSignup: false 
-    };
-  },
-
-  clearAuthValues () {
-    this.setState({
-      credentials: {
-        email: '',
-        password: ''
-      }
-    });
-  },
-
-  handleLogin (cb) {
-    firebaseUtil.login(this.state.credentials, (err, authData) => {
+  handleLogin (credentials, cb) {
+    firebaseUtil.login(credentials, (err, authData) => {
       if (err) {
         // handle error...
+        cb(err);
       } else {
         let redirect = '/home';
 
@@ -46,47 +26,28 @@ let SignupContainer = React.createClass({
     });
   },
 
-  handleSignup () {
-    firebaseUtil.signup(this.state.credentials, (err, authData) => {
+  handleSignup (credentials, cb) {
+    firebaseUtil.signup(credentials, (err, authData) => {
       if (err) {
         // handle error...
+        cb(err);
       } else {
         this.context.router.push('/home');
       }
     });
   },
 
-  handleToggle (selected) {
-    this.setState({
-      isSignup: selected.index === 0 ? false : true
-    });
-  },
-
-  handleChange (type, val) {
-    var credentials = this.state.credentials;
-    credentials[type] = val;
-    this.setState({
-      credentials: credentials
-    });
-  },
-
   render () {
-    let currentScreen = this.state.isSignup ? 
-      <Signup credentials={ this.state.credentials }
-        onChange={ this.handleChange }
-        onSignup={ this.handleSignup }
-      /> :
-      <Login credentials={ this.state.credentials }
-        onChange={ this.handleChange }
-        onLogin={ this.handleLogin }
-      />;
-
+    let children = React.Children.map(this.props.children, (child) => {
+      return React.cloneElement(child, {
+        onLogin: this.handleLogin,
+        onSignup: this.handleSignup
+      });
+    });
     return (
       <div>
-        <Toggle options={ ['Login', 'Sign up'] }
-          onToggle={ this.handleToggle }
-        />
-        { currentScreen }
+        <img className="logo" src={ logo } alt="JUKEBOT" />
+        { children }
       </div>
     );
   }

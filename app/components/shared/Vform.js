@@ -4,7 +4,14 @@ let validator = require('../../util/validator');
 
 let Vform = React.createClass({
   propTypes: {
-    submit: React.PropTypes.func
+    submit: React.PropTypes.func.isRequired,
+    submitBtnTxt: React.PropTypes.string
+  },
+
+  getDefaultProps() {
+    return {
+      submitBtnTxt: 'Submit'
+    };
   },
 
   // Validate context types
@@ -51,8 +58,15 @@ let Vform = React.createClass({
   getInitialState () {
     return {
       isAllValid: false,
-      submitting: false
+      submitting: false,
+      serverErrors: []
     };
+  },
+
+  doneSubmitting () {
+    this.setState({
+      submitting: false
+    });
   },
 
   // form submission method -- pass this.model to
@@ -60,17 +74,27 @@ let Vform = React.createClass({
   // handle errors and display necessary server error messages
   handleSubmit (e) {
     e.preventDefault();
+    // set the form's state to submitting
     this.setState({
       submitting: true
     }, () => {
+      // invoke the submit function
       this.props.submit(this.model, (err) => {
+        // handle errors
         let key = Object.keys(err)[0];
-        this.inputs[key].setState({
-          serverErrors: [err[key]]
-        });
-        this.setState({
-          submitting: false
-        });
+        // either set the server error on the form
+        if (key === 'form') {
+          this.setState({
+            serverErrors: [err[key]]
+            // finish submitting
+          }, this.doneSubmitting);
+        // or set the server error on the designated input
+        } else {
+          this.inputs[key].setState({
+            serverErrors: [err[key]]
+            // finish submitting
+          }, this.doneSubmitting);
+        }
       });
     });
   },
@@ -81,6 +105,10 @@ let Vform = React.createClass({
     if (!input.props.validation) {
       return;
     }
+
+    this.setState({
+      serverErrors: []
+    });
 
     //   only validate if the input has value or if it is required
       //   determine the validation requirements   
@@ -134,11 +162,22 @@ let Vform = React.createClass({
   },
 
   render () {
+    let formErrors = this.state.serverErrors.map((err, i) => {
+      return (
+        <span key={i}>{ err.msg }</span>
+      );
+    });
     return (
-      <form onSubmit={ this.handleSubmit }>
+      <form onSubmit={ this.handleSubmit }
+        className="form">
+        { formErrors }
         { this.props.children }
-        <button type="submit" disabled={ this.state.submitting || !this.state.isAllValid }>
-          Submit
+        <button 
+          type="submit" 
+          className="btn-primary orange"
+          disabled={ this.state.submitting || !this.state.isAllValid }
+        >
+          { this.props.submitBtnTxt } 
         </button>
       </form>
     );

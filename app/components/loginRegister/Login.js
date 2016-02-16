@@ -1,30 +1,20 @@
 const React = require('react');
+const Link = require('react-router').Link;
 const Constants = require('../../config/constants');
 
+const Vform = require('../shared/Vform');
+const Vinput = require('../shared/Vinput');
+
 const Login = React.createClass({
-  PropTypes: {
-    onChange: React.PropTypes.func.isRequired,
-    onLogin: React.PropTypes.func.isRequired,
-    credentials: React.PropTypes.obj
-  },
-
-  getDefaultProps () {
-    return {
-      credentials: {
-        email: '',
-        password: ''
-      }
-    };
-  },
-
-  handleChange (e) {
-    this.props.onChange(e.target.getAttribute('name'), e.target.value);
-  },
-
-  handleLogin () {
-    this.props.onLogin((err) => {
+  handleLogin (model, cb) {
+    this.props.onLogin(model, (err, data) => {
       if (err) {
-        console.log(err);
+        console.log(err.code);
+        if (err.code === 'INVALID_USER' ||
+            err.code === 'INVALID_PASSWORD' ||
+            err.code === 'INVALID_EMAIL') {
+          cb({ form: { msg: 'The email or password you\'ve entered is incorrect'}});
+        }
       } 
     });
   },
@@ -32,24 +22,23 @@ const Login = React.createClass({
   render () {
     return (
       <div>
-
-        <h3>Login</h3>
-
-        <input type="text" 
-          name="email" 
-          placeholder="email" 
-          value={ this.props.credentials.email }
-          onChange={ this.handleChange }
-        />
-        <input type="text" 
-          name="password" 
-          placeholder="password"
-          value={ this.props.credentials.password }
-          onChange={ this.handleChange }
-        />
-
-        <button onClick={ this.handleLogin }>Login</button>
-
+        <Vform submit={ this.handleLogin } submitBtnTxt="Go!">
+          <Vinput type="text" 
+            name="email" 
+            validation="email"
+            required
+            placeholder="email" 
+          />
+          <Vinput type="text" 
+            name="password" 
+            validation="minCharLen:6"
+            required
+            placeholder="password"
+            type="password"
+          /> 
+        </Vform>
+        <a className="link med">I forgot my login</a>
+        <Link className="link large" to="/signup">New User? Create an account</Link>
       </div>
     );
   }

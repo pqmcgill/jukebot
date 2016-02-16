@@ -41,6 +41,24 @@ module.exports = {
       {
         test: /\.scss$/,
         loader: 'style!css!sass'
+      },
+
+      // Images
+      {
+        test: /\.(png|jpg|gif)$/,
+        loader: 'url?limit=25000'
+      },
+
+      // Fonts
+      {
+        test: /\.(ttf)$/,
+        loader: 'url?limit=100000'
+      },
+
+      // inline svg
+      {
+        test: /\.(svg)$/,
+        loader: 'raw-loader'
       }
 
     ]

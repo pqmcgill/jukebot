@@ -10,7 +10,14 @@ let Vinput = React.createClass({
   propTypes: {
     validations: React.PropTypes.string,
     required: React.PropTypes.bool,
-    placeholder: React.PropTypes.string
+    placeholder: React.PropTypes.string,
+    type: React.PropTypes.string
+  },
+
+  getDefaultProps () {
+    return {
+      type: 'text'
+    };
   },
 
   getInitialState () {
@@ -52,15 +59,17 @@ let Vinput = React.createClass({
     let errors = this.state.errors.concat(this.state.serverErrors);
     let errorMsgs = errors.map((err, i) => {
       return (
-        <span key={i}>{ err.msg }</span>
+        <span className="jb-input-error" key={i}>{ err.msg }</span>
       );
     });
     return (
-      <div>
+      <div className="jb-input-container">
         <input type="text" 
+          className="jb-input orange"
           onChange={ this.handleChange }
           onBlur={ this.handleBlur }
           placeholder={ this.props.placeholder }
+          type={ this.props.type }
         />
         { errorMsgs }
       </div>
