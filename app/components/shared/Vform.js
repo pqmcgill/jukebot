@@ -83,6 +83,7 @@ let Vform = React.createClass({
         // handle errors
         let key = Object.keys(err)[0];
         // either set the server error on the form
+        console.log(key, err[key]);
         if (key === 'form') {
           this.setState({
             serverErrors: [err[key]]
@@ -164,7 +165,7 @@ let Vform = React.createClass({
   render () {
     let formErrors = this.state.serverErrors.map((err, i) => {
       return (
-        <span key={i}>{ err.msg }</span>
+        <span key={i} className="jb-input-error-lg">{ err.msg }</span>
       );
     });
     return (

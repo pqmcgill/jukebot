@@ -1,7 +1,9 @@
 .btn-primary {
-  min-width: 80px;
-  height: 30px;
+  min-width: 75px;
+  height: 25px;
   cursor: pointer;
+  font-size: 18px;
+  line-height: 18px;
 
   &.orange {
     background-color: $jb-red;
@@ -9,7 +11,6 @@
     font-weight: bold;
     border: solid 1px $jb-orange;
     outline: solid 2px $jb-red;
-    font-size: 18px;
   }
 
   &.red {

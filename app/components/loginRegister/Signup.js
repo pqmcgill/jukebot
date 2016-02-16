@@ -10,7 +10,18 @@ let Signup = React.createClass({
     this.props.onSignup(credentials, (err) => {
       if (err) { 
         console.log(err); 
-        cb(err);
+        console.log(err.code);
+        switch(err.code) {
+          case 'INVALID_USER' || 'INVALID_PASSWORD' || 'INVALID_EMAIL':
+            cb({ form: { msg: 'The email or password you\'ve entered is incorrect'}});
+            return;
+          case 'EMAIL_TAKEN':
+            cb({ email: { msg: 'this email is already associated with an account'}});
+            return;
+          default:
+            cb({ form: { msg: 'An unknown error occurred'}});
+            return;
+        }
       }
     });
   },

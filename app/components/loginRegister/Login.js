@@ -10,10 +10,22 @@ const Login = React.createClass({
     this.props.onLogin(model, (err, data) => {
       if (err) {
         console.log(err.code);
-        if (err.code === 'INVALID_USER' ||
-            err.code === 'INVALID_PASSWORD' ||
-            err.code === 'INVALID_EMAIL') {
-          cb({ form: { msg: 'The email or password you\'ve entered is incorrect'}});
+        switch(err.code) {
+          case 'INVALID_USER':
+            cb({ form: { msg: 'The email or password you\'ve entered is incorrect'}});
+            return;
+          case 'INVALID_EMAIL':
+            cb({ form: { msg: 'The email or password you\'ve entered is incorrect'}});
+            return;
+          case 'INVALID_PASSWORD':
+            cb({ form: { msg: 'The email or password you\'ve entered is incorrect'}});
+            return;
+          case 'EMAIL_TAKEN':
+            cb({ email: { msg: 'this email is already associated with an account'}});
+            return;
+          default:
+            cb({ form: { msg: 'An unknown error occurred'}});
+            return;
         }
       } 
     });
