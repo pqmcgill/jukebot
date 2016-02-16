@@ -5,12 +5,14 @@ var entryPath = path.resolve(__dirname, './app/index.js'),
   buildPath = path.resolve(__dirname, './public'),
   node_modules = path.resolve(__dirname, 'node_modules');
 
+var PORT = 3000;
+
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: [
     'webpack/hot/dev-server',
-    'webpack-dev-server/client?http://localhost:8080',
+    'webpack-dev-server/client?http://localhost:' + PORT,
     entryPath
   ],
   output: {
@@ -18,7 +20,7 @@ module.exports = {
     path: buildPath 
   },
   devServer: {
-    port: 3000,
+    port: PORT,
     historyApiFallback: true
   },
   module: {

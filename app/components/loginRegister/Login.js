@@ -38,13 +38,11 @@ const Login = React.createClass({
           <Vinput type="text" 
             name="email" 
             validation="email"
-            required
             placeholder="email" 
           />
           <Vinput type="text" 
             name="password" 
             validation="minCharLen:6"
-            required
             placeholder="password"
             type="password"
           /> 

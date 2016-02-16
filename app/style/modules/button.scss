@@ -16,6 +16,10 @@
   &.red {
 
   }
+
+  &.disabled {
+    opacity: 0.3;
+  }
 }
 
 .link {

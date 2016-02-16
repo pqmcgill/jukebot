@@ -32,21 +32,23 @@ let Signup = React.createClass({
         <Vform submit={ this.handleSignup } submitBtnTxt="Sign up!">
           <Vinput type="text"
             name="email"
-            required
             validation="email"
             placeholder="email"
           />
           <Vinput type="text"
+            name="displayName"
+            placeholder="display name"
+            validation="required"
+          />
+          <Vinput type="text"
             name="password"
             type="password"
-            required
             validation="minCharLen:6"
             placeholder="password"
           />
           <Vinput type="text"
             name="confirm"
             type="password"
-            required
             validation="match:password"
             placeholder="confirm password"
           />

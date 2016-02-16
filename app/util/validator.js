@@ -8,9 +8,11 @@ let validator = (validationStr, val, match) => {
     return val.length >= typeArry[0] ? true :
       { msg: `must be at least ${typeArry[0]} characters` }; 
   } else if (type === 'match' && match) {
-    console.log(typeArry);
     return val === match ? true :
       { msg: `${typeArry[0]} does not match` };
+  } else if (type === 'required') {
+    return val.length > 0 ? true :
+      { msg: `${typeArry[0]} is required` };
   } else {
     return true;
   }

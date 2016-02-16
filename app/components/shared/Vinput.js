@@ -33,6 +33,7 @@ let Vinput = React.createClass({
   componentWillMount () {
     this.context.attachToForm(this);
     this.setState({ isValid: !this.props.required });
+    this.validate(this);
   },
 
   componentWillUnmount () {
