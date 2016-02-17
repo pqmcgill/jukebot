@@ -1,10 +1,8 @@
 // Main Sass file... import all sass dependencies here
 @import './variables/colors.scss';
 
-@import './modules/input.scss';
-@import './modules/button.scss';
-@import './modules/form.scss';
-@import './modules/img.scss';
+@import './modules/modules.scss';
+@import './components/components.scss';
 
 @font-face {
   font-family: 'Oxygen';
@@ -23,10 +21,13 @@
 }
 
 body {
-  background: $jb-orange;
+  //background: $jb-orange;
   margin: 0;
   //font-family: 'Oxygen', sans-serif;
   text-align: center;
 }
 
-
+.component {
+  height: 100vh;
+  width: 100%;
+}

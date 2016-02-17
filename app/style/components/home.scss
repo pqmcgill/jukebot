@@ -1,0 +1,53 @@
+@import '../variables/colors.scss';
+
+.home {
+  background-color: $jb-red;
+
+  // buttons
+  .btn-primary {
+    background-color: $jb-white;
+    color: $jb-red;
+    border: solid 1px $jb-red;
+    outline: solid 2px $jb-white;
+  }
+  
+  .link {
+    &.large {
+      color: $jb-white;
+    }
+  
+    &.med {
+      color: $jb-white;
+    }
+  }
+  
+  
+  // inputs
+  .jb-input {
+    border-left: solid $jb-white 1px;
+    border-bottom: solid $jb-white 1px;
+    border-top: none;
+    border-right: none;
+    background-color: $jb-red;
+    color: $jb-white;
+    &::-webkit-input-placeholder {
+      color: $jb-white;
+    }
+    &::-ms-input-placeholder {
+      color: $jb-white;
+    }
+    &::-moz-placeholder {
+      color: $jb-white;
+    }
+  }
+
+  .jb-input-error {
+    background-color: $jb-white;
+    color: $jb-red;
+  }
+
+  .jb-input-error-lg {
+    background-color: $jb-white;
+    color: $jb-red;
+  }
+}

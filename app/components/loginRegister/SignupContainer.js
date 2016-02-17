@@ -45,7 +45,7 @@ let SignupContainer = React.createClass({
       });
     });
     return (
-      <div>
+      <div className="component loginSignup">
         <img className="logo" src={ logo } alt="JUKEBOT" />
         { children }
       </div>

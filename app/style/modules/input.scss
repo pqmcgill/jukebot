@@ -16,41 +16,18 @@
 
   &:focus {
     box-shadow: none;
-    border: none;
     outline: none;
   }
 
-  &.orange {
-    border-left: solid $jb-red 1px;
-    border-bottom: solid $jb-red 1px;
-    border-top: none;
-    border-right: none;
-    background-color: $jb-orange;
-    color: $jb-red;
-  }
-
-  &::-webkit-input-placeholder {
-    color: $jb-red;
-  }
-  &::-ms-input-placeholder {
-    color: $jb-red;
-  }
-  &::-moz-placeholder {
-    color: $jb-red;
-  }
 }
 
 .jb-input-error {
-  background-color: $jb-red;
-  color: $jb-orange;
   font-size: 8px;
   padding: 2px 4px;
   float: right;
 }
 
 .jb-input-error-lg {
-  background-color: $jb-red;
-  color: $jb-orange;
   font-size: 10px;
   padding: 4px 6px;
   margin-bottom: 20px;

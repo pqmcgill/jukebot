@@ -32,10 +32,10 @@ let Home = React.createClass({
   render () {
     return (
       <div>
-        <button onClick={ this.logout }>logout</button>
+        <button className="btn-primary" onClick={ this.logout }>logout</button>
         <h1>Home</h1>
-        <button onClick={ this.goToPartyList }>Join a party</button>
-        <button onClick={ this.goToCreate }>Create a party</button>
+        <button className="btn-primary" onClick={ this.goToPartyList }>Join a party</button>
+        <button className="btn-primary" onClick={ this.goToCreate }>Create a party</button>
       </div>
     );
   }

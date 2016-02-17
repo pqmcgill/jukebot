@@ -3,19 +3,8 @@
   height: 25px;
   cursor: pointer;
   font-size: 18px;
+  font-weight: bold;
   line-height: 18px;
-
-  &.orange {
-    background-color: $jb-red;
-    color: $jb-orange;
-    font-weight: bold;
-    border: solid 1px $jb-orange;
-    outline: solid 2px $jb-red;
-  }
-
-  &.red {
-
-  }
 
   &.disabled {
     opacity: 0.3;
@@ -30,13 +19,11 @@
   font-size: 14px;
   margin-top: 50px;
   display: block;
-  color: $jb-red;
 }
 
 .link.med {
   font-size: 11px;
   margin-top: 10px;
-  color: $jb-red;
   display: block;
   text-decoration: underline;
 }
