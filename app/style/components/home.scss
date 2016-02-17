@@ -1,53 +1,53 @@
 @import '../variables/colors.scss';
 
 .home {
-  background-color: $jb-red;
+  background-color: $home-secondary;
 
   // buttons
   .btn-primary {
-    background-color: $jb-white;
-    color: $jb-red;
-    border: solid 1px $jb-red;
-    outline: solid 2px $jb-white;
+    background-color: $home-primary;
+    color: $home-secondary;
+    border: solid 1px $home-secondary;
+    outline: solid 2px $home-primary;
   }
   
   .link {
     &.large {
-      color: $jb-white;
+      color: $home-primary;
     }
   
     &.med {
-      color: $jb-white;
+      color: $home-primary;
     }
   }
   
   
   // inputs
   .jb-input {
-    border-left: solid $jb-white 1px;
-    border-bottom: solid $jb-white 1px;
+    border-left: solid $home-primary 1px;
+    border-bottom: solid $home-primary 1px;
     border-top: none;
     border-right: none;
-    background-color: $jb-red;
-    color: $jb-white;
+    background-color: $home-secondary;
+    color: $home-primary;
     &::-webkit-input-placeholder {
-      color: $jb-white;
+      color: $home-primary;
     }
     &::-ms-input-placeholder {
-      color: $jb-white;
+      color: $home-primary;
     }
     &::-moz-placeholder {
-      color: $jb-white;
+      color: $home-primary;
     }
   }
 
   .jb-input-error {
-    background-color: $jb-white;
-    color: $jb-red;
+    background-color: $home-primary;
+    color: $home-secondary;
   }
 
   .jb-input-error-lg {
-    background-color: $jb-white;
-    color: $jb-red;
+    background-color: $home-primary;
+    color: $home-secondary;
   }
 }

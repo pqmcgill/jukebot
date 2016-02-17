@@ -1,53 +1,53 @@
 @import '../variables/colors.scss';
 
 .loginSignup {
-  background-color: $jb-orange;
+  background-color: $login-secondary;
   
   // buttons
   .btn-primary {
-    background-color: $jb-red;
-    color: $jb-orange;
-    border: solid 1px $jb-orange;
-    outline: solid 2px $jb-red;
+    background-color: $login-primary;
+    color: $login-secondary;
+    border: solid 1px $login-secondary;
+    outline: solid 2px $login-primary;
   }
   
   .link {
     &.large {
-      color: $jb-red;
+      color: $login-primary;
     }
   
     &.med {
-      color: $jb-red;
+      color: $login-primary;
     }
   }
   
   
   // inputs
   .jb-input {
-    border-left: solid $jb-red 1px;
-    border-bottom: solid $jb-red 1px;
+    border-left: solid $login-primary 1px;
+    border-bottom: solid $login-primary 1px;
     border-top: none;
     border-right: none;
-    background-color: $jb-orange;
-    color: $jb-red;
+    background-color: $login-secondary;
+    color: $login-primary;
     &::-webkit-input-placeholder {
-      color: $jb-red;
+      color: $login-primary;
     }
     &::-ms-input-placeholder {
-      color: $jb-red;
+      color: $login-primary;
     }
     &::-moz-placeholder {
-      color: $jb-red;
+      color: $login-primary;
     }
   }
 
   .jb-input-error {
-    background-color: $jb-red;
-    color: $jb-orange;
+    background-color: $login-primary;
+    color: $login-secondary;
   }
 
   .jb-input-error-lg {
-    background-color: $jb-red;
-    color: $jb-orange;
+    background-color: $login-primary;
+    color: $login-secondary;
   }
 }
