@@ -1,23 +1,12 @@
 // Main Sass file... import all sass dependencies here
 @import './variables/colors.scss';
+@import './variables/fonts.scss';
 
 @import './modules/modules.scss';
 @import './componentThemes/components.scss';
 
-@font-face {
-  font-family: 'Oxygen';
-  src: url('../fonts/Oxygen/Oxygen-Light.ttf');
-  font-weight: normal;
-}
-
-@font-face {
-  font-family: 'Oxygen';
-  src: url('../fonts/Oxygen/Oxygen-Bold.ttf');
-  font-weight: bold;
-}
-
 * {
-  font-family: 'Oxygen', sans-serif;
+  font-family: $jb-font-family;
 }
 
 body {

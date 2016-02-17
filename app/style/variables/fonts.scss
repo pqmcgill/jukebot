@@ -1,0 +1,19 @@
+@font-face {
+  font-family: 'Oxygen';
+  src: url('../fonts/Oxygen/Oxygen-Light.ttf');
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: 'Oxygen';
+  src: url('../fonts/Oxygen/Oxygen-Bold.ttf');
+  font-weight: bold;
+}
+
+$jb-font-family: 'Oxygen', sans-serif;
+
+// font sizes
+$jb-font-small: 8px;
+$jb-font-medium: 10px;
+$jb-font-large: 14px;
+$jb-font-larger: 18px;

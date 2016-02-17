@@ -1,10 +1,10 @@
 .btn-primary {
-  min-width: 75px;
-  height: 25px;
+  min-width: 4.2em;
+  height: 1.4em;
   cursor: pointer;
-  font-size: 18px;
+  font-size: $jb-font-larger;
   font-weight: bold;
-  line-height: 18px;
+  line-height: $jb-font-larger;
 
   &.disabled {
     opacity: 0.3;
@@ -16,14 +16,14 @@
 }
 
 .link.large {
-  font-size: 14px;
+  font-size: $jb-font-large;
   margin-top: 50px;
   display: block;
 }
 
 .link.med {
-  font-size: 11px;
-  margin-top: 10px;
+  font-size: $jb-font-medium;
+  margin-top: $jb-font-medium;
   display: block;
   text-decoration: underline;
 }

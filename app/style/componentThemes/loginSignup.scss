@@ -1,0 +1,53 @@
+@import '../variables/colors.scss';
+
+.loginSignup {
+  background-color: $login-secondary;
+  
+  // buttons
+  .btn-primary {
+    background-color: $login-primary;
+    color: $login-secondary;
+    border: solid 1px $login-secondary;
+    outline: solid 2px $login-primary;
+  }
+  
+  .link {
+    &.large {
+      color: $login-primary;
+    }
+  
+    &.med {
+      color: $login-primary;
+    }
+  }
+  
+  
+  // inputs
+  .jb-input {
+    border-left: solid $login-primary 1px;
+    border-bottom: solid $login-primary 1px;
+    border-top: none;
+    border-right: none;
+    background-color: $login-secondary;
+    color: $login-primary;
+    &::-webkit-input-placeholder {
+      color: $login-primary;
+    }
+    &::-ms-input-placeholder {
+      color: $login-primary;
+    }
+    &::-moz-placeholder {
+      color: $login-primary;
+    }
+  }
+
+  .jb-input-error {
+    background-color: $login-primary;
+    color: $login-secondary;
+  }
+
+  .jb-input-error-lg {
+    background-color: $login-primary;
+    color: $login-secondary;
+  }
+}
