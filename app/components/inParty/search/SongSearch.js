@@ -3,6 +3,8 @@ let React = require('react');
 let SearchList = require('./SearchList'),
   rhapsodyMeta = require('../../../util/rhapsodyMetaData');
 
+let rhapsodyUtil = require('../../../util/rhapsodyUtil');
+
 let debounce = require('../../../util/util').debounce;
 
 let SongSearch = React.createClass({
@@ -73,6 +75,10 @@ let SongSearch = React.createClass({
       .catch(this.searchError);
   },
 
+  selectTrack (trackId) {
+    rhapsodyUtil.playTrack(trackId);
+  },
+
   searchError (err) {
     // Handle error...
   },
@@ -105,6 +111,9 @@ let SongSearch = React.createClass({
         case 'artist':
           selectFn = this.searchArtist;
           break;
+        case 'track':
+          selectFn = this.selectTrack;
+          break;
         default:
           break;
       }
@@ -127,7 +136,9 @@ let SongSearch = React.createClass({
       <div>
         <h1>Song Search</h1>
         <input type="text" onChange={ this.onSearchChange } placeholder="Search..." />
-        { lists }
+        <div className="search">
+          { lists }
+        </div>
       </div>
     );
   }

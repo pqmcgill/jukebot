@@ -1,4 +1,7 @@
 let React = require('react');
+let SongSearch = require('../inParty/search/SongSearch');
+
+let rhapsodyUtil = require('../../util/rhapsodyUtil');
 
 let CreateParty = React.createClass({
   //getInitialState () {
@@ -67,13 +70,13 @@ let CreateParty = React.createClass({
 //  },
 
 //  // play a track: Tra.5156528 = "Say it ain't so" by Weezer :)
-//  playTrack (e) {
-//    e.preventDefault();
-//    rhapsodyUtil.playTrack('Tra.5156528');
-//  },
+
   render () {
     return (
-      <h1>create Party</h1>
+      <div className="component loginSignup">
+        <h1>create Party</h1>
+        <SongSearch className="search" />
+      </div>
     );
   }
 });
