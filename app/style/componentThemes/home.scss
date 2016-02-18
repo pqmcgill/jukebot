@@ -10,6 +10,17 @@
     border: solid 1px $home-secondary;
     outline: solid 2px $home-primary;
   }
+
+  .btn-jumbo {
+    background-color: $home-secondary;
+    color: $home-primary;
+    outline: none;
+    border: none;
+    
+    &:first-of-type {
+      border-bottom: solid 2px $home-primary;
+    }
+  }
   
   .link {
     &.large {

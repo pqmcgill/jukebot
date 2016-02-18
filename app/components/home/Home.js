@@ -31,11 +31,17 @@ let Home = React.createClass({
 
   render () {
     return (
-      <div>
-        <button className="btn-primary" onClick={ this.logout }>logout</button>
-        <h1>Home</h1>
-        <button className="btn-primary" onClick={ this.goToPartyList }>Join a party</button>
-        <button className="btn-primary" onClick={ this.goToCreate }>Create a party</button>
+      <div className="component home">
+        <div className="wrapper">
+          <button className="btn-jumbo" onClick={ this.goToCreate }>
+            Start Party
+            <img  />
+          </button>
+          <button className="btn-jumbo" onClick={ this.goToPartyList }>
+            Join Party
+            <img  />
+          </button>
+        </div>
       </div>
     );
   }
