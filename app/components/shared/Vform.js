@@ -129,6 +129,7 @@ let Vform = React.createClass({
         if (v.match(/^match/)) {
           let match = v.split(':')[1];
           result = validator(v, val, this.inputs[match].state.val);
+          console.log('foo');
         } else if (v === 'required') {
           console.log(v, val)
           result = validator(v + ':' + input.props.name, val);
