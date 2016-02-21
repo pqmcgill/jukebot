@@ -26,7 +26,6 @@ let Home = React.createClass({
       console.log('ERROR with RHAPSODY');
       return;
     }
-
     this.context.router.push('/create');
   },
 
@@ -45,11 +44,7 @@ let Home = React.createClass({
 
   // navigate to the party creation page
   goToCreate () {
-    if (rhapsodyUtil.hasTokens()) {
-      window.location.href = 'https://api.rhapsody.com/oauth/authorize?client_id=' + CLIENT_ID + '&redirect_uri=http://localhost:3000/home&response_type=code';
-    } else {
-      rhapsodyUtil.authenticate(null, this.handleRhapsodyAuth);
-    }
+    rhapsodyUtil.authenticate(null, this.handleRhapsodyAuth);
   },
 
   render () {
