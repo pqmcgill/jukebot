@@ -4,6 +4,9 @@ let React = require('react'),
   { CLIENT_ID } = require('../../util/constants'),
   $ = require('jquery');
 
+let start_img = require('../../images/start.png');
+let join_img = require('../../images/join.png');
+
 let Home = React.createClass({
   propTypes: {
     history: React.PropTypes.object.isRequired
@@ -53,12 +56,10 @@ let Home = React.createClass({
         <div className="wrapper">
           <a onClick={ this.logout }>logout</a>
           <button className="btn-jumbo" onClick={ this.goToCreate }>
-            Start Party
-            <img  />
+            <img src={ start_img }/>
           </button>
           <button className="btn-jumbo" onClick={ this.goToPartyList }>
-            Join Party
-            <img  />
+            <img src={ join_img }/>
           </button>
         </div>
       </div>
