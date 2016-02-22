@@ -8,6 +8,10 @@ let rhapsodyUtil = require('../../../util/rhapsodyUtil');
 let debounce = require('../../../util/util').debounce;
 
 let SongSearch = React.createClass({
+  propTypes: {
+    onTrackSelect: React.PropTypes.func.isRequired
+  },
+
   getInitialState () {
     return {
       lists: [],
@@ -76,7 +80,7 @@ let SongSearch = React.createClass({
   },
 
   selectTrack (trackId) {
-    rhapsodyUtil.playTrack(trackId);
+    this.props.onTrackSelect(trackId);
   },
 
   searchError (err) {
