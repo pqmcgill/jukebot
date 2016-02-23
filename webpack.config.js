@@ -21,7 +21,7 @@ module.exports = {
   },
   devServer: {
     port: PORT,
-    historyApiFallback: true
+    historyApiFallback: true 
   },
   module: {
     loaders: [

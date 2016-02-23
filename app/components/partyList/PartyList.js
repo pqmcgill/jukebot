@@ -2,6 +2,8 @@ let React = require('react'),
   ReactFireMixin = require('reactfire'),
   firebaseUtil = require('../../util/firebaseUtil');
 
+let Link = require('react-router').Link;
+
 let PartyListItem = require('./PartyListItem');
 
 let PartyList = React.createClass({
@@ -39,6 +41,7 @@ let PartyList = React.createClass({
     return (
       <ul>
         { parties }
+        <Link to="/parties/foo">foo</Link>
       </ul>
     );
   }
