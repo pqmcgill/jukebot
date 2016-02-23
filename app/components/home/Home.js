@@ -4,6 +4,9 @@ let React = require('react'),
   { CLIENT_ID } = require('../../util/constants'),
   $ = require('jquery');
 
+let start_img = require('../../images/start.png');
+let join_img = require('../../images/join.png');
+
 let Home = React.createClass({
   propTypes: {
     history: React.PropTypes.object.isRequired
@@ -26,7 +29,6 @@ let Home = React.createClass({
       console.log('ERROR with RHAPSODY');
       return;
     }
-
     this.context.router.push('/create');
   },
 
@@ -45,11 +47,7 @@ let Home = React.createClass({
 
   // navigate to the party creation page
   goToCreate () {
-    if (rhapsodyUtil.hasTokens()) {
-      window.location.href = 'https://api.rhapsody.com/oauth/authorize?client_id=' + CLIENT_ID + '&redirect_uri=http://localhost:3000/home&response_type=code';
-    } else {
-      rhapsodyUtil.authenticate(null, this.handleRhapsodyAuth);
-    }
+    rhapsodyUtil.authenticate(null, this.handleRhapsodyAuth);
   },
 
   render () {
@@ -58,12 +56,10 @@ let Home = React.createClass({
         <div className="wrapper">
           <a onClick={ this.logout }>logout</a>
           <button className="btn-jumbo" onClick={ this.goToCreate }>
-            Start Party
-            <img  />
+            <img src={ start_img }/>
           </button>
           <button className="btn-jumbo" onClick={ this.goToPartyList }>
-            Join Party
-            <img  />
+            <img src={ join_img }/>
           </button>
         </div>
       </div>

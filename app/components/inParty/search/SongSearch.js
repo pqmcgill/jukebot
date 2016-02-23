@@ -137,7 +137,7 @@ let SongSearch = React.createClass({
       }
     });
     return (
-      <div>
+      <div className="search-container">
         <h1>Song Search</h1>
         <input type="text" onChange={ this.onSearchChange } placeholder="Search..." />
         <div className="search">

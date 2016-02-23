@@ -49,7 +49,7 @@ let Signup = React.createClass({
           <Vinput type="text"
             name="confirm"
             type="password"
-            validation="match:password"
+            validation="match:password,required"
             placeholder="confirm password"
           />
         </Vform>

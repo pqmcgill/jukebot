@@ -30,7 +30,7 @@ module.exports = {
     if (!code) { 
       // redirect to rhapsody login screen
       // pass redirect url back to UI
-      window.location.replace(`https://api.rhapsody.com/oauth/authorize?CLIENT_ID=${CLIENT_ID}&redirect_uri=http://localhost:3000/home&response_type=code&state=continueAuth`);
+      window.location.replace(`https://api.rhapsody.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=http://localhost:3000/home&response_type=code&state=continueAuth`);
     } else {
       // get Access token from separate jukebot express application
       $.ajax({

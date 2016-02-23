@@ -1,4 +1,7 @@
 @import '../variables/colors.scss';
+body {
+  background-color: $login-secondary;
+}
 
 .loginSignup {
   background-color: $login-secondary;
