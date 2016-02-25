@@ -1,0 +1,16 @@
+.tray {
+  position: absolute;
+  height: 33%;
+  bottom: 0;
+  width: 70%;
+  left: 50%;
+  margin-left: -35%;
+  -webkit-box-shadow: 0 0 37px -1px rgba(69,69,69,0.69);
+  -moz-box-shadow: 0 0 37px -1px rgba(69,69,69,0.69);
+  box-shadow: 0 0 37px -1px rgba(69,69,69,0.69);
+
+  transition: bottom .2s ease-out;
+  &.hide {
+    bottom: -33%;
+  }
+}

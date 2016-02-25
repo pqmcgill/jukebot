@@ -29,7 +29,7 @@ let Home = React.createClass({
       console.log('ERROR with RHAPSODY');
       return;
     }
-    this.context.router.push('/parties/123');
+    this.context.router.push('/create');
   },
 
   // handle loggin out of firebase and rhapsody
@@ -52,7 +52,7 @@ let Home = React.createClass({
 
   render () {
     return (
-      <div className="component home">
+      <div className="component home no-padding">
         <div className="wrapper">
           <a onClick={ this.logout }>logout</a>
           <button className="btn-jumbo" onClick={ this.goToCreate }>

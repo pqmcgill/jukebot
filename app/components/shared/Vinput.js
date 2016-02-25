@@ -11,7 +11,8 @@ let Vinput = React.createClass({
     validations: React.PropTypes.string,
     required: React.PropTypes.bool,
     placeholder: React.PropTypes.string,
-    type: React.PropTypes.string
+    type: React.PropTypes.string,
+    name: React.PropTypes.string.isRequired
   },
 
   getDefaultProps () {
