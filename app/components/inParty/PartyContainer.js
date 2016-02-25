@@ -1,10 +1,30 @@
 let React = require('react');
+let rhapsodyUtil = require('../../util/rhapsodyUtil');
+let Link = require('react-router').Link;
 
 let PartyContainer = React.createClass({
+  contextTypes: {
+    router: React.PropTypes.object.isRequired
+  },
+
+  componentWillMount () {
+    rhapsodyUtil.init(() => {
+      console.log('party started');
+    });
+  },
+
+  goToSearch (e) {
+    e.preventDefault();
+    this.context.router.push('search');
+  },
+
   render () {
-    console.log(this.props.params.partyId);
+    let partyId = this.props.params.partyId;
     return (
       <div className="component home">
+        <Link to={ '/parties/' + partyId + '/search' }>Search</Link>
+        <Link to={ '/parties/' + partyId + '/nowPlaying' }>Now Playing</Link>
+        <Link to={ '/parties/' + partyId + '/mySongs' }>My Songs</Link>
         { this.props.children }
       </div>
     );

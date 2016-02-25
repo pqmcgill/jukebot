@@ -94,25 +94,11 @@ module.exports = {
           return;
         }
 
-        // initialize player and set credentials
-        // call final callback upon completion
-        this.init(() => {
-          this.setPlayer(this.accessToken, this.refreshToken, () => {
-            cb(null, true);
-          });
-        });
-
+        cb(null, true);
       });
     } else {
-      console.log('found tokens');
-      console.log(this.accessToken, this.refreshToken);
-      // initialize player and set credentials
       // call final callback upon completion
-      this.init(() => {
-        this.setPlayer(this.accessToken, this.refreshToken, () => {
-          cb(null, true);
-        });
-      });
+      cb(null, true);
     }
   },
 
@@ -125,7 +111,11 @@ module.exports = {
       });
 
       // callback after initialization is complete
-      Rhapsody.player.on('ready', cb);
+      Rhapsody.player.on('ready', () => {
+        this.setPlayer(this.accessToken, this.refreshToken, () => {
+          cb(null, true);
+        });
+      });
   },
 
   // connect to player via auth credentials

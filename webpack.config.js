@@ -16,7 +16,7 @@ module.exports = {
     entryPath
   ],
   output: {
-    filename: 'bundle.js',
+    filename: '/bundle.js',
     path: buildPath 
   },
   devServer: {

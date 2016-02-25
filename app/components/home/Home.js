@@ -29,7 +29,7 @@ let Home = React.createClass({
       console.log('ERROR with RHAPSODY');
       return;
     }
-    this.context.router.push('/create');
+    this.context.router.push('/parties/123');
   },
 
   // handle loggin out of firebase and rhapsody
