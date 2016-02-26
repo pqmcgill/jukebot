@@ -8,6 +8,10 @@ let SignupContainer = React.createClass({
     router: React.PropTypes.object.isRequired
   },
 
+  getInitialState () {
+    return { email: null };
+  },
+
   handleLogin (credentials, cb) {
     firebaseUtil.login(credentials, (err, authData) => {
       if (err) {
@@ -36,12 +40,40 @@ let SignupContainer = React.createClass({
       }
     });
   },
+  
+  handleGenerateEmail (request, cb) {
+    firebaseUtil.requestTempToken(request.email, (err) => {
+      cb(err);
+      this.setState({ email: request.email });
+    });
+  },
+  
+  handleUpdateUser (request) {
+    firebaseUtil.changePassword(this.state.email, request.token, request.newPassword, (err) => {
+      if (err) {
+        console.log('error...', err);
+        return;
+      }
+      firebaseUtil.login({
+        email: this.state.email,
+        password: request.newPassword
+      }, (err) => {
+        if (err) {
+          console.log('error...', err);
+          return;
+        }
+        this.context.router.push('/home');
+      });
+    });
+  },
 
   render () {
     let children = React.Children.map(this.props.children, (child) => {
       return React.cloneElement(child, {
         onLogin: this.handleLogin,
-        onSignup: this.handleSignup
+        onSignup: this.handleSignup,
+        generateEmail: this.handleGenerateEmail,
+        updateUser: this.handleUpdateUser
       });
     });
     return (

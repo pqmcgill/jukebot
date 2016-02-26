@@ -48,7 +48,7 @@ const Login = React.createClass({
             type="password"
           /> 
         </Vform>
-        <a className="link med">I forgot my login</a>
+        <Link to="/forgot" className="link med">I forgot my login</Link>
         <Link className="link large" to="/signup">New User? Create an account</Link>
       </div>
     );

@@ -5,6 +5,7 @@ let React = require('react'),
 let App = require('./components/App'),
   SignupContainer = require('./components/loginRegister/SignupContainer'),
   Login = require('./components/loginRegister/Login'),
+  ForgotLogin = require('./components/loginRegister/ForgotLogin'),
   Signup = require('./components/loginRegister/Signup'),
   Home = require('./components/home/Home'),
   CreateParty = require('./components/create/CreateParty'),
@@ -25,6 +26,7 @@ module.exports = (
         <IndexRedirect to="/login" />
         <Route path="/signup" component={ Signup }/>
         <Route path="/login" component={ Login }/> 
+        <Route path="/forgot" component={ ForgotLogin }/>
       </Route>
       <Route path="home" component={ Home } onEnter={ requireAuth }/>
       <Route path="parties" component={ PartyList } onEnter={ requireAuth }/>

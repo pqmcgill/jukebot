@@ -56,6 +56,24 @@ let firebaseUtil = {
     firebaseUtil.onChange(this.isLoggedIn());
   },
 
+  requestTempToken (email, cb) {
+    ref.resetPassword({
+      email: email
+    }, (err) => {
+      cb(err);
+    });
+  },
+
+  changePassword (email, oldPwd, newPwd, cb) {
+    ref.changePassword({
+      email: email,
+      oldPassword: oldPwd,
+      newPassword: newPwd
+    }, (err) => {
+      cb(err);
+    });
+  },
+
   createParty () {
     console.log(session.uid);
     ref.child('parties').push().set({
