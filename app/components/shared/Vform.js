@@ -2,6 +2,8 @@ let React = require('react');
 
 let validator = require('../../util/validator');
 
+let Button = require('./Button');
+
 let Vform = React.createClass({
   propTypes: {
     submit: React.PropTypes.func.isRequired,
@@ -45,7 +47,6 @@ let Vform = React.createClass({
 
   // Bind component to the form
   attachToForm (component) {
-    console.log(component);
     this.inputs[component.props.name] = component;
   },
 
@@ -81,15 +82,16 @@ let Vform = React.createClass({
       // invoke the submit function
       this.props.submit(this.model, (err) => {
         // handle errors
-        let key = Object.keys(err)[0];
+        let key = err ? Object.keys(err)[0] : -1;
         // either set the server error on the form
-        console.log(key, err[key]);
         if (key === 'form') {
           this.setState({
             serverErrors: [err[key]]
             // finish submitting
           }, this.doneSubmitting);
         // or set the server error on the designated input
+        } else if (key === -1) {
+          this.doneSubmitting();
         } else {
           this.inputs[key].setState({
             serverErrors: [err[key]]
@@ -129,25 +131,19 @@ let Vform = React.createClass({
         if (v.match(/^match/)) {
           let match = v.split(':')[1];
           result = validator(v, val, this.inputs[match].state.val);
-          console.log('foo');
         } else if (v === 'required') {
-          console.log(v, val)
           result = validator(v + ':' + input.props.name, val);
         } else {
           result = validator(v, val);
         }
         
-        console.log('result', result);
-
         if (typeof(result) === 'object') {
           isValid = false;
           if (input.state.wasTouched && (input.state.val.length > 0 || v === 'required')) {
-            console.log(input.state.val);
             errors.push(result);
           }
         }
       });
-      console.log(isValid);
 
       // Set the input component's state
       input.setState({
@@ -160,7 +156,6 @@ let Vform = React.createClass({
 
   // Method for validating the entire form
   validateForm () {
-    console.log(this.inputs);
     // Initialize the new form state to true
     let isAllValid = true;
     // loop through all associated inputs.
@@ -188,16 +183,13 @@ let Vform = React.createClass({
         className="form">
         { formErrors }
         { this.props.children }
-        <button 
+        <Button 
           type="submit" 
-          className={ "btn-primary orange " + (
-            this.state.submitting || !this.state.isAllValid ?
-            'disabled' : ''
-          )}
+          classString={ "btn-primary orange" }
           disabled={ this.state.submitting || !this.state.isAllValid }
         >
           { this.props.submitBtnTxt } 
-        </button>
+        </Button>
       </form>
     );
   }

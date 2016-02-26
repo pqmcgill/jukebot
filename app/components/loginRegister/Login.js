@@ -4,6 +4,7 @@ const Constants = require('../../config/constants');
 
 const Vform = require('../shared/Vform');
 const Vinput = require('../shared/Vinput');
+const Button = require('../shared/Button');
 
 const Login = React.createClass({
   handleLogin (model, cb) {

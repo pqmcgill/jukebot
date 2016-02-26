@@ -2,7 +2,7 @@ let React = require('react');
 
 let Tray = React.createClass({
   propTypes: {
-    shown: React.PropTypes.boolean
+    shown: React.PropTypes.bool
   },
 
   getDefaultProps () {

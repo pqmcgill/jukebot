@@ -21,12 +21,14 @@ let CreateParty = React.createClass({
     };
   },
 
-  createParty (model) {
+  createParty (model, cb) {
     // handle party creation here
     //this.context.router.push('/parties/' + model.partyName);
     this.setState({
       trayShown: true,
       model: model
+    }, () => {
+      cb();
     });
   },
 
