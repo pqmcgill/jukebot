@@ -53,7 +53,9 @@ body {
     background-color: $login-primary;
     color: $login-secondary;
   }
-
+  .jb-input-animation {
+    background-color: $login-primary;
+  }
   .tray {
     background-color: $login-secondary;
     color: $login-primary;

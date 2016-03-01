@@ -1,18 +1,39 @@
 .jb-input-container {
   margin-top: 20px;
+  position: relative;
 
   &:last-of-type {
     margin-bottom: 30px;
   }
 }
 
+.jb-input-animation {
+  position: absolute;
+  z-index: -1;
+  top: 100%;
+  bottom: -1px;
+  left: -1px;
+  right: 100%;
+  transition: top .5s ease-out, right .5s ease-out;
+
+  &.jb-input-animation-focus {
+    top: 0;
+    right: 0;
+  }
+
+  &.hidden {
+    bottom: 0;
+    left: 0;
+  }
+}
+
 .jb-input {
   width: 100%;
-  height: 2.5em;
+  height: 2em;
   box-sizing: border-box;
   display: block;
-  font-size: $jb-font-medium;
-  padding: $jb-font-medium;
+  font-size: $jb-font-larger;
+  padding: 0 $jb-font-medium;
 
   &:focus {
     box-shadow: none;
@@ -25,12 +46,14 @@
   font-size: $jb-font-small;
   padding: 0.25em 0.5em;
   float: right;
+  font-weight: bold;
 }
 
 .jb-input-error-lg {
   font-size: $jb-font-medium;
   padding: 0.4em 0.6em;
   margin-bottom: 2em;
+  font-weight: bold;
 }
 
 

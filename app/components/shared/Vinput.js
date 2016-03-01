@@ -1,4 +1,6 @@
 let React = require('react');
+let ReactDOM = require('react-dom');
+let $ = require('jquery');
 
 let Vinput = React.createClass({
   contextTypes: {
@@ -48,9 +50,27 @@ let Vinput = React.createClass({
   },
 
   handleBlur (e) {
+    this.toggleAnimation();
     this.setState({
       wasTouched: true
     }, this.validate);
+  },
+
+  handleFocus (e) {
+    this.toggleAnimation();
+  },
+
+  toggleAnimation () {
+    let $animation = $(ReactDOM.findDOMNode(this)).find('.jb-input-animation');
+    if ($animation.hasClass('jb-input-animation-focus')) {
+      $animation.removeClass('jb-input-animation-focus');
+      setTimeout(() => {
+        $animation.addClass('hidden');
+      }, 500);
+    } else {
+      $animation.removeClass('hidden');
+      $animation.addClass('jb-input-animation-focus');
+    }
   },
 
   validate () {
@@ -70,9 +90,11 @@ let Vinput = React.createClass({
           className="jb-input orange"
           onChange={ this.handleChange }
           onBlur={ this.handleBlur }
+          onFocus={ this.handleFocus }
           placeholder={ this.props.placeholder }
           type={ this.props.type }
         />
+        <div className="jb-input-animation hidden"></div>
         { errorMsgs }
       </div>
     );
