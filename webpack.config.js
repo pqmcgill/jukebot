@@ -66,9 +66,14 @@ module.exports = {
 
     ]
   },
-  plugins: [new HtmlWebpackPlugin({
-    template: './app/index.ejs',
-    inject: true,
-    title: 'Jukebot'
-  })]
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './app/index.ejs',
+      inject: true,
+      title: 'Jukebot'
+    }),
+    new webpack.DefinePlugin({
+      REDIRECT: JSON.stringify('http://localhost:3000/home')
+    })
+  ]
 };

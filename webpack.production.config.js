@@ -60,6 +60,9 @@ module.exports = {
       title: 'Jukebot',
       template: './app/index.ejs',
       inject: true
+    }),
+    new DefinePlugin({
+      REDIRECT: JSON.stringify('://morning-spire-97331.herokuapp.com/home')
     })
   ]
 };
