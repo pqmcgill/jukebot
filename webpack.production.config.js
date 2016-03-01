@@ -61,8 +61,8 @@ module.exports = {
       template: './app/index.ejs',
       inject: true
     }),
-    new DefinePlugin({
-      REDIRECT: JSON.stringify('://morning-spire-97331.herokuapp.com/home')
+    new webpack.DefinePlugin({
+      REDIRECT: JSON.stringify('http://morning-spire-97331.herokuapp.com/home')
     })
   ]
 };
