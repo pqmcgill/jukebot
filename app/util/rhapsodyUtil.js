@@ -19,6 +19,10 @@ Rhapsody.player.on('playstopped', log);
 Rhapsody.player.on('playerframeready', log);
 
 module.exports = {
+  // allow a component to register callbacks with rhapsody player's events
+  registerListener (type, cb) {
+    Rhapsody.player.on(type, cb);
+  },
   
   // login to rhapsody
   login (code, cb) {
