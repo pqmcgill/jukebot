@@ -34,7 +34,7 @@ module.exports = {
       {
         test: /\.scss$/,
         loader: 'style!css!sass'
-      }
+      },
       // Images
       {
         test: /\.(png|jpg|gif)$/,
@@ -60,6 +60,6 @@ module.exports = {
       title: 'Jukebot',
       template: './app/index.ejs',
       inject: true
-    });
+    })
   ]
 };

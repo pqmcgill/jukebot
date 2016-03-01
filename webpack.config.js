@@ -11,17 +11,18 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: [
-    'webpack/hot/dev-server',
+    'webpack/hot/only-dev-server',
     'webpack-dev-server/client?http://localhost:' + PORT,
     entryPath
   ],
+  devServer: {
+    port: PORT,
+    contentBase: '/public',
+    historyApiFallback: true
+  },
   output: {
     filename: '/bundle.js',
     path: buildPath 
-  },
-  devServer: {
-    port: PORT,
-    historyApiFallback: true 
   },
   module: {
     loaders: [
