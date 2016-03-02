@@ -8,6 +8,7 @@ module.exports = function(req, res) {
       console.log(err);
       return;
     }
+    // return the entire snapshot
     ref.once('value', function(sn) {
       res.json(sn.val());
     });
