@@ -25,7 +25,10 @@ let CreateParty = React.createClass({
 
   createParty (model, cb) {
     // handle party creation here
-    api.createParty(model).then(
+    api.createParty({
+      displayName: model.partyName,
+      pwd: model.password
+    }).then(
       (data) => {
         this.setState({
           trayShown: true,
