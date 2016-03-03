@@ -5,7 +5,7 @@ var entryPath = path.resolve(__dirname, './app/index.js'),
   buildPath = path.resolve(__dirname, './public'),
   node_modules = path.resolve(__dirname, 'node_modules');
 
-var PORT = 3000;
+var PORT = process.env.PORT || 8080;
 
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -73,7 +73,7 @@ module.exports = {
       title: 'Jukebot'
     }),
     new webpack.DefinePlugin({
-      REDIRECT: JSON.stringify('http://localhost:3000/home')
+      REDIRECT: JSON.stringify('http://localhost:' + PORT + '/home')
     })
   ]
 };

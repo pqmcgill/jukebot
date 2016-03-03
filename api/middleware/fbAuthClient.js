@@ -5,9 +5,10 @@ var Firebase = require('firebase');
 module.exports = function(req, res, next) {
   var ref = new Firebase('https://jukebot.firebaseio.com/');
   var token = req.headers.firebasetoken;
+
   ref.authWithCustomToken(token, function(err) {
     if (err) {
-      res.json(err); 
+      res.json({ error: err });
       return;
     }
     ref.unauth();

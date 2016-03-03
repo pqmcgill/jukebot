@@ -5,8 +5,7 @@ module.exports = function(req, res) {
   var ref = new Firebase('http://jukebot.firebaseio.com');
   ref.authWithCustomToken(process.env.APP_SECRET, function(err) {
     if (err) {
-      console.log(err);
-      return;
+      res.json(err);
     }
     // return the entire snapshot
     ref.once('value', function(sn) {

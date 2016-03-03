@@ -8,5 +8,10 @@ module.exports = function(app) {
   // declare all of our routes to our services here
   app.get('/api/test', require('./services/test'));
   app.get('/api/testAuth', require('./services/testAuth'));
+  app.post('/api/party', require('./services/createParty'));
 
+
+  app.get('/api/*', function(req, res) {
+    res.json({ "error": "404 - Not found" });
+  }); 
 };

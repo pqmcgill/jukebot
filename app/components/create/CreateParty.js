@@ -9,6 +9,7 @@ let Vform = require('../shared/Vform');
 let Vinput = require('../shared/Vinput');
 
 let Tray = require('../shared/Tray');
+let api = require('../../util/api');
 
 let CreateParty = React.createClass({
   contextTypes: {
@@ -24,13 +25,19 @@ let CreateParty = React.createClass({
 
   createParty (model, cb) {
     // handle party creation here
-    //this.context.router.push('/parties/' + model.partyName);
-    this.setState({
-      trayShown: true,
-      model: model
-    }, () => {
-      cb();
-    });
+    api.createParty(model).then(
+      (data) => {
+        this.setState({
+          trayShown: true,
+          model: model
+        }, () => {
+          cb();
+        });
+      },
+      (err) => {
+        console.log('error creating party', err);
+      }
+    );
   },
 
   render () {

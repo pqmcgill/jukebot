@@ -16,6 +16,10 @@ let firebaseUtil = {
     return session ? true : false;
   },
 
+  getSession () {
+    return session;
+  },
+
   login (credentials, cb) {
     ref.authWithPassword(credentials, (err, authData) => {
       if (err) {
@@ -74,13 +78,13 @@ let firebaseUtil = {
     });
   },
 
-  createParty () {
-    console.log(session.uid);
-    ref.child('parties').push().set({
-      owner: session.uid,
-      pwd: 'test',
-      displayName: '90\'s night jamboree!'
-    });
+  createParty (partyName, partyPwd) {
+    //    let partyRef = new Firebase('https://jukebot.firebaseio.com/parties');
+    //    ref.push().set({
+    //      owner: session.uid,
+    //      pwd: 'test',
+    //      displayName: partyName
+    //    });
   }
 
 };
