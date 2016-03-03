@@ -11,8 +11,8 @@ let makeAjaxCall = (path, method, payload) => {
       headers: {
         firebaseToken: session.token
       },
-      error: reject(err),
-      success: resolve(data)
+      error: reject,
+      success: resolve
     });
   });
 };
