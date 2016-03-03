@@ -8,9 +8,22 @@ let PartyContainer = React.createClass({
   },
 
   componentWillMount () {
+    rhapsodyUtil.registerListener('error', this.handleRhapsodyError);
+    rhapsodyUtil.registerListener('unauthorized', (e) => {
+      console.log('unauthorized in component');
+    });
     rhapsodyUtil.init(() => {
       console.log('party started');
     });
+  },
+
+  handleRhapsodyError (err) {
+    // there was an unauthorized request
+    if (err.data.code === 401) {
+      rhapsodyUtil.destroyTokens();
+      // TODO: display prompt to either re-authenticate or kill party
+      rhapsodyUtil.authenticate();
+    }
   },
 
   goToSearch (e) {

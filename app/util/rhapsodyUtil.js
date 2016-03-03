@@ -63,6 +63,11 @@ module.exports = {
     this.refreshToken = localStorage.getItem('rhapsody.member.refreshToken');
   },
 
+  destroyTokens() {
+    this.accessToken = localStorage.removeItem('rhapsody.member.accessToken');
+    this.refreshToken = localStorage.removeItem('rhapsody.member.refreshToken');
+  },
+
   // return a boolean corresponding to the status of whether any tokens
   // have been initialized
   hasTokens() {

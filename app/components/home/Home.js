@@ -22,6 +22,8 @@ let Home = React.createClass({
     if (code) {
       rhapsodyUtil.authenticate(code, this.handleRhapsodyAuth);
     }
+
+    //TODO: route user to their resumed party if applicable
   },
 
   handleRhapsodyAuth (err) {
@@ -29,6 +31,8 @@ let Home = React.createClass({
       console.log('ERROR with RHAPSODY');
       return;
     }
+    // TODO: determine if host is resuming party.
+    // if so, route to inParty page
     this.context.router.push('/create');
   },
 
