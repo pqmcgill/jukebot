@@ -5,6 +5,7 @@ module.exports = function(req, res) {
   
   // first authenticate as super user 
   ref.authWithCustomToken(process.env.APP_SECRET, function(err) {
+    console.log(req.body);
     if (err) { res.json({ error: err }); }
     
     // create new data, and generate reference to it

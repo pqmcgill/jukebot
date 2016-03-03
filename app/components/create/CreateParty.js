@@ -30,6 +30,7 @@ let CreateParty = React.createClass({
       pwd: model.password
     }).then(
       (data) => {
+        console.log('here');
         this.setState({
           trayShown: true,
           model: model

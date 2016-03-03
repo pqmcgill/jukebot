@@ -5,10 +5,10 @@ let session = require('./firebaseUtil').getSession();
 let makeAjaxCall = (path, method, payload) => {
   return new Promise((resolve, reject) => {
     $.ajax(path, {
-      contentType: 'application/json',
-      data: payload,
+      data: JSON.stringify(payload),
       method: method,
       headers: {
+        'Content-Type': 'application/json',
         firebaseToken: session.token
       },
       error: reject,
@@ -18,8 +18,10 @@ let makeAjaxCall = (path, method, payload) => {
 };
 
 module.exports = {
+  // calls the service to create a party 
   createParty (partyData) {
     return new Promise((resolve, reject) => {
+      console.log(partyData);
       makeAjaxCall('/api/party', 'POST', partyData).then(resolve, reject);
     });
   }

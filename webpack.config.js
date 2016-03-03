@@ -5,7 +5,7 @@ var entryPath = path.resolve(__dirname, './app/index.js'),
   buildPath = path.resolve(__dirname, './public'),
   node_modules = path.resolve(__dirname, 'node_modules');
 
-var PORT = process.env.PORT || 8080;
+var PORT = process.env.PORT || 3000;
 
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -18,7 +18,10 @@ module.exports = {
   devServer: {
     port: PORT,
     contentBase: '/public',
-    historyApiFallback: true
+    historyApiFallback: true,
+    proxy: {
+      '/api/*': 'http://localhost:8080'
+    }
   },
   output: {
     filename: '/bundle.js',
