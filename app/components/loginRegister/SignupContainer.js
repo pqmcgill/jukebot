@@ -1,6 +1,10 @@
 const React = require('react');
 const firebaseUtil = require('../../util/firebaseUtil');
 
+const Login = require('./Login'),
+  Signup = require('./Signup'),
+  ForgotLogin = require('./ForgotLogin');
+
 let logo = require('../../images/jukebot.png');
 
 let SignupContainer = React.createClass({
@@ -67,19 +71,33 @@ let SignupContainer = React.createClass({
     });
   },
 
+  test () {
+    this.context.router.push('/forgot');
+  },
+
   render () {
-    let children = React.Children.map(this.props.children, (child) => {
-      return React.cloneElement(child, {
-        onLogin: this.handleLogin,
-        onSignup: this.handleSignup,
-        generateEmail: this.handleGenerateEmail,
-        updateUser: this.handleUpdateUser
-      });
-    });
+    
+    // Determine the child w/ props to render based on the route
+    let child;
+    switch(this.props.location.pathname) {
+      case '/login':
+        child = <Login onLogin={ this.handleLogin } />;
+        break;
+      case '/signup':
+        console.log('here');
+        child = <Signup onSignup={ this.handleSignup } />;
+        break;
+      case '/forgot':
+        child = <ForgotLogin generateEmail={ this.handleGenerateEmail } updateUser={ this.handleUpdateUser } />;
+        break;
+      default:
+        child = <Login onLogin={ this.handleLogin } />;
+    }
+
     return (
       <div className="component loginSignup">
         <img className="logo" src={ logo } alt="JUKEBOT" />
-        { children }
+        { child }
       </div>
     );
   }
