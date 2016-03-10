@@ -32,7 +32,7 @@ let PartyContainer = React.createClass({
   },
 
   render () {
-    let partyId = this.props.params.partyId;
+    let { partyId } = this.props.params;
     return (
       <div className="component home">
         <Link to={ '/parties/' + partyId + '/search' }>Search</Link>
