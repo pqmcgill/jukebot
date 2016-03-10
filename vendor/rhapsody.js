@@ -5,6 +5,10 @@
 //     });
 //
 
+// **** THIS LINE WAS ADDED TO COMPLY WITH WEBPACK ****
+var jQuery = require('jquery');
+// ****************************************************
+
 (function(exports, $, JSON) {
 
   'use strict';
