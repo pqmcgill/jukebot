@@ -9,6 +9,16 @@ module.exports = function(req, res) {
     if (err) { res.json({ error: err }); }
     
     // create new data, and generate reference to it
+    var member = { partyBit: 0 };
+    var members = {};
+    members[req.body.uid] = member;
+    var data = {
+      displayName: req.body.displayName,
+      pwd: req.body.pwd,
+      partyBit: 0,
+      owner: req.body.uid
+    };
+    data.members = members;
     var newRef = ref.push(req.body, function(err) {
       if (err) { res.json({ error: err }); }
     });

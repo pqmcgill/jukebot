@@ -4,6 +4,7 @@ let Link = require('react-router').Link;
 
 let ReactFireMixin = require('reactfire');
 let rhapsodyUtil = require('../../util/rhapsodyUtil');
+let firebaseUtil = require('../../util/firebaseUtil');
 
 let Vform = require('../shared/Vform');
 let Vinput = require('../shared/Vinput');
@@ -27,7 +28,8 @@ let CreateParty = React.createClass({
     // handle party creation here
     api.createParty({
       displayName: model.partyName,
-      pwd: model.password
+      pwd: model.password,
+      uid: firebaseUtil.getSession().uid
     }).then(
       (data) => {
         console.log('here');
