@@ -24,9 +24,9 @@ module.exports = (
       <IndexRedirect to="welcome" />
       <Route path="welcome" component={ SignupContainer } onEnter={ requireUnAuth }>
         <IndexRedirect to="/login" />
-        <Route path="/signup" component={ Signup }/>
-        <Route path="/login" component={ Login }/> 
-        <Route path="/forgot" component={ ForgotLogin }/>
+        <Route path="/signup" />
+        <Route path="/login" /> 
+        <Route path="/forgot" />
       </Route>
       <Route path="home" component={ Home } onEnter={ requireAuth }/>
       <Route path="parties" component={ PartyList } onEnter={ requireAuth }/>
