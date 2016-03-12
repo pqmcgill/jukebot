@@ -84,7 +84,6 @@ let SignupContainer = React.createClass({
         child = <Login onLogin={ this.handleLogin } />;
         break;
       case '/signup':
-        console.log('here');
         child = <Signup onSignup={ this.handleSignup } />;
         break;
       case '/forgot':
