@@ -1,0 +1,29 @@
+.list {
+  padding: 0;
+  border-top: solid white 1px;
+  border-bottom: solid white 1px;
+
+  .listItem {
+    list-style-type: none;
+    clear: both;
+    overflow: auto;
+    padding: 5px;
+    border-top: solid white 1px;
+    border-bottom: solid white 1px;
+    img {
+      &:first-of-type {
+        float: left;
+      }
+      &.artist-pic {
+        border-radius: 50%;
+      }
+    }
+    button {
+      float: right;
+      height: 70px;
+      width: 70px;
+      display: block;
+    }
+  }
+
+}
