@@ -1,5 +1,4 @@
 let React = require('react');
-let SongSearch = require('../inParty/search/SongSearch');
 let Link = require('react-router').Link;
 
 let ReactFireMixin = require('reactfire');

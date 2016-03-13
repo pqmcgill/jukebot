@@ -11,7 +11,6 @@ let App = require('./components/App'),
   CreateParty = require('./components/create/CreateParty'),
   PartyList = require('./components/partyList/PartyList'),
   PartyContainer = require('./components/inParty/PartyContainer'),
-  SongSearch = require('./components/inParty/search/SongSearch'),
   SearchContainer = require('./components/inParty/search/SearchContainer'),
   NowPlaying = require('./components/inParty/nowPlaying/NowPlaying'),
   MySongs = require('./components/inParty/mySongs/MySongs');
