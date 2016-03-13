@@ -30,7 +30,7 @@ module.exports = (
       </Route>
       <Route path="home" component={ Home } onEnter={ requireAuth }/>
       <Route path="parties" component={ PartyList } onEnter={ requireAuth }/>
-      <Route path="parties/:partyId" component={ PartyContainer }>
+      <Route path="parties/:partyId" component={ PartyContainer } onEnter={ requireAuth }>
         <Route path="search" component={ SongSearch }/>
         <Route path="nowPlaying" component={ NowPlaying }/>
         <Route path="mySongs" component={ MySongs }/>
