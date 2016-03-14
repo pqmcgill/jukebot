@@ -5,7 +5,7 @@
   "main": "App.js",
   "scripts": {
     "start": "node server",
-    "postinstall": "./postinstall.sh",
+    "postinstall": "bash ./postinstall.sh",
     "dev": "webpack-dev-server --devtool eval --progress --colors --hot",
     "deploydev": "heroku config:set SOURCE_MAPS=\"true\" && git push heroku master",
     "deployprod": "heroku config:unset SOURCE_MAPS && git push heroku master"
