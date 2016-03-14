@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node server",
     "postinstall": "webpack -p --config webpack.production.config.js",
-    "dev": "webpack-dev-server --devtool eval --progress --colors --hot"
+    "dev": "webpack-dev-server --devtool eval --progress --colors --hot",
+    "deploydev": "heroku config:set SOURCE_MAPS=\"true\" && git push heroku master",
+    "deployprod": "heroku config:unset SOURCE_MAPS && git push heroku master"
   },
   "engines": {
     "node": "0.12.7"
