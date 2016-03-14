@@ -7,7 +7,7 @@ var node_modules = path.resolve(__dirname, 'node_modules'),
 
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
-module.exports = {
+let config = {
   entry: {
     app: entryPath,
     vendors: ['react']
@@ -66,3 +66,9 @@ module.exports = {
     })
   ]
 };
+
+if (process.env.SOURCE_MAP === 'true') {
+  config.devtool = 'source-map';
+}
+
+module.exports = config;
