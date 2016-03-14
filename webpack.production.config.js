@@ -7,7 +7,7 @@ var node_modules = path.resolve(__dirname, 'node_modules'),
 
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
-let config = {
+var config = {
   entry: {
     app: entryPath,
     vendors: ['react']
