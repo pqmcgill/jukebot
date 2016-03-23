@@ -9,6 +9,7 @@ let App = require('./components/App'),
   Signup = require('./components/loginRegister/Signup'),
   Home = require('./components/home/Home'),
   CreateParty = require('./components/create/CreateParty'),
+  JoinParty = require('./components/join/JoinParty'),
   PartyList = require('./components/partyList/PartyList'),
   PartyContainer = require('./components/inParty/PartyContainer'),
   SearchContainer = require('./components/inParty/search/SearchContainer'),
@@ -30,6 +31,7 @@ module.exports = (
       </Route>
       <Route path="home" component={ Home } onEnter={ requireAuth }/>
       <Route path="parties" component={ PartyList } onEnter={ requireAuth }/>
+      <Route path="parties/join/:partyId" component={ JoinParty } onEnter={ requireAuth }/>
       <Route path="parties/:partyId" component={ PartyContainer } onEnter={ requireAuth }>
         <Route path="search" component={ SearchContainer }>
           <Route path="all" />

@@ -9,6 +9,7 @@ module.exports = function(app) {
   app.get('/api/test', require('./services/test'));
   app.get('/api/testAuth', require('./services/testAuth'));
   app.post('/api/party', require('./services/createParty'));
+  app.post('/api/join', require('./services/joinParty'));
 
 
   app.get('/api/*', function(req, res) {

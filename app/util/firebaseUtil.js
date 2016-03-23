@@ -7,6 +7,7 @@ console.log(session);
 
 // Private Methods
 let addNewUser = (user) => {
+  console.log('adding user', user.uid);
   ref.child('users').child(user.uid).set(user);
 };
 
@@ -77,15 +78,6 @@ let firebaseUtil = {
       cb(err);
     });
   },
-
-  createParty (partyName, partyPwd) {
-    //    let partyRef = new Firebase('https://jukebot.firebaseio.com/parties');
-    //    ref.push().set({
-    //      owner: session.uid,
-    //      pwd: 'test',
-    //      displayName: partyName
-    //    });
-  }
 
 };
 
