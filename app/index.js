@@ -1,6 +1,5 @@
 let ReactDOM = require('react-dom');
 console.log(process.env.NODE_ENV);
-require('../node_modules/font-awesome/scss/font-awesome.scss');
 require('./style/main.scss');
 
 let Routes = require('./Routes');

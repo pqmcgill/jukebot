@@ -41,14 +41,16 @@ let SearchArtist = React.createClass({
       });
     }
     return (
-      <div>
-        <a onClick={ this.props.router.goBack }>{ '<< Back' }</a>
-        <ul className="list">
-          { tracks }
-        </ul>
-        <ul className="list">
-          { albums }
-        </ul>
+      <div className="searchResults">
+        <div className="searchListContainer">
+          <a className="navLink" onClick={ this.props.router.goBack }>{ '<< Back' }</a>
+          <ul className="list">
+            { tracks }
+          </ul>
+          <ul className="list">
+            { albums }
+          </ul>
+        </div>
       </div>
     );
   }

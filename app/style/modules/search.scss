@@ -1,0 +1,22 @@
+.searchResults {
+  text-align: left;
+  color: $jb-white;
+
+  .searchListContainer {
+    margin-top: 30px;
+  }
+
+  .navLink {
+    float: right;
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+
+  .listHeader {
+    margin-left: 10px;
+  }
+
+  i {
+    text-align: center;
+  }
+}

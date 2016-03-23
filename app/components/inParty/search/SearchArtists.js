@@ -29,11 +29,13 @@ let SearchArtists = React.createClass({
       });
     }
     return (
-      <div>
-        <a onClick={ this.props.router.goBack }>{ '<< Back' }</a>
-        <ul className="list">
-          { artists }
-        </ul>
+      <div className="searchResults">
+        <div className="searchListContainer">
+          <a className="navLink" onClick={ this.props.router.goBack }>{ '<< Back' }</a>
+          <ul className="list">
+            { artists }
+          </ul>
+        </div>
       </div>
     );
   }

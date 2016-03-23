@@ -1,16 +1,27 @@
+@import '../variables/colors.scss';
+
 .list {
+  clear:both;
+  margin: 10px 0;
   padding: 0;
-  border-top: solid white 1px;
-  border-bottom: solid white 1px;
+  border-top: solid $party-tertiary 1px;
+  border-bottom: solid $party-tertiary 1px;
+  color: $jb-white;
 
   .listItem {
     list-style-type: none;
     clear: both;
     overflow: auto;
     padding: 5px;
-    border-top: solid white 1px;
-    border-bottom: solid white 1px;
+    border-top: solid $party-tertiary 1px;
+    border-bottom: solid $party-tertiary 1px;
     img {
+      height: 70px;
+      width: 70px;
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+
       &:first-of-type {
         float: left;
       }
@@ -18,11 +29,25 @@
         border-radius: 50%;
       }
     }
-    button {
-      float: right;
+
+    .itemText {
+      display: inline-block;
+      width: calc(100% - 140px); 
+
+      p {
+        margin: 10px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+
+    .fa {
       height: 70px;
       width: 70px;
-      display: block;
+      float: right;
+      font-size: 24px;
+      line-height: 70px;
     }
   }
 

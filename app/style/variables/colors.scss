@@ -1,6 +1,8 @@
 $jb-orange: #FF8C00;
 $jb-red: #DC0000;
 $jb-white: #FFF;
+$jb-dark-purple: #460A3B;
+$jb-light-purple: #5A2651;
 
 // LoginSignup
 $login-primary: $jb-red;
@@ -9,3 +11,8 @@ $login-secondary: $jb-orange;
 // Home
 $home-primary: $jb-white;
 $home-secondary: $jb-red;
+
+// Party
+$party-primary: $jb-white;
+$party-secondary: $jb-dark-purple;
+$party-tertiary: $jb-light-purple;

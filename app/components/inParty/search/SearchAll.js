@@ -53,19 +53,28 @@ let SearchAll = React.createClass({
     } 
 
     return (
-      <div>
-        <a onClick={ this.handleRouteUpdate.bind(null, 'tracks') }>more tracks >></a>
-        <ul className="list">
-          { tracks }
-        </ul>
-        <a onClick={ this.handleRouteUpdate.bind(null, 'albums') }>more albums >></a>
-        <ul className="list">
-          { albums }
-        </ul>
-        <a onClick={ this.handleRouteUpdate.bind(null, 'artists') }>more artists >></a>
-        <ul className="list">
-          { artists }
-        </ul>
+      <div className="searchResults">
+        <div className="searchListContainer">
+          <span className="listHeader">Songs</span>
+          <a className="navLink" onClick={ this.handleRouteUpdate.bind(null, 'tracks') }>more ></a>
+          <ul className="list">
+            { tracks }
+          </ul>
+        </div>
+        <div className="searchListContainer">
+          <span className="listHeader">Albums</span>
+          <a className="navLink" onClick={ this.handleRouteUpdate.bind(null, 'albums') }>more ></a>
+          <ul className="list">
+            { albums }
+          </ul>
+        </div>
+        <div className="searchListContainer">
+          <span className="listHeader">Artists</span>
+          <a className="navLink" onClick={ this.handleRouteUpdate.bind(null, 'artists') }>more ></a>
+          <ul className="list">
+            { artists }
+          </ul>
+        </div>
       </div>
     );
   }
