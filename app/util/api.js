@@ -24,5 +24,11 @@ module.exports = {
       console.log(partyData);
       makeAjaxCall('/api/party', 'POST', partyData).then(resolve, reject);
     });
+  },
+
+  joinParty (partyAttempt) {
+    return new Promise((resolve, reject) => {
+      makeAjaxCall('/api/join', 'POST', partyAttempt).then(resolve, reject);
+    });
   }
 };
