@@ -1,3 +1,4 @@
 node_modules
 *.swp
-dist/
+dist/bundle.js
+dist/vendor.js
