@@ -1,0 +1,97 @@
+@import '../variables/colors.scss';
+
+.inParty {
+  background-color: $party-secondary;
+  // buttons
+  .btn-primary {
+    background-color: $party-primary;
+    color: $party-secondary;
+    border: solid 1px $party-secondary;
+    outline: solid 2px $party-primary;
+  }
+
+  .btn-jumbo {
+    background-color: $party-secondary;
+    color: $party-primary;
+    outline: none;
+    border: none;
+    
+    &:first-of-type {
+      border-bottom: solid 2px $party-primary;
+    }
+  }
+  
+  .link {
+    &.large {
+      color: $party-primary;
+    }
+  
+    &.med {
+      color: $party-primary;
+    }
+  }
+  
+  
+  // inputs
+  .jb-input {
+    border-left: solid $party-primary 1px;
+    border-bottom: solid $party-primary 1px;
+    border-top: none;
+    border-right: none;
+    background-color: $party-secondary;
+    color: $party-primary;
+    &::-webkit-input-placeholder {
+      color: $party-primary;
+    }
+    &::-ms-input-placeholder {
+      color: $party-primary;
+    }
+    &::-moz-placeholder {
+      color: $party-primary;
+    }
+  }
+
+  .jb-input-error {
+    background-color: $party-primary;
+    color: $party-secondary;
+  }
+
+  .jb-input-error-lg {
+    background-color: $party-primary;
+    color: $party-secondary;
+  }
+  .jb-input-animation {
+    background-color: $party-primary;
+  }
+  .tray {
+    background-color: $party-primary;
+    color: $party-secondary;
+  }
+
+  .ripple-effect {
+    background-color: $party-secondary;
+  }
+
+  .tabs {
+    .tab {
+      color: $party-primary;
+      background-color: $party-tertiary;
+
+      &.active {
+        background-color: $party-secondary;
+      }
+    }
+  }
+
+  .search { 
+    background-color: $party-secondary;
+    color: $party-primary;
+    border: solid 1px $party-primary;
+
+    input {
+      color: $party-primary;
+      border: none;
+      background-color: $party-secondary;
+    }
+  }
+}

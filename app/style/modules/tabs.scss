@@ -1,0 +1,16 @@
+.tabs {
+  width: 100%;
+  position: fixed;
+
+  .tab {
+    display: inline-block;
+    width: 25%;
+    height: 60px;
+    line-height: 60px;
+    text-decoration: none;
+
+    &.active {
+      background-color: purple;
+    }
+  }
+} 

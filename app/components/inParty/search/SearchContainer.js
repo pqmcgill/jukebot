@@ -133,7 +133,10 @@ let SearchContainer = React.createClass({
 
       return (
         <div>
-          <input onChange={ this.handleChange } value={ this.state.query }/>
+          <div className="search">
+            <span className="fa fa-search"></span>
+            <input onChange={ this.handleChange } value={ this.state.query }/>
+          </div>
           { child }
         </div>
       );

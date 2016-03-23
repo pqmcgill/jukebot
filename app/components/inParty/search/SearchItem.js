@@ -27,24 +27,31 @@ let SearchItem = React.createClass({
       listItem = (
         <li className="listItem" onClick={ this.props.onClick.bind(null, this.props.data.id) }>
           <img src={ this.loadAlbumImg(this.props.data.album.id) } alt="albumArt" />
-          { this.props.data.name }
-          <button>{ '\u2713' }</button>
+          <div className="itemText">
+            <p>{ this.props.data.name }</p>
+            <p>{ this.props.data.artist.name } - { this.props.data.album.name }</p>
+          </div>
+          <i className="fa fa-plus"></i>
         </li>
       );
     } else if (this.props.type === 'artist') {
       listItem = (
         <li className="listItem" onClick={ this.props.onClick.bind(null, 'artistId', this.props.data.id) }>
           <img className="artist-pic" src={ this.loadArtistImg(this.props.data.id) } alt="artistPic" />
-          { this.props.data.name }
-          <button>{ '>' }</button>
+          <div className="itemText">
+            <p>{ this.props.data.name }</p>
+          </div>
+          <i className="fa fa-chevron-right"></i>
         </li>
       );
     } else {
       listItem = (
         <li className="listItem" onClick={ this.props.onClick.bind(null, 'albumId', this.props.data.id) }>
           <img src={ this.loadAlbumImg(this.props.data.id) } alt="albumArt" />
-          { this.props.data.name }
-          <button>{ '>' }</button>
+          <div className="itemText">
+            <p>{ this.props.data.name }</p>
+          </div>
+          <i className="fa fa-chevron-right"></i>
         </li>
       );
     }

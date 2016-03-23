@@ -56,5 +56,30 @@
   font-weight: bold;
 }
 
+.search {
+  height: 60px;
+  width: 70%;
+  margin: 100px auto 15px auto;
+  position: relative;
 
+  .fa-search {
+    position: absolute;
+    height: 30px;
+    line-height: 30px;
+    width: 30px;
+    top: 15px;
+    text-align: center;
+  }
 
+  input {
+    height: 100%;
+    width: 100%;
+    padding-left: 40px;
+    box-sizing: border-box;
+    font-size: $jb-font-larger;
+
+    &:focus {
+      outline: none;
+    }
+  }
+}

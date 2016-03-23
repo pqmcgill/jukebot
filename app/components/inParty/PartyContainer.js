@@ -34,10 +34,13 @@ let PartyContainer = React.createClass({
   render () {
     let { partyId } = this.props.params;
     return (
-      <div className="component home">
-        <Link to={ '/parties/' + partyId + '/search' }>Search</Link>
-        <Link to={ '/parties/' + partyId + '/nowPlaying' }>Now Playing</Link>
-        <Link to={ '/parties/' + partyId + '/mySongs' }>My Songs</Link>
+      <div className="component inParty no-padding">
+        <div className="tabs">
+          <Link className="tab" activeClassName="active" to={ '/parties/' + partyId + '/menu' }>MENU</Link>
+          <Link className="tab" activeClassName="active" to={ '/parties/' + partyId + '/search' }>Search</Link>
+          <Link className="tab" activeClassName="active" to={ '/parties/' + partyId + '/nowPlaying' }>Now Playing</Link>
+          <Link className="tab" activeClassName="active" to={ '/parties/' + partyId + '/mySongs' }>SongList</Link>
+        </div>
         { this.props.children }
       </div>
     );
