@@ -9,6 +9,10 @@ let PartyListItem = require('./PartyListItem');
 let PartyList = React.createClass({
   mixins: [ ReactFireMixin ],
 
+  contextTypes: {
+    router: React.PropTypes.object.isRequired
+  },
+
   getInitialState () {
     return {
       parties: []
@@ -20,9 +24,8 @@ let PartyList = React.createClass({
     this.bindAsArray(partiesRef, 'parties');
   },
 
-  joinParty (e) {
-    e.preventDefault();
-    console.log('joining party');
+  joinParty (partyId) {
+    this.context.router.push('/parties/join/' + partyId);
   },
 
   render () {
@@ -31,7 +34,9 @@ let PartyList = React.createClass({
       parties = '';
     } else {
       parties = this.state.parties.map((party, i) => {
+        console.log('party', party);
         return <PartyListItem key={i} 
+          partyId={ party['.key'] }
           name={ party.displayName } 
           onMyClick={ this.joinParty }
         />;
@@ -41,7 +46,6 @@ let PartyList = React.createClass({
     return (
       <ul>
         { parties }
-        <Link to="/parties/foo">foo</Link>
       </ul>
     );
   }
