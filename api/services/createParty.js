@@ -8,17 +8,19 @@ module.exports = function(req, res) {
     console.log(req.body);
     if (err) { res.json({ error: err }); }
     
-    // create new data, and generate reference to it
+    // TODO: create new data, and generate reference to it
     var member = { partyBit: 0 };
     var members = {};
     members[req.body.uid] = member;
-    var data = {
+    var partyData = {
       displayName: req.body.displayName,
       pwd: req.body.pwd,
       partyBit: 0,
       owner: req.body.uid
     };
-    data.members = members;
+    partyData.members = members;
+    
+    // TODO: push partyData instead of req.body
     var newRef = ref.push(req.body, function(err) {
       if (err) { res.json({ error: err }); }
     });

@@ -45,7 +45,7 @@ let search = (options, url) => {
 // }
 let getArtistsTopTracks = (options, artId) => {
   let { offset, limit } = options;
-  let url = `http://api.rhapsody.com/v1/artists/${artId}/tracks/top`;
+  let url = `https://api.rhapsody.com/v1/artists/${artId}/tracks/top`;
   return new Promise((resolve, reject) => {
     search(options, url)
       .then((data) => {
@@ -58,7 +58,7 @@ let getArtistsTopTracks = (options, artId) => {
 
 // get an album's tracks
 let getAlbumTracks = (albumId) => {
-  let url = `http://api.rhapsody.com/v1/albums/${albumId}/tracks`;
+  let url = `https://api.rhapsody.com/v1/albums/${albumId}/tracks`;
   return new Promise((resolve, reject) => {
     search({}, url)
       .then((data) => {
@@ -71,7 +71,7 @@ let getAlbumTracks = (albumId) => {
 
 // get an artist's albums
 let getArtistsAlbums = (artistId) => {
-  let url = `http://api.rhapsody.com/v1/artists/${artistId}/albums?limit=1000`;
+  let url = `https://api.rhapsody.com/v1/artists/${artistId}/albums?limit=1000`;
   return new Promise((resolve, reject) => {
     search({}, url)
       .then((data) => {
@@ -98,7 +98,7 @@ let searchByType = (options, type) => {
   if (Object.prototype.toString.call(type) !== '[object Array]') {
     type = [type];
   }
-  let url = 'http://api.rhapsody.com/v1/search/typeahead';
+  let url = 'https://api.rhapsody.com/v1/search/typeahead';
   return Promise.all(type.map((t, i) => {
     let cloned_options = clone(options);
     cloned_options.type = t;
