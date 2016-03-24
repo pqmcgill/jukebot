@@ -11,16 +11,19 @@ module.exports = function(req, res) {
       var pwd = sn.val().pwd;
       console.log(req.body.password, pwd);
       if (req.body.password === pwd) {
-        partyRef.child('members').update({
-          req.body.uid: true
-        }, (err) => {
-          if (err) res.json({err: err});
-          userRef.update({
-            currentParty: sn.key()
-          }, (userErr) => {
-            if (userErr) res.json({ err: userErr });
-            res.json({ success: 'bitches' });
-          });
+        var updateObj = {};
+        updateObj['req.body.uid'] = true;
+        partyRef.child('members').update(
+          updateObj, 
+          (err) => {
+            if (err) res.json({err: err});
+            userRef.update({
+              currentParty: sn.key()
+            }, (userErr) => {
+              if (userErr) res.json({ err: userErr });
+              res.json({ success: 'whoohoo!' });
+            }
+          );
         });
       } else {
         res.json({ error: 'INCORRECT_PWD' });

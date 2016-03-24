@@ -11,7 +11,6 @@ module.exports = function(app) {
   app.post('/api/party', require('./services/createParty'));
   app.post('/api/join', require('./services/joinParty'));
 
-
   app.get('/api/*', function(req, res) {
     res.json({ "error": "404 - Not found" });
   }); 

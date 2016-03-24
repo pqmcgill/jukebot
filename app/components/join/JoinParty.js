@@ -17,7 +17,7 @@ let JoinParty = React.createClass({
 
   render () {
     return (
-      <div>
+      <div className="component inParty">
         <h1>Join Party: { this.props.params.partyId }</h1>
         <Vform submit={ this.handleSubmit } submitBtnTxt="Join Party">
           <Vinput type="text"
