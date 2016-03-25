@@ -78,6 +78,19 @@ let firebaseUtil = {
       cb(err);
     });
   },
+  
+  getCurrentParty () {
+    return new Promise((resolve, reject) => {
+      if (!session) {
+        reject({ error: 'unauthenticated' });
+      } else {
+        let ref = new Firebase('https://jukebot.firebaseio.com/users/' + session.uid);
+        ref.once('value', function(sn) {
+          resolve(sn.val().currentParty); 
+        });
+      }
+    });
+  }
 
 };
 

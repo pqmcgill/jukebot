@@ -30,8 +30,10 @@ module.exports = (
         <Route path="/forgot" />
       </Route>
       <Route path="home" component={ Home } onEnter={ requireAuth }/>
-      <Route path="parties" component={ PartyList } />
-      <Route path="parties/:partyId" component={ PartyContainer } >
+      <Route path="parties" component={ PartyList } onEnter={ requireAuth }/>
+      <Route path="join/:partyId" component={ JoinParty } onEnter={ requireAuth }/>
+      <Route path="parties/:partyId" component={ PartyContainer } onEnter={ requireAuth }>
+        <IndexRedirect to="nowPlaying" />
         <Route path="search" component={ SearchContainer }>
           <Route path="all" />
           <Route path="tracks" />
