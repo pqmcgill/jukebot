@@ -3,7 +3,8 @@ let React = require('react');
 let PartyListItem = React.createClass({
   propTypes: {
     name: React.PropTypes.string.isRequired,
-    onMyClick: React.PropTypes.func
+    onMyClick: React.PropTypes.func,
+    partyId: React.PropTypes.string.isRequired
   },
 
   getDefaultProps () {
@@ -19,7 +20,7 @@ let PartyListItem = React.createClass({
     return (
       <li>
         { this.props.name }
-        <button onClick={ this.props.onMyClick }>Join</button>
+        <button onClick={ this.props.onMyClick.bind(null, this.props.partyId) }>Join</button>
       </li>
     );
   }

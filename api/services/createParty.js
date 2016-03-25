@@ -23,9 +23,18 @@ module.exports = function(req, res) {
       if (err) { res.json({ error: err }); }
     });
 
-    // resolve the new key
     newRef.once('value', function(sn) {
-      res.json({ key: sn.key() });
+      var userRef = new Firebase('https://jukebot.firebaseio.com/users/' + req.body.uid);
+      userRef.update({
+        currentParty: sn.key()
+      }, function(err) {
+        if (err) { res.json({ error: err }); }
+        // resolve the new key
+        newRef.once('value', function(sn) {
+          res.json({ key: sn.key() });
+        });
+      });
     });
+
   });
 };
