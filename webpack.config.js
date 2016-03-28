@@ -5,7 +5,7 @@ var entryPath = path.resolve(__dirname, './app/index.js'),
   buildPath = path.resolve(__dirname, './public'),
   node_modules = path.resolve(__dirname, 'node_modules');
 
-var PORT = process.env.PORT || 8080;
+var PORT = process.env.PORT || 3000;
 
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -20,7 +20,7 @@ module.exports = {
     contentBase: '/public',
     historyApiFallback: true,
     proxy: {
-      '/api/*': 'http://localhost:8081'
+      '/api/*': 'http://localhost:8080'
     }
   },
   output: {

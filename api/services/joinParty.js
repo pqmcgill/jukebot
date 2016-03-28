@@ -20,20 +20,21 @@ module.exports = function(req, res) {
         
         // create membership object to add to party
         var updateObj = {};
-        updateObj[req.body.uid] = true;
-        updateObj.partyBit = partyBit;
+        updateObj[req.body.uid] = partyBit;
         
         // establish party membership
         partyRef.child('members').update(
           updateObj, 
-          (err) => {
+          function (err) {
             if (err) {
               res.json({err: err});
               return;
             }
+
+            console.log('added member');
             userRef.update({
               currentParty: sn.key()
-            }, (userErr) => {
+            }, function (userErr) {
               
               if (userErr) {
                 // TODO: erase all previously created data for this operation
