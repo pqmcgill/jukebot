@@ -20,7 +20,7 @@ let Home = React.createClass({
   componentWillMount () {
     let code = this.props.location.query.code;
     if (code) {
-      rhapsodyUtil.authenticate(code, this.handleRhapsodyAuth);
+      rhapsodyUtil.authenticate(code, this.props.location.pathname, this.handleRhapsodyAuth);
     }
 
     //TODO: route user to their resumed party if applicable
@@ -51,7 +51,11 @@ let Home = React.createClass({
 
   // navigate to the party creation page
   goToCreate () {
-    rhapsodyUtil.authenticate(null, this.handleRhapsodyAuth);
+    let { pathname } = this.props.location;
+    if (pathname[0] !== '/') {
+      pathname = '/' + pathname;
+    }
+    rhapsodyUtil.authenticate(null, pathname, this.handleRhapsodyAuth);
   },
 
   render () {

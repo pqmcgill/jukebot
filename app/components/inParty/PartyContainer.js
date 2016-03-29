@@ -20,6 +20,32 @@ let PartyContainer = React.createClass({
   },
 
   componentWillMount () {
+    let code = this.props.location.query.code;
+    
+    // Create Reference to Party Data and User's Data
+    let partyRef = new Firebase('https://jukebot.firebaseio.com/parties/' + this.props.params.partyId);
+    let userRef = new Firebase('https://jukebot.firebaseio.com/users/' + firebaseUtil.getSession().uid)
+    this.bindAsObject(partyRef, 'party');
+    this.bindAsObject(userRef, 'user');
+    
+    partyRef.once('value', (partySn) => {
+      userRef.once('value', (userSn) => {
+        if (partySn.val().metaData.owner === userSn.val().uid) {
+          if (code) {
+            rhapsodyUtil.authenticate(code, this.props.location.pathname, this.initializeParty);
+          } else {
+            rhapsodyUtil.authenticate(null, this.props.location.pathname, this.initializeParty);
+          }
+        } 
+      });
+    });
+  },
+  
+  initializeParty (err) {
+    if (err) {
+      console.log('ERROR authenticating with rhapsody', err);
+      return;
+    }
     rhapsodyUtil.registerListener('error', this.handleRhapsodyError);
     rhapsodyUtil.registerListener('unauthorized', (e) => {
       console.log('unauthorized in component');
@@ -27,12 +53,6 @@ let PartyContainer = React.createClass({
     rhapsodyUtil.init(() => {
       console.log('party started');
     });
-    
-    // Create Reference to Party Data and User's Data
-    let partyRef = new Firebase('https://jukebot.firebaseio.com/parties/' + this.props.params.partyId);
-    let userRef = new Firebase('https://jukebot.firebaseio.com/users/' + firebaseUtil.getSession().uid)
-    this.bindAsObject(partyRef, 'party');
-    this.bindAsObject(userRef, 'user');
   },
 
   handleRhapsodyError (err) {

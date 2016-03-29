@@ -9,7 +9,7 @@ let makeAjaxCall = (path, method, payload) => {
       method: method,
       headers: {
         'Content-Type': 'application/json',
-        firebaseToken: session.token
+        firebasetoken: session.token
       },
       error: reject,
       success: resolve
