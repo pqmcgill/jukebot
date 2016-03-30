@@ -30,15 +30,32 @@ let PartyContainer = React.createClass({
     
     partyRef.once('value', (partySn) => {
       userRef.once('value', (userSn) => {
+        
+        // verify party ownership. If the valid owner is found, then
+        // authenticate with rhapsody and initialize the party
         if (partySn.val().metaData.owner === userSn.val().uid) {
-          if (code) {
-            rhapsodyUtil.authenticate(code, this.props.location.pathname, this.initializeParty);
-          } else {
-            rhapsodyUtil.authenticate(null, this.props.location.pathname, this.initializeParty);
-          }
-        } 
+          this.authenticate(code);
+        }
+        
       });
     });
+  },
+
+  goToSearch (e) {
+    e.preventDefault();
+    this.context.router.push('search');
+  },
+  
+  /*******************************
+   ***** PARTY OWNER METHODS *****
+   *******************************/
+   
+  authenticate (code) {
+    if (code) {
+      rhapsodyUtil.authenticate(code, this.props.location.pathname, this.initializeParty);
+    } else {
+      rhapsodyUtil.authenticate(null, this.props.location.pathname, this.initializeParty);
+    }
   },
   
   initializeParty (err) {
@@ -46,15 +63,21 @@ let PartyContainer = React.createClass({
       console.log('ERROR authenticating with rhapsody', err);
       return;
     }
+    
     rhapsodyUtil.registerListener('error', this.handleRhapsodyError);
     rhapsodyUtil.registerListener('unauthorized', (e) => {
       console.log('unauthorized in component');
     });
+    rhapsodyUtil.registerListener('playstopped', this.queryNextSong);
     rhapsodyUtil.init(() => {
       console.log('party started');
     });
   },
-
+  
+  queryNextSong () {
+    // ask the server for the next song
+  },
+ 
   handleRhapsodyError (err) {
     // there was an unauthorized request
     if (err.data.code === 401) {
@@ -63,11 +86,10 @@ let PartyContainer = React.createClass({
       rhapsodyUtil.authenticate();
     }
   },
-
-  goToSearch (e) {
-    e.preventDefault();
-    this.context.router.push('search');
-  },
+  
+  /********************************
+   ***** /PARTY OWNER METHODS *****
+   ********************************/
 
   render () {
     let { partyId } = this.props.params;
