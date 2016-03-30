@@ -47,7 +47,6 @@ module.exports = {
         }),
         success: (res) => {
           res = JSON.parse(res);
-          debugger;
           this.setTokens(res.access_token, res.refresh_token);
           if (cb) {
             cb();

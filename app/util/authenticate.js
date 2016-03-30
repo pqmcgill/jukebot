@@ -33,8 +33,8 @@ module.exports = {
           cb();
         }
       }, (err) => {
-        replace({ pathname: '/home' });
-        cb();
+        console.log(err)
+        cb(err);
       });
   },
 

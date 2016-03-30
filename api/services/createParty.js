@@ -15,7 +15,6 @@ module.exports = function(req, res) {
     var partyData = {
       // Add metaData object
       metaData: {
-        displayName: req.body.displayName,
         owner: req.body.uid
       },
       // Add membership object
@@ -24,27 +23,39 @@ module.exports = function(req, res) {
       // used for music selection algorithm
       partyBit: 0
     };
+    var partyId = req.body.displayName;
     
     // push partyData 
-    var newRef = ref.push(partyData, function(err) {
-      if (err) { res.json({ error: err }); }
-    });
-
-    newRef.once('value', function(sn) {
-      var userRef = new Firebase('https://jukebot.firebaseio.com/users/' + req.body.uid);
-      userRef.update({
-        currentParty: sn.key()
-      }, function(err) {
+    // var newRef = ref.push(partyData, function(err) {
+    //   if (err) { res.json({ error: err }); }
+    // });
+    
+    ref.once('value', function(partiesSn) {
+      if (!partiesSn.child(partyId).exists()) {
         
-        // TODO: if nested error occurs then undo previous operations
-        if (err) { res.json({ error: err }); }
-
-        // resolve the new key
-        newRef.once('value', function(sn) {
-          res.json({ key: sn.key() });
+        var partyRef = partiesSn.child(partyId).ref();
+        partyRef.set(partyData);
+        partiesSn.child(partyId).ref().once('value', function(sn) {
+          var userRef = new Firebase('https://jukebot.firebaseio.com/users/' + req.body.uid);
+          userRef.update({
+            currentParty: partyId
+          }, function(err) {
+            
+            // TODO: if nested error occurs then undo previous operations
+            if (err) { res.json({ error: err }); }
+    
+            // resolve the new key
+          
+            res.json({ key: partyId });
+           
+          });
         });
-      });
+      } else {
+        res.json({ error: 'PARTY_EXISTS' });
+      }
     });
+
+    
 
   });
 };
