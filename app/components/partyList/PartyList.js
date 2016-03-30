@@ -15,17 +15,24 @@ let PartyList = React.createClass({
 
   getInitialState () {
     return {
-      parties: []
+      parties: [],
+      user: {}
     };
   },
 
   componentWillMount () {
     let partiesRef = new Firebase('https://jukebot.firebaseio.com/parties');
+    let userRef = new Firebase('https://jukebot.firebaseio.com/users/' + firebaseUtil.getSession().uid);
     this.bindAsArray(partiesRef, 'parties');
+    this.bindAsObject(userRef, 'user');
   },
 
   joinParty (partyId) {
-    this.context.router.push('/parties/join/' + partyId);
+    if (this.state.user.currentParty === partyId) {
+      this.context.router.push('/parties/' + partyId);
+    } else {
+      this.context.router.push('/join/' + partyId);
+    }
   },
 
   render () {

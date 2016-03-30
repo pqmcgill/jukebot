@@ -58,7 +58,7 @@ let firebaseUtil = {
   logout () {
     ref.unauth();
     session = null;
-    firebaseUtil.onChange(this.isLoggedIn());
+    firebaseUtil.onChange(this.());
   },
 
   requestTempToken (email, cb) {
@@ -78,6 +78,19 @@ let firebaseUtil = {
       cb(err);
     });
   },
+  
+  getCurrentParty () {
+    return new Promise((resolve, reject) => {
+      if (!session) {
+        reject({ error: 'unauthenticated' });
+      } else {
+        let ref = new Firebase('https://jukebot.firebaseio.com/users/' + session.uid);
+        ref.once('value', function(sn) {
+          resolve(sn.val().currentParty); 
+        });
+      }
+    });
+  }
 
 };
 

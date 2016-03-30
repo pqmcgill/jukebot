@@ -24,19 +24,23 @@ module.exports = {
     Rhapsody.player.on(type, cb);
   },
   
+  getAuthorizationCode (redirect_pathname) {
+    // redirect to rhapsody login screen
+    // pass redirect url back to UI
+    window.location.replace(`https://api.rhapsody.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT + redirect_pathname}&response_type=code&state=continueAuth`);
+  },
+  
   // login to rhapsody
   login (code, cb) {
-    
-    if (!code) { 
-      // redirect to rhapsody login screen
-      // pass redirect url back to UI
-      window.location.replace(`https://api.rhapsody.com/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT}&response_type=code&state=continueAuth`);
-    } else {
+    if (code) {
       // get Access token from separate jukebot express application
       $.ajax({
         type: 'POST',
-        url: 'http://rocky-castle-7896.herokuapp.com/api/v1/rhapsody/auth',
-        contentType: 'application/json',
+        url: 'https://rocky-castle-7896.herokuapp.com/api/v1/rhapsody/auth',
+        headers: {
+          firebaseToken: firebaseUtil.getSession().uid,
+          "Content-Type": "application/json"
+        },
         dataType: 'json',
         data: JSON.stringify({
           code: code
@@ -90,21 +94,23 @@ module.exports = {
   },
 
   // public method. Acts as rhapsody authentication controller
-  authenticate (code, cb) {
+  authenticate (code, redirect_pathname, cb) {
     this.initTokens();
 
     // setup consumerKey with rhapsody sdk
     if (!this.hasTokens()) {
-      console.log('no tokens');
-      this.login(code, (err) => {
-        if (err) {
-          console.log('there was an error logging into rhapsody:', err);
-          cb(err);
-          return;
-        }
-
-        cb(null, true);
-      });
+      if (!code) {
+        this.getAuthorizationCode(redirect_pathname);
+      } else {
+        this.login(code, (err) => {
+          if (err) {
+            console.log('there was an error logging into rhapsody:', err);
+            cb(err);
+            return;
+          }
+          cb(null, true);
+        });
+      }
     } else {
       // call final callback upon completion
       cb(null, true);
@@ -122,6 +128,7 @@ module.exports = {
       // callback after initialization is complete
       Rhapsody.player.on('ready', () => {
         this.setPlayer(this.accessToken, this.refreshToken, () => {
+          console.log('setting player');
           cb(null, true);
         });
       });

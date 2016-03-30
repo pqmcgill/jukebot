@@ -2,39 +2,60 @@ var Firebase = require('firebase');
 
 module.exports = function(req, res) {
   var ref = new Firebase('https://jukebot.firebaseio.com/parties');
+  console.log(req.body.authorizedUser);
   
   // first authenticate as super user 
   ref.authWithCustomToken(process.env.APP_SECRET, function(err) {
-    console.log(req.body);
     if (err) { res.json({ error: err }); }
     
     // create new data, and generate reference to it
-    var member = { partyBit: 0 };
     var members = {};
-    members[req.body.uid] = member;
-    var data = {
-      displayName: req.body.displayName,
+    // set to zero to match the party's partyBit
+    members[req.body.uid] = 0;
+    var partyData = {
+      // Add metaData object
+      metaData: {
+        owner: req.body.uid
+      },
+      // Add membership object
+      members: members,
       pwd: req.body.pwd,
-      partyBit: 0,
-      owner: req.body.uid
+      // used for music selection algorithm
+      partyBit: 0
     };
-    data.members = members;
-    var newRef = ref.push(req.body, function(err) {
-      if (err) { res.json({ error: err }); }
+    var partyId = req.body.displayName;
+    
+    // push partyData 
+    // var newRef = ref.push(partyData, function(err) {
+    //   if (err) { res.json({ error: err }); }
+    // });
+    
+    ref.once('value', function(partiesSn) {
+      if (!partiesSn.child(partyId).exists()) {
+        
+        var partyRef = partiesSn.child(partyId).ref();
+        partyRef.set(partyData);
+        partiesSn.child(partyId).ref().once('value', function(sn) {
+          var userRef = new Firebase('https://jukebot.firebaseio.com/users/' + req.body.uid);
+          userRef.update({
+            currentParty: partyId
+          }, function(err) {
+            
+            // TODO: if nested error occurs then undo previous operations
+            if (err) { res.json({ error: err }); }
+    
+            // resolve the new key
+          
+            res.json({ key: partyId });
+           
+          });
+        });
+      } else {
+        res.json({ error: 'PARTY_EXISTS' });
+      }
     });
 
-    newRef.once('value', function(sn) {
-      var userRef = new Firebase('https://jukebot.firebaseio.com/users/' + req.body.uid);
-      userRef.update({
-        currentParty: sn.key()
-      }, function(err) {
-        if (err) { res.json({ error: err }); }
-        // resolve the new key
-        newRef.once('value', function(sn) {
-          res.json({ key: sn.key() });
-        });
-      });
-    });
+    
 
   });
 };
