@@ -69,9 +69,14 @@ let PartyContainer = React.createClass({
       console.log('unauthorized in component');
     });
     rhapsodyUtil.registerListener('playstopped', this.queryNextSong);
+    rhapsodyUtil.registerListener('queueloaded', this.playSong);
     rhapsodyUtil.init(() => {
       console.log('party started');
     });
+  },
+  
+  playSong() {
+    rhapsodyUtil.playTrack('Tra.5156528');
   },
   
   queryNextSong () {
@@ -79,6 +84,7 @@ let PartyContainer = React.createClass({
   },
  
   handleRhapsodyError (err) {
+    console.log('error', err);
     // there was an unauthorized request
     if (err.data.code === 401) {
       rhapsodyUtil.destroyTokens();

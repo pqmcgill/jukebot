@@ -58,7 +58,7 @@ let firebaseUtil = {
   logout () {
     ref.unauth();
     session = null;
-    firebaseUtil.onChange(this.());
+    firebaseUtil.onChange(this.isLoggedIn());
   },
 
   requestTempToken (email, cb) {
