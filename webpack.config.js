@@ -74,7 +74,7 @@ module.exports = {
       title: 'Jukebot'
     }),
     new webpack.DefinePlugin({
-      REDIRECT: JSON.stringify('https://0.0.0.0:' + PORT + '/home')
+      REDIRECT: JSON.stringify('http://localhost:' + PORT)
     })
   ]
 };

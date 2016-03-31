@@ -73,10 +73,14 @@ let PartyContainer = React.createClass({
     rhapsodyUtil.init(() => {
       console.log('party started');
     });
+    rhapsodyUtil.registerListener('queuechanged', this.playSong);
   },
   
   playSong() {
-    rhapsodyUtil.playTrack('Tra.5156528');
+    console.log('here');
+    setTimeout(() => {
+      rhapsodyUtil.playTrack('Tra.5156528');
+    }, 1000);
   },
   
   queryNextSong () {

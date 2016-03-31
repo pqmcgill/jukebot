@@ -15,6 +15,9 @@ module.exports = function(app) {
   app.post('/api/join', require('./services/joinParty'));
   // Leave a Party
   //  app.post('/api/leave', require('./services/leaveParty'));
+
+  // Pick the next song
+  app.post('/api/nextSong', require('./services/nextParty'));
   
   // app.post('/api/rhapsody/auth', require('./services/rhapsodyAuth'));
 
