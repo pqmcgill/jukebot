@@ -1,6 +1,7 @@
 let React = require('react');
 let rhapsodyUtil = require('../../util/rhapsodyUtil');
 let firebaseUtil = require('../../util/firebaseUtil');
+let { nextSong } = require('../../util/api');
 let Link = require('react-router').Link;
 let ReactFireMixin = require('reactfire');
 let Firebase = require('firebase');
@@ -69,11 +70,11 @@ let PartyContainer = React.createClass({
       console.log('unauthorized in component');
     });
     rhapsodyUtil.registerListener('playstopped', this.queryNextSong);
-    rhapsodyUtil.registerListener('queueloaded', this.playSong);
+    rhapsodyUtil.registerListener('queueloaded', this.queryNextSong);
     rhapsodyUtil.init(() => {
       console.log('party started');
     });
-    rhapsodyUtil.registerListener('queuechanged', this.playSong);
+    rhapsodyUtil.registerListener('queuechanged', this.queryNextSong);
   },
   
   playSong() {
@@ -84,7 +85,11 @@ let PartyContainer = React.createClass({
   },
   
   queryNextSong () {
-    // ask the server for the next song
+    nextSong().then((data) => {
+      if (data.track) {
+        rhapsodyUtil.playTrack(data.track);
+      }
+    });
   },
  
   handleRhapsodyError (err) {
