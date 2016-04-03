@@ -17,7 +17,7 @@ module.exports = function(app) {
   //  app.post('/api/leave', require('./services/leaveParty'));
 
   // Pick the next song
-  app.get('/api/nextSong/:partyId', require('./services/nextSong'));
+  app.get('/api/nextSong/:partyId', require('./services/nextSongPartyBits'));
   
   // app.post('/api/rhapsody/auth', require('./services/rhapsodyAuth'));
 
