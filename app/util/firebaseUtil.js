@@ -3,11 +3,9 @@ let Firebase = require('firebase');
 let forge = 'https://jukebot.firebaseio.com';
 let ref = new Firebase(forge);
 let session = ref.getAuth();
-console.log(session);
 
 // Private Methods
 let addNewUser = (user) => {
-  console.log('adding user', user.uid);
   ref.child('users').child(user.uid).set(user);
 };
 

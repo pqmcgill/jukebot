@@ -11,7 +11,7 @@ module.exports = function(req, res) {
     // create new data, and generate reference to it
     var members = {};
     // set to zero to match the party's partyBit
-    members[req.body.uid] = 0;
+    members[req.body.uid] = { partyBit: 0 };
     var partyData = {
       // Add metaData object
       metaData: {

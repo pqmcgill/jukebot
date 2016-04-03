@@ -10,7 +10,8 @@ let React = require('react'),
 let SearchContainer = React.createClass({
 
   contextTypes: {
-    router: React.PropTypes.object.isRequired
+    router: React.PropTypes.object.isRequired,
+    addSongToBucket: React.PropTypes.func
   },
 
   getInitialState () {
@@ -42,10 +43,8 @@ let SearchContainer = React.createClass({
   updateSearchType (type, id) {
     let { partyId } = this.props.params;
     if (id) {
-      console.log(id);
       id = this.urlSafeString(id);
     }
-    console.log(id);
     let route = '/parties/' + partyId + '/search';
     if (type === 'artistId') {
       route += '/artists/' + id;
@@ -54,12 +53,11 @@ let SearchContainer = React.createClass({
     } else {
       route += '/' + type;
     }
-    console.log(route);
     this.context.router.push(route + '?q=' + this.state.query);
   },
 
   addTrack (id) {
-    console.log('adding track:', id);
+    this.context.addSongToBucket( id );
   },
 
   urlSafeString (str) {
@@ -72,7 +70,6 @@ let SearchContainer = React.createClass({
     let { partyId, artistId, albumId } = this.props.params;
     artistId = this.urlSafeString(artistId);
     albumId = this.urlSafeString(albumId);
-    console.log(albumId);
     let child;
     switch (this.props.location.pathname) {
       case '/parties/' + partyId + '/search/all':
@@ -129,7 +126,6 @@ let SearchContainer = React.createClass({
         break;
       default:
     }
-      console.log(child);
 
       return (
         <div>

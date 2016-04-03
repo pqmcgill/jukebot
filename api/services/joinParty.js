@@ -20,7 +20,7 @@ module.exports = function(req, res) {
         
         // create membership object to add to party
         var updateObj = {};
-        updateObj[req.body.uid] = partyBit;
+        updateObj[req.body.uid] = { partyBit: partyBit };
         
         // establish party membership
         partyRef.child('members').update(

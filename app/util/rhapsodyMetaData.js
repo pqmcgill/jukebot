@@ -115,10 +115,20 @@ let searchByType = (options, type) => {
   }));
 };
 
+let parseId = (id) => {
+  return id.replace(/\./g, '_');
+};
+
+let formatId = (id) => {
+  return id.replace(/\_/g, '.');
+};
+
 module.exports = {
-  search: search,
-  searchByType: searchByType,
-  getArtistsTopTracks: getArtistsTopTracks,
-  getAlbumTracks: getAlbumTracks,
-  getArtistData: getArtistData
+  search,
+  searchByType,
+  getArtistsTopTracks,
+  getAlbumTracks,
+  getArtistData,
+  parseId,
+  formatId
 };

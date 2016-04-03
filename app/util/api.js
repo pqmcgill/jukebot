@@ -32,9 +32,9 @@ module.exports = {
     });
   },
   
-  nextSong () {
+  nextSong (partyId) {
     return new Promise((resolve, reject) => {
-      makeAjaxCall('/api/nextSong', 'GET').then(resolve, reject);
+      makeAjaxCall('/api/nextSong/' + partyId, 'GET').then(resolve, reject);
     });
   }
 };
