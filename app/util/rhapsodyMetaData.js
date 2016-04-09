@@ -88,7 +88,21 @@ let getArtistData = (artistId) => {
     getArtistsTopTracks({ limit: 6, offset: 0 }, artistId),
     getArtistsAlbums(artistId)
   ]);
-}
+};
+
+let getTrackData = (trackId) => {
+  console.log(trackId);
+  let url = `https://api.rhapsody.com/v1/tracks/${trackId}`;
+  return new Promise((resolve, reject) => {
+    search({}, url)
+      .then((data) => {
+        console.log(data);
+        resolve(data);
+      }, (err) => {
+        reject(err);
+      });
+  });
+};
 
 // takes a string, or Array<String>
 // returns promise 
@@ -129,6 +143,7 @@ module.exports = {
   getArtistsTopTracks,
   getAlbumTracks,
   getArtistData,
+  getTrackData,
   parseId,
   formatId
 };

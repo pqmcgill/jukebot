@@ -1,5 +1,5 @@
 let React = require('react'),
-  search = require('../../../util/rhapsodyMetaData').search,
+  { search, getTrackData } = require('../../../util/rhapsodyMetaData'),
   SearchAll = require('./SearchAll'),
   SearchTracks = require('./SearchTracks'),
   SearchAlbums = require('./SearchAlbums'),
@@ -57,7 +57,10 @@ let SearchContainer = React.createClass({
   },
 
   addTrack (id) {
-    this.context.addSongToBucket( id );
+    getTrackData(id).then((trackData) => {
+      console.log('trackData ==>', trackData);
+      this.context.addSongToBucket( trackData );
+    });
   },
 
   urlSafeString (str) {

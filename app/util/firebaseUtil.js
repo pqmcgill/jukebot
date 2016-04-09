@@ -44,7 +44,8 @@ let firebaseUtil = {
           } else {
             addNewUser({
               email: credentials.email,
-              uid: authData.uid
+              uid: authData.uid,
+              displayName: credentials.displayName
             });
             cb(null, authData);
           }
