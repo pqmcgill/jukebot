@@ -2,6 +2,7 @@
 
 .home {
   background-color: $home-secondary;
+  
   // buttons
   .btn-primary {
     background-color: $home-primary;
@@ -60,9 +61,11 @@
     background-color: $home-primary;
     color: $home-secondary;
   }
+
   .jb-input-animation {
     background-color: $home-primary;
   }
+
   .tray {
     background-color: $home-primary;
     color: $home-secondary;
@@ -70,5 +73,11 @@
 
   .ripple-effect {
     background-color: $home-secondary;
+  }
+
+  .party-text {
+    font-size: 1.5em;
+    padding: 0;
+    margin: 0;
   }
 }

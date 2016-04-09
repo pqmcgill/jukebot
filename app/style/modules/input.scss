@@ -33,7 +33,7 @@
   box-sizing: border-box;
   display: block;
   font-size: $jb-font-larger;
-  padding: 0 $jb-font-medium;
+  padding: 0 $jb-font-medium 3px $jb-font-medium;
 
   &:focus {
     box-shadow: none;

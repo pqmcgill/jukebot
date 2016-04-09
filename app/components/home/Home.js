@@ -62,12 +62,14 @@ let Home = React.createClass({
     return (
       <div className="component home no-padding">
         <div className="wrapper">
-          <a onClick={ this.logout }>logout</a>
-          <button className="btn-jumbo" onClick={ this.goToCreate }>
+          <a className="logout" onClick={ this.logout }>logout</a>
+          <button className="btn-jumbo link" onClick={ this.goToCreate }>
             <img src={ start_img }/>
+            <p className="party-text">a party</p>
           </button>
-          <button className="btn-jumbo" onClick={ this.goToPartyList }>
+          <button className="btn-jumbo link" onClick={ this.goToPartyList }>
             <img src={ join_img }/>
+            <p className="party-text">a party</p>
           </button>
         </div>
       </div>
