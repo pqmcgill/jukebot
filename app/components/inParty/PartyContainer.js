@@ -16,7 +16,8 @@ let PartyContainer = React.createClass({
 
   childContextTypes: {
     addSongToBucket: React.PropTypes.func,
-    mySongs: React.PropTypes.object
+    mySongs: React.PropTypes.object,
+    nowPlaying: React.PropTypes.object
   },
 
   getChildContext () {
@@ -24,9 +25,16 @@ let PartyContainer = React.createClass({
     if (this.state.user.uid && this.state.partyMembers[this.state.user.uid]) {
       mySongs = this.state.partyMembers[this.state.user.uid].bucket || {};
     }
+
+    let nowPlaying = {};
+    if (this.state.partyMetaData && this.state.partyMetaData.nowPlaying) {
+      nowPlaying = this.state.partyMetaData.nowPlaying;
+    }
+
     return {
       addSongToBucket: this.addSongToBucket,
-      mySongs: mySongs   
+      mySongs: mySongs,
+      nowPlaying: nowPlaying
     };
   },
   
@@ -68,16 +76,32 @@ let PartyContainer = React.createClass({
     this.context.router.push('search');
   },
 
-  addSongToBucket (trackId) {
+  addSongToBucket (trackData) {
+    let trackId = trackData.id,
+      albumId = trackData.album.id,
+      trackName = trackData.name,
+      albumName = trackData.album.name,
+      artistName = trackData.artist.name;
+
     if (this.state.partyMembers[this.state.user.uid].bucket) {
       let obj = {};
-      obj[rhapsodyMetaData.parseId( trackId )] = true;
+      obj[rhapsodyMetaData.parseId( trackId )] = {
+        albumId: rhapsodyMetaData.parseId( albumId ),
+        trackName: trackName,
+        albumName: albumName,
+        artistName: artistName
+      };
       this.partyMemberDataRef.child(this.state.user.uid).child('bucket').update(obj, () => {
         this.hasSongsRef.set(true);
       });
     } else {
       let obj = {bucket: {}};
-      obj.bucket[rhapsodyMetaData.parseId( trackId )] = true;
+      obj.bucket[rhapsodyMetaData.parseId( trackId )] = {
+        albumId: rhapsodyMetaData.parseId( albumId ),
+        trackName: trackName,
+        albumName: albumName,
+        artistName: artistName
+      };
       this.partyMemberDataRef.child(this.state.user.uid).update(obj, () => {
         this.hasSongsRef.set(true);
       });

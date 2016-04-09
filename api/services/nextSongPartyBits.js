@@ -6,6 +6,7 @@ function randNumBetween (n1, n2) {
 
 module.exports = function(req, res) {
   var partyRef = new Firebase('https://jukebot.firebaseio.com/parties/' + req.params.partyId);
+  var usersRef = new Firebase('https://jukebot.firebaseio.com/users');
   partyRef.authWithCustomToken(process.env.APP_SECRET, function(err) {
     if (err) {
       res.json({ err: err });
@@ -30,6 +31,7 @@ module.exports = function(req, res) {
           // handle when no members are found with songs
           if (members.length === 0) {
             // tell the UI that no songs were found
+            partyRef.child('metaData').child('nowPlaying').remove();
             resolve();
             return;
           }
@@ -58,7 +60,19 @@ module.exports = function(req, res) {
               partyBit: flippedBit 
             }); 
             memberRef.child('bucket').child(selectedTrack).remove();
-            resolve(selectedTrack);
+
+            usersRef.once('value', function(usersSn) {
+              partyRef.child('metaData').child('nowPlaying').set({
+                trackId: selectedTrack,
+                albumId: party.members[selectedMember].bucket[selectedTrack].albumId,
+                trackName: party.members[selectedMember].bucket[selectedTrack].trackName,
+                albumName: party.members[selectedMember].bucket[selectedTrack].albumName,
+                artistName: party.members[selectedMember].bucket[selectedTrack].artistName,
+                selectedBy: usersSn.child(selectedMember).val().displayName  
+              });
+
+              resolve(selectedTrack);
+            });
 
           }
 
