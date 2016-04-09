@@ -17,7 +17,7 @@ let MySongs = React.createClass({
       return <li key={i} >{ song }</li>;
     });
     return (
-      <div>
+      <div className="fixed-offset">
         <h1>My Songs</h1>
         <ul>
           { mySongs }
