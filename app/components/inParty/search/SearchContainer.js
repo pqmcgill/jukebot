@@ -1,5 +1,6 @@
 let React = require('react'),
   { search, getTrackData } = require('../../../util/rhapsodyMetaData'),
+  SearchInput = require('../../shared/SearchInput'),
   SearchAll = require('./SearchAll'),
   SearchTracks = require('./SearchTracks'),
   SearchAlbums = require('./SearchAlbums'),
@@ -132,10 +133,7 @@ let SearchContainer = React.createClass({
 
       return (
         <div>
-          <div className="search">
-            <span className="fa fa-search"></span>
-            <input onChange={ this.handleChange } value={ this.state.query }/>
-          </div>
+          <SearchInput onChange={ this.handleChange } value={ this.state.query }/>
           { child }
         </div>
       );

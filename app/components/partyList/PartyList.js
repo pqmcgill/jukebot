@@ -3,6 +3,7 @@ let React = require('react'),
   firebaseUtil = require('../../util/firebaseUtil');
 
 let Link = require('react-router').Link;
+let SearchInput = require('../shared/SearchInput');
 
 let PartyListItem = require('./PartyListItem');
 
@@ -16,7 +17,9 @@ let PartyList = React.createClass({
   getInitialState () {
     return {
       parties: [],
-      user: {}
+      filteredParties: [],
+      user: {},
+      query: ''
     };
   },
 
@@ -27,6 +30,17 @@ let PartyList = React.createClass({
     this.bindAsObject(userRef, 'user');
   },
 
+  first: true,
+
+  componentWillUpdate (prevProps, prevState) {
+    if (this.first) {
+      this.first = false;
+      this.setState({
+        filteredParties: this.state.parties.slice()
+      });
+    }
+  },
+
   joinParty (partyId) {
     if (this.state.user.currentParty === partyId) {
       this.context.router.push('/parties/' + partyId);
@@ -35,25 +49,37 @@ let PartyList = React.createClass({
     }
   },
 
+  filterParties (e) {
+    let val = e.target.value;
+    this.setState({
+      query: val,
+      filteredParties: this.state.parties.filter((party) => {
+        return val.length > 0 ? party['.key'].indexOf(val) >= 0 : true;
+      })
+    });
+  },
+
   render () {
     let parties;
     if (this.state.parties.length === 0) {
       parties = '';
     } else {
-      parties = this.state.parties.map((party, i) => {
-        console.log('party', party);
+      parties = this.state.filteredParties.map((party, i) => {
         return <PartyListItem key={i} 
           partyId={ party['.key'] }
-          name={ party.displayName } 
+          name={ party['.key'] } 
           onMyClick={ this.joinParty }
         />;
       });
     } 
 
     return (
-      <ul>
-        { parties }
-      </ul>
+      <div className="component loginSignup">
+        <SearchInput onChange={ this.filterParties } query={ this.state.query }/>
+        <ul>
+          { parties }
+        </ul>
+      </div>
     );
   }
 });

@@ -64,4 +64,16 @@ body {
   .ripple-effect {
     background-color: $login-secondary;
   }
+
+  .search { 
+    background-color: $login-secondary;
+    color: $party-primary;
+    border: solid 1px $login-primary;
+
+    input {
+      color: $login-primary;
+      border: none;
+      background-color: $login-secondary;
+    }
+  }
 }
