@@ -32,6 +32,7 @@ module.exports = function(req, res) {
           if (members.length === 0) {
             // tell the UI that no songs were found
             partyRef.child('metaData').child('nowPlaying').remove();
+            partyRef.child('vetos').remove();              
             resolve();
             return;
           }

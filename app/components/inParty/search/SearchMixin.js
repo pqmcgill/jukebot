@@ -29,6 +29,10 @@ module.exports = {
     }
   },
 
+  componentDidUpdate () {
+    console.log('did update!');
+  },
+
   decodeUrlParam (param) {
     if (param) {
       return param.replace('_', '.');

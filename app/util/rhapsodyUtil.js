@@ -147,6 +147,10 @@ module.exports = {
   // play a track by a given id
   playTrack (track_id) {
     Rhapsody.player.play(track_id);
+  },
+
+  pauseTrack () {
+    Rhapsody.player.pause();
   }
 
 };

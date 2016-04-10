@@ -186,13 +186,13 @@ let PartyContainer = React.createClass({
         pickingSong: true 
       }, () => {
         nextSong(this.props.params.partyId).then((data) => {
-
           this.setState({
             pickingSong: false
           });
 
           if (data.track === undefined) {
             this.hasSongsRef.set(false, () => {
+              rhapsodyUtil.pauseTrack();
               this.listenForSongs();
             });
           } else {
@@ -201,6 +201,7 @@ let PartyContainer = React.createClass({
                 if (this.state.vetoing) {
                   this.setState({ vetoing: false });
                 }
+                console.log('playing track');
                 rhapsodyUtil.playTrack(rhapsodyMetaData.formatId(data.track));
               }, 1000);
             }

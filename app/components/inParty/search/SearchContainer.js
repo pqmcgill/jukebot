@@ -25,23 +25,43 @@ let SearchContainer = React.createClass({
     let query = this.props.location.query.q || '';
     this.setState({
       query: query
+    }, this.updateRoute);
+    this.context.router.listenBefore((obj) => {
+      if (obj.action === 'POP') {
+        let all = obj.pathname.indexOf('/all');
+        let album = obj.pathname.indexOf('/albums/Alb');
+        let artist = obj.pathname.indexOf('/artists/Art');
+        let path = obj.pathname.split('/');
+        let param = path[path.length - 1];
+        if (all >= 0) {
+          this.updateSearchType('all', null, true);
+        } else if (album >= 0) {
+          this.updateSearchType('albumId', param, true);
+        } else if (artist >= 0) {
+          this.updateSearchType('artistId', param, true);
+        } else {
+          this.updateSearchType(param, null, true);
+        }
+      }
     });
+  },
+
+  updateRoute () {
+    if (this.state.query.length > 0) {
+      this.context.router.replace('/parties/' + this.props.params.partyId + '/search/all?q=' + this.state.query);
+    } else {
+      this.context.router.push('/parties/' + this.props.params.partyId + '/search');
+    }	
   },
 
   handleChange (e) {
     let q = e.target.value;
     this.setState({
       query: q
-    }, () => {
-      if (this.state.query.length > 0) {
-        this.context.router.replace('/parties/' + this.props.params.partyId + '/search/all?q=' + this.state.query);
-      } else {
-        this.context.router.push('/parties/' + this.props.params.partyId + '/search');
-      }	
-    });
+    }, this.updateRoute);
   },
 
-  updateSearchType (type, id) {
+  updateSearchType (type, id, pop) {
     let { partyId } = this.props.params;
     if (id) {
       id = this.urlSafeString(id);
@@ -59,7 +79,6 @@ let SearchContainer = React.createClass({
 
   addTrack (id) {
     getTrackData(id).then((trackData) => {
-      console.log('trackData ==>', trackData);
       this.context.addSongToBucket( trackData );
     });
   },
