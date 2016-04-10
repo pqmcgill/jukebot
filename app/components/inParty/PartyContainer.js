@@ -203,7 +203,7 @@ let PartyContainer = React.createClass({
           <div className="main-tab">
             <Link className="tab" activeClassName="active" to={ '/parties/' + partyId + '/search' }>Search</Link>
             <Link className="tab" activeClassName="active" to={ '/parties/' + partyId + '/nowPlaying' }>Now Playing</Link>
-            <Link className="tab" activeClassName="active" to={ '/parties/' + partyId + '/mySongs' }>My Collection</Link>
+            <Link className="tab" activeClassName="active" to={ '/parties/' + partyId + '/mySongs' }>My Tracks</Link>
           </div>
         </div>
         { this.props.children }
