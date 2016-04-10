@@ -35,10 +35,8 @@ let PartyContainer = React.createClass({
     }
 
     let hasVetoed = true;
-    if (this.state.partyMembers && this.state.partyMembers[firebaseUtil.getSession().uid]) {
-      console.log('in HERE');
-      hasVetoed = this.state.partyMembers[firebaseUtil.getSession().uid].hasVetoed || false;
-      console.log(hasVetoed);
+    if (this.state.hasVetoed['.key'] && this.state.hasVetoed['.value'] === null) {
+      hasVetoed = false;
     }
 
     return {
@@ -46,8 +44,8 @@ let PartyContainer = React.createClass({
       nowPlaying: nowPlaying,
       mySongs: mySongs,
       removeSong: this.removeSong,
-      hasVetoed: hasVetoed,
-      veto: this.veto
+      veto: this.veto,
+      hasVetoed: hasVetoed
     };
   },
   
@@ -58,7 +56,8 @@ let PartyContainer = React.createClass({
       isOwner: false,
       partyMetaData: {},
       partyMembers: {},
-      user: {}
+      user: {},
+      hasVetoed: {} 
     };
   },
 
@@ -69,10 +68,12 @@ let PartyContainer = React.createClass({
     this.partyMetaDataRef = new Firebase('https://jukebot.firebaseio.com/parties/' + this.props.params.partyId + '/metaData');
     this.partyMemberDataRef = new Firebase('https://jukebot.firebaseio.com/parties/' + this.props.params.partyId + '/members');
     this.userRef = new Firebase('https://jukebot.firebaseio.com/users/' + firebaseUtil.getSession().uid)
+    this.vetosRef = new Firebase('https://jukebot.firebaseio.com/parties/' + this.props.params.partyId + '/vetos');
     this.hasSongsRef = new Firebase('https://jukebot.firebaseio.com/parties/' + this.props.params.partyId + '/metaData/hasSongs');
     this.bindAsObject(this.partyMetaDataRef, 'partyMetaData');
     this.bindAsObject(this.partyMemberDataRef, 'partyMembers');
     this.bindAsObject(this.userRef, 'user');
+    this.bindAsObject(this.vetosRef.child(firebaseUtil.getSession().uid), 'hasVetoed');
     
     this.partyMetaDataRef.once('value', (partyMetaDataSn) => {
       this.userRef.once('value', (userSn) => {
@@ -81,10 +82,15 @@ let PartyContainer = React.createClass({
         // authenticate with rhapsody and initialize the party
         if (partyMetaDataSn.val().owner === userSn.val().uid) {
           this.authenticate(code);
+          this.vetosRef.on('value', this.handleVeto);
         }
         
       });
     });
+  },
+
+  componentWillUnmount () {
+    this.vetosRef.off();
   },
 
   goToSearch (e) {
@@ -125,17 +131,21 @@ let PartyContainer = React.createClass({
   },
 
   veto () {
-    this.partyMemberDataRef.child(this.state.user.uid).update({
-      hasVetoed: true
-    });
+    var obj = {};
+    obj[this.state.user.uid] = true;
+    this.vetosRef.update(obj);
   },
   
   /*******************************
    ***** PARTY OWNER METHODS *****
    *******************************/
-  handleVeto () {
-    console.log('vetoed');
-    this.queryNextSong();
+  handleVeto (vetoSn) {
+    let vetos = vetoSn.val();
+    if (vetos) { 
+      if (Object.keys(vetos).length >= (Object.keys(this.state.partyMembers).length - 1) / 2) {
+        this.queryNextSong();
+      }
+    }
   }, 
 
   authenticate (code) {
@@ -188,6 +198,9 @@ let PartyContainer = React.createClass({
           } else {
             if (data.track) {
               setTimeout(() => {
+                if (this.state.vetoing) {
+                  this.setState({ vetoing: false });
+                }
                 rhapsodyUtil.playTrack(rhapsodyMetaData.formatId(data.track));
               }, 1000);
             }
@@ -208,8 +221,6 @@ let PartyContainer = React.createClass({
   },
 
   removeSong (trackId) {
-    console.log(trackId);
-    console.log(rhapsodyMetaData.parseId(trackId));
     this.partyMemberDataRef
       .child(firebaseUtil.getSession().uid)
       .child('bucket')

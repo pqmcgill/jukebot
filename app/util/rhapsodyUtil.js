@@ -7,7 +7,7 @@ let log = (e) => {
 };
 
 Rhapsody.player.on('playEvent', log);
-Rhapsody.player.on('playtimer', log);
+//Rhapsody.player.on('playtimer', log);
 Rhapsody.player.on('error', log);
 Rhapsody.player.on('metadata', log);
 Rhapsody.player.on('queueloaded', log);

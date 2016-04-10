@@ -71,11 +71,7 @@ module.exports = function(req, res) {
                 selectedBy: usersSn.child(selectedMember).val().displayName  
               });
 
-              partyRef.child('members').once('value', function(sn) {
-                sn.forEach(function (member) {
-                  member.child('hasVetoed').ref().set(false);
-                });
-              });
+              partyRef.child('vetos').remove();              
               resolve(selectedTrack);
             });
 
