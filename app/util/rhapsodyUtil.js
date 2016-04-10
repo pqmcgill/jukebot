@@ -145,8 +145,20 @@ module.exports = {
   },
 
   // play a track by a given id
-  playTrack (track_id) {
-    Rhapsody.player.play(track_id);
+  playTrack (track_id, seekTime) {
+    let t = seekTime || 0;
+    setTimeout(() => {
+      Rhapsody.player.play(track_id);
+      if (seekTime) {
+        var first = true;
+        Rhapsody.player.on('playtimer', () => {
+          if (first) {
+            first = false;
+            Rhapsody.player.seek(seekTime);
+          }
+        });
+      }
+    }, 1000);
   },
 
   pauseTrack () {

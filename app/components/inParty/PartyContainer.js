@@ -6,6 +6,7 @@ let { nextSong } = require('../../util/api');
 let Link = require('react-router').Link;
 let ReactFireMixin = require('reactfire');
 let Firebase = require('firebase');
+let { debounce } = require('../../util/util');
 
 let PartyContainer = React.createClass({
   mixins: [ ReactFireMixin ],
@@ -171,12 +172,34 @@ let PartyContainer = React.createClass({
       console.log('unauthorized in component');
     });
     rhapsodyUtil.registerListener('playstopped', this.queryNextSong);
-    rhapsodyUtil.registerListener('queueloaded', this.queryNextSong);
+    rhapsodyUtil.registerListener('queueloaded', this.playFirstSong);
     rhapsodyUtil.init(() => {
       console.log('party started');
     });
     rhapsodyUtil.registerListener('queuechanged', this.queryNextSong);
+    rhapsodyUtil.registerListener('playtimer', debounce(this.updatePlayTimer));
     
+  },
+
+  playFirstSong () {
+    this.partyMetaDataRef.child('nowPlaying').once('value', (pmSn) => {
+      let val = pmSn.val();
+      if (val) {
+        rhapsodyUtil.playTrack(
+          rhapsodyMetaData.formatId(val.trackId),
+          val.currentTime
+        );
+      } else {
+        this.queryNextSong();
+      }
+    });
+  },
+
+  updatePlayTimer (e) {
+    this.partyMetaDataRef.child('nowPlaying').update({
+      currentTime: e.data.currentTime,
+      totalTime: e.data.totalTime
+    });
   },
   
   queryNextSong () {
@@ -219,6 +242,10 @@ let PartyContainer = React.createClass({
         this.hasSongsRef.off();
       }
     });
+  },
+
+  resumeLastSong () {
+
   },
 
   removeSong (trackId) {
