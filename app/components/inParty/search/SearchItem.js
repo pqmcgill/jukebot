@@ -50,6 +50,7 @@ let SearchItem = React.createClass({
           <img src={ this.loadAlbumImg(this.props.data.id) } alt="albumArt" />
           <div className="itemText">
             <p>{ this.props.data.name }</p>
+            <p>{ this.props.data.artist.name }</p>
           </div>
           <i className="fa fa-chevron-right"></i>
         </li>

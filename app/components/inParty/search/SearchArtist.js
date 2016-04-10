@@ -42,12 +42,18 @@ let SearchArtist = React.createClass({
     }
     return (
       <div className="searchResults">
+        <div className="album-header">
+        </div>
         <div className="searchListContainer">
-          <a className="navLink" onClick={ this.props.router.goBack }>{ '<< Back' }</a>
-          <ul className="list">
+          <span className="listHeader">Top Tracks</span>
+          <a className="navLink" onClick={ this.props.router.goBack }>{ '< Back' }</a>
+          <ul className="list song-full-tile">
             { tracks }
           </ul>
-          <ul className="list">
+        </div>
+        <div className="searchListContainer">
+          <span className="listHeader">Albums</span>
+          <ul className="list album-tile">
             { albums }
           </ul>
         </div>

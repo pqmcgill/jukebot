@@ -1,7 +1,7 @@
 @import '../variables/colors.scss';
 
 .list {
-  clear:both;
+  clear: both;
   margin: 10px 0;
   padding: 0;
   border-top: solid $party-tertiary 1px;
@@ -11,10 +11,11 @@
   .listItem {
     list-style-type: none;
     clear: both;
-    overflow: auto;
     padding: 5px;
     border-top: solid $party-tertiary 1px;
     border-bottom: solid $party-tertiary 1px;
+    cursor: pointer;
+
     img {
       height: 70px;
       width: 70px;
@@ -25,6 +26,7 @@
       &:first-of-type {
         float: left;
       }
+
       &.artist-pic {
         border-radius: 50%;
       }
@@ -51,4 +53,99 @@
     }
   }
 
+  &.song-full-tile,
+  &.album-tile {
+    .listItem {
+      height: 55px;
+    
+      img {
+        height: 55px;
+        width: 55px;
+      }
+
+      .itemText {
+        margin-top: 10px;
+
+        p {
+          margin: 0 0 0 10px;
+
+          &:first-child {
+            font-size: 15px;
+          }
+
+          &:last-child {
+            font-size: 12px;
+          }
+        }
+      }
+
+      .fa {
+        height: 55px;
+        width: 55px;
+        line-height: 55px;
+      }
+    }
+  }
+
+  &.artist-tile {
+    .listItem {
+      height: 55px;
+    
+      img {
+        height: 55px;
+        width: 55px;
+      }
+
+      .itemText {
+        height: 55px;
+        line-height: 55px;
+
+        p {
+          margin: 0 0 0 10px;
+          font-size: 15px;
+        }
+      }
+
+      .fa {
+        height: 55px;
+        width: 55px;
+        line-height: 55px;
+      }
+    }
+  }
+
+  /* &.album-tile {
+    .listItem {
+      height: 282px;
+      padding: 15px;
+      width: 30%;
+      display: inline-block;
+      border-right: solid #5A2651 2px;
+
+      &:nth-child(3) {
+        border-right: none;
+      }
+    
+      img {
+        // height: 55px;
+        // width: 55px;
+      }
+
+      .itemText {
+        height: 55px;
+        line-height: 55px;
+
+        p {
+          margin: 0 0 0 10px;
+          font-size: 15px;
+        }
+      }
+
+      .fa {
+        height: 55px;
+        width: 55px;
+        line-height: 55px;
+      }
+    }
+  } */
 }

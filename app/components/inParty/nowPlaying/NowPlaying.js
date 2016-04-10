@@ -16,7 +16,7 @@ let NowPlaying = React.createClass({
     console.log(this.context.nowPlaying);
     return (
       Object.keys(this.context.nowPlaying).length > 0 ?
-        <div className="tab-content">
+        <div className="tab-content fixed-offset">
           <img src={ this.getAlbumArt(this.context.nowPlaying.albumId) }/>
           <p>{ this.context.nowPlaying.trackName }</p>
           <p>{ this.context.nowPlaying.artistName }</p>

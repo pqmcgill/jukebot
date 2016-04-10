@@ -1,17 +1,32 @@
 .tabs {
   width: 100%;
   position: fixed;
+  background-color: #5A2651;
+  height: 45px;
+  z-index: 3;
 
   .tab {
     display: inline-block;
-    width: 25%;
-    height: 60px;
-    line-height: 60px;
+    width: 33.333%;
+    height: 45px;
+    line-height: 45px;
     text-decoration: none;
+    font-size: 15px;
 
     &.active {
       background-color: purple;
     }
+  }
+
+  .menu-tab {
+    display: inline-block;
+    width: 15%;
+    font-size: 12px;
+  }
+
+  .main-tab {
+    display: inline-block;
+    width: 85%;
   }
 } 
 
