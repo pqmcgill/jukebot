@@ -1,4 +1,3 @@
-
 let React = require('react'),
   SearchMixin = require('./SearchMixin'),
   SearchItem = require('./SearchItem');

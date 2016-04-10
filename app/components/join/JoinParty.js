@@ -13,7 +13,6 @@ let JoinParty = React.createClass({
     model.partyId = this.props.params.partyId;
     model.uid = firebaseUtil.getSession().uid;
     api.joinParty(model).then((res) => {
-      debugger;
       this.context.router.push('/parties/' + this.props.params.partyId);
     }, (err) => {
       console.log('ERROR', err);

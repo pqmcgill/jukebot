@@ -16,25 +16,27 @@ let PartyContainer = React.createClass({
 
   childContextTypes: {
     addSongToBucket: React.PropTypes.func,
+    nowPlaying: React.PropTypes.object,
     mySongs: React.PropTypes.object,
-    nowPlaying: React.PropTypes.object
+    removeSong: React.PropTypes.func
   },
 
   getChildContext () {
-    let mySongs = {};
-    if (this.state.user.uid && this.state.partyMembers[this.state.user.uid]) {
-      mySongs = this.state.partyMembers[this.state.user.uid].bucket || {};
-    }
-
     let nowPlaying = {};
     if (this.state.partyMetaData && this.state.partyMetaData.nowPlaying) {
       nowPlaying = this.state.partyMetaData.nowPlaying;
     }
 
+    let mySongs = {};
+    if (this.state.partyMembers && this.state.partyMembers[firebaseUtil.getSession().uid]) {
+      mySongs = this.state.partyMembers[firebaseUtil.getSession().uid].bucket || {};
+    }
+
     return {
       addSongToBucket: this.addSongToBucket,
+      nowPlaying: nowPlaying,
       mySongs: mySongs,
-      nowPlaying: nowPlaying
+      removeSong: this.removeSong
     };
   },
   
@@ -42,7 +44,10 @@ let PartyContainer = React.createClass({
     return {
       user: {},
       pickingSong: false,
-      isOwner: false
+      isOwner: false,
+      partyMetaData: {},
+      partyMembers: {},
+      user: {}
     };
   },
 
@@ -180,6 +185,16 @@ let PartyContainer = React.createClass({
     });
   },
 
+  removeSong (trackId) {
+    console.log(trackId);
+    console.log(rhapsodyMetaData.parseId(trackId));
+    this.partyMemberDataRef
+      .child(firebaseUtil.getSession().uid)
+      .child('bucket')
+      .child(rhapsodyMetaData.parseId(trackId))
+      .remove();
+  },
+
   handleRhapsodyError (err) {
     console.log('error', err);
     // there was an unauthorized request
@@ -196,6 +211,12 @@ let PartyContainer = React.createClass({
 
   render () {
     let { partyId } = this.props.params;
+    //    let childrenWithProps = React.Children.map(this.props.children, (child) => {
+    //      let mySongs = this.state.partyMembers && this.state.partyMembers[firebaseUtil.getSession().uid] ?
+    //        this.state.partyMembers[firebaseUtil.getSession().uid].bucket || {} :
+    //        {}
+    //      React.cloneElement(child, { mySongs: mySongs });
+    //    });
     return (
       <div className="component inParty no-padding">
         <div className="tabs">
