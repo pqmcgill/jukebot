@@ -76,8 +76,9 @@
   .tabs {
     .tab {
       color: $party-primary;
-      background-color: $party-tertiary;
+      // background-color: $party-tertiary;
 
+      &:hover,
       &.active {
         background-color: $party-secondary;
       }

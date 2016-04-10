@@ -62,7 +62,7 @@ let MySongs = React.createClass({
       );
     });
     return (
-      <div className="tab-content searchResults">
+      <div className="fixed-offset searchResults">
         <div className="searchListContainer">
           <h1>My Songs</h1>
           <ul className="list">

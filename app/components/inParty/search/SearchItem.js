@@ -46,6 +46,7 @@ let SearchItem = React.createClass({
     } else {
       listItem = (
         <PartyListItem mainText={ this.props.data.name }
+          subText={ this.props.data.artist.name }
           onClick={ this.props.onClick.bind(null, 'albumId', this.props.data.id) }
           iconClass="fa fa-chevron-right"
           imgSrc={ this.loadAlbumImg(this.props.data.id) }

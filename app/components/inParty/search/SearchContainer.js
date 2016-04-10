@@ -132,8 +132,8 @@ let SearchContainer = React.createClass({
     }
 
       return (
-        <div>
-          <SearchInput onChange={ this.handleChange } value={ this.state.query }/>
+        <div className="fixed-offset">
+          <SearchInput placeholder="search..." onChange={ this.handleChange } value={ this.state.query }/>
           { child }
         </div>
       );
