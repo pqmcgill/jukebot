@@ -3,7 +3,9 @@ let { formatId } = require('../../../util/rhapsodyMetaData');
 
 let NowPlaying = React.createClass({
   contextTypes: {
-    nowPlaying: React.PropTypes.object
+    nowPlaying: React.PropTypes.object,
+    veto: React.PropTypes.func,
+    hasVetoed: React.PropTypes.bool
   },
 
   getAlbumArt (albumId) {
@@ -22,7 +24,7 @@ let NowPlaying = React.createClass({
           <p>{ this.context.nowPlaying.artistName }</p>
           <p>{ this.context.nowPlaying.albumName }</p>
           <p>selected by: { this.context.nowPlaying.selectedBy }</p>
-          <button>Veto</button>
+          <button disabled={ this.context.hasVetoed } onClick={ this.context.veto }>Veto</button>
         </div> :
 
         <div className="tab-content">content can go here when there is no currently playing song</div>

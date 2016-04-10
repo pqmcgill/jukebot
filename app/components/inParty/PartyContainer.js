@@ -18,7 +18,9 @@ let PartyContainer = React.createClass({
     addSongToBucket: React.PropTypes.func,
     nowPlaying: React.PropTypes.object,
     mySongs: React.PropTypes.object,
-    removeSong: React.PropTypes.func
+    removeSong: React.PropTypes.func,
+    hasVetoed: React.PropTypes.bool,
+    veto: React.PropTypes.func
   },
 
   getChildContext () {
@@ -32,11 +34,20 @@ let PartyContainer = React.createClass({
       mySongs = this.state.partyMembers[firebaseUtil.getSession().uid].bucket || {};
     }
 
+    let hasVetoed = true;
+    if (this.state.partyMembers && this.state.partyMembers[firebaseUtil.getSession().uid]) {
+      console.log('in HERE');
+      hasVetoed = this.state.partyMembers[firebaseUtil.getSession().uid].hasVetoed || false;
+      console.log(hasVetoed);
+    }
+
     return {
       addSongToBucket: this.addSongToBucket,
       nowPlaying: nowPlaying,
       mySongs: mySongs,
-      removeSong: this.removeSong
+      removeSong: this.removeSong,
+      hasVetoed: hasVetoed,
+      veto: this.veto
     };
   },
   
@@ -112,11 +123,21 @@ let PartyContainer = React.createClass({
       });
     }
   },
+
+  veto () {
+    this.partyMemberDataRef.child(this.state.user.uid).update({
+      hasVetoed: true
+    });
+  },
   
   /*******************************
    ***** PARTY OWNER METHODS *****
    *******************************/
-   
+  handleVeto () {
+    console.log('vetoed');
+    this.queryNextSong();
+  }, 
+
   authenticate (code) {
     if (code) {
       rhapsodyUtil.authenticate(code, this.props.location.pathname, this.initializeParty);
@@ -145,6 +166,7 @@ let PartyContainer = React.createClass({
       console.log('party started');
     });
     rhapsodyUtil.registerListener('queuechanged', this.queryNextSong);
+    
   },
   
   queryNextSong () {
