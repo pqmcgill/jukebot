@@ -20,8 +20,12 @@ let MySongs = React.createClass({
   },
 
   componentWillUpdate (newProps, newState, newContext) {
-    let newSongs = Object.keys(newContext.mySongs).sort();
-    let oldSongs = Object.keys(this.context.mySongs).sort();
+    let newSongs = Object.keys(newContext.mySongs).sort((x, y) => {
+      return newContext.mySongs[x].trackName > newContext.mySongs[y].trackName;
+    });
+    let oldSongs = Object.keys(this.context.mySongs).sort((x, y) => {
+      return this.context.mySongs[x].trackName > this.context.mySongs[y].trackName;
+    });
     let diff = [];
     diff = diff.concat(oldSongs.filter((oldS) => {
       return newSongs.indexOf(oldS) === -1;
