@@ -17,7 +17,9 @@ let MySongs = React.createClass({
   },
 
   componentDidMount () {
-    this.getSongData(Object.keys(this.context.mySongs));
+    this.getSongData(Object.keys(this.context.mySongs).sort((x, y) => {
+      return this.context.mySongs[x].trackName > this.context.mySongs[y].trackName;
+    }));
   },
 
   componentWillUpdate (newProps, newState, newContext) {
