@@ -32,3 +32,54 @@ body {
 .fixed-offset {
   margin-top: 65px;
 }
+
+.now-playing {
+  img {
+    width: 80%;
+    max-width: 300px;
+    margin: auto;
+    display: block;
+  }
+
+  button {
+    margin: 15px auto 10px auto;
+    padding: 8px;
+    width: 80%;
+    max-width: 300px;
+    background-color: darken($jb-dark-purple, 3%);
+    border: 1px solid $jb-white;
+    color: $jb-white;
+    text-transform: uppercase;
+    font-size: $jb-font-larger;
+
+    &:disabled {
+      background-color: $jb-dark-purple;
+      border: 1px solid $jb-white;
+      color: $jb-white;
+      opacity: 0.5;
+    }
+  }
+
+  p {
+    margin: 0 auto;
+    width: 80%;
+    max-width: 300px;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    &.track {
+      font-size: $jb-font-large;
+    }
+
+    &.artist {
+      font-size: $jb-font-medium;
+    }
+
+    &.selected-by {
+      font-size: $jb-font-medium;
+      margin-top: 10px;
+    }
+  }
+}
