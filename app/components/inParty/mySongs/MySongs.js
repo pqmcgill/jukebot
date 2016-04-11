@@ -6,7 +6,8 @@ let PartyListItem = require('../../shared/PartyListItem');
 let MySongs = React.createClass({
   contextTypes: {
     mySongs: React.PropTypes.object,
-    removeSong: React.PropTypes.func
+    removeSong: React.PropTypes.func,
+    user: React.PropTypes.object
   },
 
   getInitialState () {
@@ -69,6 +70,7 @@ let MySongs = React.createClass({
       <div className="fixed-offset searchResults">
         <div className="searchListContainer">
           <h1>My Tracks</h1>
+          <p>{ this.context.user.displayName }</p>
           <ul className="list song-full-tile">
             { mySongs }
           </ul>

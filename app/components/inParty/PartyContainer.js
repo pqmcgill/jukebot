@@ -21,7 +21,8 @@ let PartyContainer = React.createClass({
     mySongs: React.PropTypes.object,
     removeSong: React.PropTypes.func,
     hasVetoed: React.PropTypes.bool,
-    veto: React.PropTypes.func
+    veto: React.PropTypes.func,
+    user: React.PropTypes.object
   },
 
   getChildContext () {
@@ -40,13 +41,19 @@ let PartyContainer = React.createClass({
       hasVetoed = false;
     }
 
+    let user = {};
+    if (this.state.user) {
+      user = this.state.user;
+    }
+
     return {
       addSongToBucket: this.addSongToBucket,
       nowPlaying: nowPlaying,
       mySongs: mySongs,
       removeSong: this.removeSong,
       veto: this.veto,
-      hasVetoed: hasVetoed
+      hasVetoed: hasVetoed,
+      user: user
     };
   },
   
