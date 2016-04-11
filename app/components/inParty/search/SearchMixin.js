@@ -23,14 +23,10 @@ module.exports = {
   },
 
   componentWillReceiveProps (nextProps) {
-    if (nextProps.query && nextProps.query.length > 0) {
+    if (nextProps.query && nextProps.query.length > 0 && nextProps.query !== this.props.query) {
       this.options.q = nextProps.query;
       this.search(this.options, this.searchType);
     }
-  },
-
-  componentDidUpdate () {
-    console.log('did update!');
   },
 
   decodeUrlParam (param) {

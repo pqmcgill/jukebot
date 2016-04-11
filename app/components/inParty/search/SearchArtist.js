@@ -17,7 +17,11 @@ let SearchArtist = React.createClass({
 
   render () {
     let tracks,
-      albums;
+      albums,
+      artistId,
+      artistName,
+      artistUrl;
+
     if (this.state.data.length > 0) {
       tracks = this.state.data[0].data.map((d, i) => {
         return (
@@ -39,23 +43,32 @@ let SearchArtist = React.createClass({
           />
         );
       });
+
+      artistId = this.state.data[1].data[0].artist.id;
+      artistName = this.state.data[1].data[0].artist.name;
+      artistUrl = `http://direct.rhapsody.com/imageserver/v2/artists/${artistId}/images/150x100.jpg`;
+
     }
     return (
-      <div className="searchResults">
-        <div className="album-header">
-        </div>
-        <div className="searchListContainer">
-          <span className="listHeader">Top Tracks</span>
-          <a className="navLink" onClick={ this.props.router.goBack }>{ '< Back' }</a>
-          <ul className="list song-full-tile">
-            { tracks }
-          </ul>
-        </div>
-        <div className="searchListContainer">
-          <span className="listHeader">Albums</span>
-          <ul className="list album-tile">
-            { albums }
-          </ul>
+      <div>
+        { artistName }
+        <img src={ artistUrl }/>
+        <div className="searchResults">
+          <div className="album-header">
+          </div>
+          <div className="searchListContainer">
+            <span className="listHeader">Top Tracks</span>
+            <a className="navLink" onClick={ this.props.router.goBack }>{ '< Back' }</a>
+            <ul className="list song-full-tile">
+              { tracks }
+            </ul>
+          </div>
+          <div className="searchListContainer">
+            <span className="listHeader">Albums</span>
+            <ul className="list album-tile">
+              { albums }
+            </ul>
+          </div>
         </div>
       </div>
     );
