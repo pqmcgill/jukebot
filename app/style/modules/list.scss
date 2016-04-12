@@ -11,7 +11,7 @@
   .listItem {
     list-style-type: none;
     clear: both;
-    padding: 5px;
+    padding: 5px 0 5px 15px;
     border-top: solid $party-tertiary 1px;
     border-bottom: solid $party-tertiary 1px;
     cursor: pointer;
@@ -34,7 +34,7 @@
 
     .itemText {
       display: inline-block;
-      width: calc(100% - 140px); 
+      width: calc(100% - 140px);
 
       p {
         margin: 10px;
@@ -87,13 +87,23 @@
     }
   }
 
-  &.artist-tile {
+  &.artist-tile,
+  &.song-title-tile {
     .listItem {
       height: 55px;
-    
-      img {
-        height: 55px;
+
+      .image-cropper {
         width: 55px;
+        height: 55px;
+        display: inline-block;
+        overflow: hidden;
+        border-radius: 50%;
+
+        img {
+          margin: 0 0 0 -11px;
+          height: 55px;
+          width: auto;
+        }
       }
 
       .itemText {

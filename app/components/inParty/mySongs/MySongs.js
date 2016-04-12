@@ -71,8 +71,7 @@ let MySongs = React.createClass({
     return (
       <div className="fixed-offset searchResults">
         <div className="searchListContainer">
-          <h1>My Tracks</h1>
-          <p>{ this.context.user.displayName }</p>
+          <h1 className="my-tracks-header">{ this.context.user.displayName }'s Tracks</h1>
           <ul className="list song-full-tile">
             { mySongs }
           </ul>

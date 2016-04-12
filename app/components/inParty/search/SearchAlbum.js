@@ -40,12 +40,14 @@ let SearchAlbum = React.createClass({
     }
     return (
       <div>
-        { albumName }
-        { artistName }
-        <img src={ albumUrl } />
-        <div className="searchResults">
-          <div className="album-header">
+        <div className="album-header">
+          <img src={ albumUrl } />
+          <div className="title">
+            <p>{ albumName }</p>
+            <p>{ artistName }</p>
           </div>
+        </div>
+        <div className="searchResults">
           <div className="searchListContainer">
             <span className="listHeader">Tracks</span>
             <a className="navLink" onClick={ this.props.router.goBack }>{ '< Back' }</a>

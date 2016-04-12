@@ -33,6 +33,11 @@ body {
   margin-top: 65px;
 }
 
+.my-tracks-header {
+  font-size: 20px;
+  margin: 20px;
+}
+
 .now-playing {
   img {
     width: 80%;
@@ -80,6 +85,72 @@ body {
     &.selected-by {
       font-size: $jb-font-medium;
       margin-top: 10px;
+    }
+  }
+}
+
+.artist-header {
+  height: 80px;
+  margin-top: 15px;
+  text-align: left;
+  position: relative;
+
+  .image-cropper {
+    width: 80px;
+    height: 80px;
+    display: inline-block;
+    overflow: hidden;
+    border-radius: 50%;
+    margin: 0 15px;
+
+    img {
+      margin: 0 0 0 -20px;
+      height: 80px;
+      width: auto;
+    }
+  }
+
+  .title {
+    display: inline-block;
+    position: absolute;
+    line-height: 80px;
+    width: calc(100% - 125px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 20px;
+  }
+}
+
+.album-header {
+  height: 80px;
+  margin-top: 15px;
+  text-align: left;
+  position: relative;
+
+  img {
+    display: inline-block;
+    margin: 0 15px;
+    height: 80px;
+  }
+
+  .title {
+    display: inline-block;
+    position: absolute;
+    
+    p {
+      width: calc(100% - 125px);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+
+      &:first-child {
+        font-size: 20px;
+      }
+
+      &:last-child {
+        font-size: 15px;
+      }
     }
   }
 }

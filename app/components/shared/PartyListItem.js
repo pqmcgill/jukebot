@@ -14,7 +14,9 @@ let PartyListItem = React.createClass({
   render () {
     return ( 
       <li className="listItem" onClick={ this.props.onClick }>
-        <img src={ this.props.imgSrc } alt={ this.props.imgAlt } />
+        <div className="image-cropper">
+          <img src={ this.props.imgSrc } alt={ this.props.imgAlt } />
+        </div>
         <div className="itemText">
           <p>{ this.props.mainText }</p>
           { this.props.subText ? <p>{ this.props.subText }</p> : '' }
