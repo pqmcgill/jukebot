@@ -43,6 +43,12 @@ let SearchItem = React.createClass({
           imgSrc={ this.loadArtistImg(this.props.data.id) }
           imgAlt="artistArt" />
       );
+    } else if (this.props.type === 'album-track') {
+      listItem = (
+        <PartyListItem mainText={ this.props.data.name }
+          onClick={ this.props.onClick.bind(null, this.props.data.id) }
+          iconClass="fa fa-plus" />
+      );
     } else {
       listItem = (
         <PartyListItem mainText={ this.props.data.name }

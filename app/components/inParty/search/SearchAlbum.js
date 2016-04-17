@@ -29,7 +29,7 @@ let SearchAlbum = React.createClass({
             data={ d }
             btnSrc="something.png"
             onClick={ this.props.addTrack.bind(null, d.id) }
-            type="track"
+            type="album-track"
           />
         );
       });

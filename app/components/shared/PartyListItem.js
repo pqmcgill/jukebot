@@ -14,11 +14,13 @@ let PartyListItem = React.createClass({
   render () {
     return ( 
       <li className="listItem" onClick={ this.props.onClick }>
-        <div className="image-cropper">
-          <img src={ this.props.imgSrc } alt={ this.props.imgAlt } />
-        </div>
+        { this.props.imgSrc ? 
+          <div className="image-cropper">
+            <img src={ this.props.imgSrc } alt={ this.props.imgAlt } />
+          </div> : ''
+        }
         <div className="itemText">
-          <p>{ this.props.mainText }</p>
+          <p className={ this.props.subText ? '' : 'centered' }>{ this.props.mainText }</p>
           { this.props.subText ? <p>{ this.props.subText }</p> : '' }
         </div>
         <i className={ this.props.iconClass } onClick={ this.props.onIconClick }></i>
