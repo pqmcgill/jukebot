@@ -8,7 +8,8 @@ let SearchAlbums = React.createClass({
 
   propTypes: {
     updateRoute: React.PropTypes.func.isRequired,
-    router: React.PropTypes.object.isRequired
+    router: React.PropTypes.object.isRequired,
+    bucket: React.PropTypes.object
   },
 
   options: {limit: 25},

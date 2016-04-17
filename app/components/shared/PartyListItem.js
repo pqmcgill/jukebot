@@ -8,12 +8,19 @@ let PartyListItem = React.createClass({
     mainText: React.PropTypes.string,
     subText: React.PropTypes.string,
     iconClass: React.PropTypes.string,
-    onIconClick: React.PropTypes.func
+    onIconClick: React.PropTypes.func,
+    selected: React.PropTypes.bool
+  },
+
+  getClassName () {
+    let className = 'listItem' + (this.props.selected ? ' selected' : '');
+    console.log('class', className);
+    return className;
   },
 
   render () {
     return ( 
-      <li className="listItem" onClick={ this.props.onClick }>
+      <li className={ this.getClassName() } onClick={ this.props.onClick }>
         <div className="image-cropper">
           <img src={ this.props.imgSrc } alt={ this.props.imgAlt } />
         </div>

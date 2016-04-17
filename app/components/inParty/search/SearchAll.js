@@ -7,7 +7,8 @@ let SearchAll = React.createClass({
 
   propTypes: {
     updateRoute: React.PropTypes.func.isRequired,
-    addTrack: React.PropTypes.func.isRequired
+    addTrack: React.PropTypes.func.isRequired,
+    bucket: React.PropTypes.object
   },
 
   options: {limit: 5},

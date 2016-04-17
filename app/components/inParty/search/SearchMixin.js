@@ -23,6 +23,23 @@ module.exports = {
   },
 
   componentWillReceiveProps (nextProps) {
+    let data = this.state.data.map((d) => {
+      let ret = d;
+      if (d.type === 'track') {
+        if (d.data) {
+          d.data = d.data.map((t) => {
+            if (Object.keys(this.props.bucket).some((s) => {
+              return s === this.encodeUrlParam(t.id);
+            })) {
+              t.selected = true;
+            } 
+            return t;
+          });
+        }
+      }
+      return ret;
+    });
+    this.setState({ data: data });
     if (nextProps.query && nextProps.query.length > 0 && nextProps.query !== this.props.query) {
       this.options.q = nextProps.query;
       this.search(this.options, this.searchType);
@@ -35,65 +52,46 @@ module.exports = {
     }
   },
 
+  encodeUrlParam (param) {
+    if (param) {
+      return param.replace('.', '_');
+    }
+  },
+
+  loadData (data) {
+    this.setState({
+      data: data,
+      searchErr: null,
+      loading: false
+    });
+  },
+
+  throwErr (err) {
+    this.setState({
+      data: [],
+      searchErr: err,
+      loading: false
+    });
+  },
+
   inefficientSearch (options, type) {
     this.setState({
       loading: true
     }, () => {
       if (this.searchType === 'artistsTracks') {
         rhapsodyMetaData.getArtistData(this.options.artistId).then(
-          (data) => {
-            this.setState({
-              data: data,
-              searchErr: null,
-              loading: false
-            });
-          },
-          (err) => {
-            this.setState({
-              data: [],
-              searchErr: 'An error occurred while searching...',
-              loading: false
-            });
-          }
+          this.loadData,
+          this.throwErr
         );
       } else if (this.searchType === 'albumsTracks') {
         rhapsodyMetaData.getAlbumTracks(this.options.albumId).then(
-          (data) => {
-            this.setState({
-              data: data,
-              searchErr: null,
-              loading: false
-            });
-          },
-          (err) => {
-            this.setState({
-              data: [],
-              searchErr: 'An error occurred while searching...',
-              loading: false
-            });
-          }
+          this.loadData,
+          this.throwErr
         );
       } else {
         rhapsodyMetaData.searchByType(options, type).then(
-          (data) => {
-            if (this.props.query.length > 0) {
-              this.setState({
-                data: data,
-                searchErr: null,
-                loading: false
-              });
-            }
-          },
-
-          (err) => {
-            if (this.props.query.length > 0) { 
-              this.setState({
-                data: [],
-                searchErr: 'An error occurred while searching...',
-                loading: false
-              });
-            }
-          }
+          this.loadData,
+          this.throwErr
         );
       }
     });

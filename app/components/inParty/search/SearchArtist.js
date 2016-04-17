@@ -9,7 +9,8 @@ let SearchArtist = React.createClass({
     updateRoute: React.PropTypes.func.isRequired,
     router: React.PropTypes.object.isRequired,
     addTrack: React.PropTypes.func.isRequired,
-    artistId: React.PropTypes.string.isRequired
+    artistId: React.PropTypes.string.isRequired,
+    bucket: React.PropTypes.object
   },
 
   searchType: 'artistsTracks',
