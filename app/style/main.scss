@@ -137,12 +137,14 @@ body {
   .title {
     display: inline-block;
     position: absolute;
+    width: calc(100% - 125px);
+    margin-top: 18px;
     
     p {
-      width: calc(100% - 125px);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      margin: 0;
 
       &:first-child {
         font-size: 20px;
