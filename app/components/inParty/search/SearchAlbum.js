@@ -9,7 +9,8 @@ let SearchAlbum = React.createClass({
     updateRoute: React.PropTypes.func.isRequired,
     router: React.PropTypes.object.isRequired,
     addTrack: React.PropTypes.func.isRequired,
-    albumId: React.PropTypes.string.isRequired
+    albumId: React.PropTypes.string.isRequired,
+    bucket: React.PropTypes.object
   },
 
   searchType: 'albumsTracks',

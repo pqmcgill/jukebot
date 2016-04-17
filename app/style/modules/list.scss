@@ -51,6 +51,12 @@
       font-size: 24px;
       line-height: 70px;
     }
+
+    &.selected {
+      .fa {
+        color: green;
+      }
+    }
   }
 
   &.song-full-tile,

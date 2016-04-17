@@ -12,7 +12,8 @@ let SearchContainer = React.createClass({
 
   contextTypes: {
     router: React.PropTypes.object.isRequired,
-    addSongToBucket: React.PropTypes.func
+    addSongToBucket: React.PropTypes.func,
+    mySongs: React.PropTypes.object
   },
 
   getInitialState () {
@@ -100,6 +101,7 @@ let SearchContainer = React.createClass({
           <SearchAll query={ this.state.query }
             addTrack={ this.addTrack }
             updateRoute={ this.updateSearchType }
+            bucket={ this.context.mySongs }
           />
         );
         break;
@@ -108,6 +110,7 @@ let SearchContainer = React.createClass({
           <SearchTracks query={ this.state.query }
             addTrack={ this.addTrack }
             router={ this.context.router }
+            bucket={ this.context.mySongs }
           />
         );
         break;
@@ -116,6 +119,7 @@ let SearchContainer = React.createClass({
           <SearchArtists query={ this.state.query }
             updateRoute={ this.updateSearchType }
             router={ this.context.router }
+            bucket={ this.context.mySongs }
           />
         );
         break;
@@ -126,6 +130,7 @@ let SearchContainer = React.createClass({
             router={ this.context.router }
             addTrack={ this.addTrack }
             artistId={ this.props.params.artistId }
+            bucket={ this.context.mySongs }
           />
         );
         break;
@@ -134,6 +139,7 @@ let SearchContainer = React.createClass({
           <SearchAlbums query={ this.state.query }
             updateRoute={ this.updateSearchType }
             router={ this.context.router }
+            bucket={ this.context.mySongs }
           />
         );
         break;
@@ -144,6 +150,7 @@ let SearchContainer = React.createClass({
             router={ this.context.router }
             addTrack={ this.addTrack }
             albumId={ this.props.params.albumId }
+            bucket={ this.context.mySongs }
           />
         );
         break;

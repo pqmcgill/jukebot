@@ -8,10 +8,24 @@ let PartyListItem = React.createClass({
     mainText: React.PropTypes.string,
     subText: React.PropTypes.string,
     iconClass: React.PropTypes.string,
-    onIconClick: React.PropTypes.func
+    onIconClick: React.PropTypes.func,
+    selected: React.PropTypes.bool,
+    selectedIconClass: React.PropTypes.string
+  },
+
+  getClassName () {
+    let className = 'listItem' + (this.props.selected ? ' selected' : '');
+    console.log('class', className);
+    return className;
   },
 
   render () {
+    let icon;
+    if (this.props.selected && this.props.selectedIconClass) {
+      icon = <i className={ this.props.selectedIconClass }></i>;
+    } else {
+      icon = <i className={ this.props.iconClass } onClick={ this.props.onIconClick }></i>;
+    }
     return ( 
       <li className="listItem" onClick={ this.props.onClick }>
         { this.props.imgSrc ? 
@@ -23,7 +37,7 @@ let PartyListItem = React.createClass({
           <p className={ this.props.subText ? '' : 'centered' }>{ this.props.mainText }</p>
           { this.props.subText ? <p>{ this.props.subText }</p> : '' }
         </div>
-        <i className={ this.props.iconClass } onClick={ this.props.onIconClick }></i>
+        { icon }
       </li>
     );
   }

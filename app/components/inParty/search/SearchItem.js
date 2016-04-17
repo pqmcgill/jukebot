@@ -28,9 +28,11 @@ let SearchItem = React.createClass({
     if (this.props.type === 'track') {
       listItem = (
         <PartyListItem mainText={ this.props.data.name }
+          selected={ this.props.data.selected }
           subText={ this.props.data.artist.name + ' - ' + this.props.data.album.name}
           onClick={ this.props.onClick.bind(null, this.props.data.id) }
           iconClass="fa fa-plus"
+          selectedIconClass="fa fa-check"
           imgSrc={ this.loadAlbumImg(this.props.data.album.id) }
           imgAlt="albumArt" />
       );
@@ -38,6 +40,7 @@ let SearchItem = React.createClass({
       listItem = (
         <PartyListItem mainText={ this.props.data.name }
           onClick={ this.props.onClick.bind(null, 'artistId', this.props.data.id) }
+          selected={ this.props.data.selected }
           iconClass="fa fa-chevron-right"
           imageClass="artist-pic"
           imgSrc={ this.loadArtistImg(this.props.data.id) }
@@ -53,6 +56,7 @@ let SearchItem = React.createClass({
       listItem = (
         <PartyListItem mainText={ this.props.data.name }
           subText={ this.props.data.artist.name }
+          selected={ this.props.data.selected }
           onClick={ this.props.onClick.bind(null, 'albumId', this.props.data.id) }
           iconClass="fa fa-chevron-right"
           imgSrc={ this.loadAlbumImg(this.props.data.id) }
