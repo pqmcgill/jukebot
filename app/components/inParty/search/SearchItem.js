@@ -32,6 +32,7 @@ let SearchItem = React.createClass({
           subText={ this.props.data.artist.name + ' - ' + this.props.data.album.name}
           onClick={ this.props.onClick.bind(null, this.props.data.id) }
           iconClass="fa fa-plus"
+          selectedIconClass="fa fa-check"
           imgSrc={ this.loadAlbumImg(this.props.data.album.id) }
           imgAlt="albumArt" />
       );

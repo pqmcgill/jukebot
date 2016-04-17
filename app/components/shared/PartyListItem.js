@@ -9,7 +9,8 @@ let PartyListItem = React.createClass({
     subText: React.PropTypes.string,
     iconClass: React.PropTypes.string,
     onIconClick: React.PropTypes.func,
-    selected: React.PropTypes.bool
+    selected: React.PropTypes.bool,
+    selectedIconClass: React.PropTypes.string
   },
 
   getClassName () {
@@ -19,6 +20,12 @@ let PartyListItem = React.createClass({
   },
 
   render () {
+    let icon;
+    if (this.props.selected && this.props.selectedIconClass) {
+      icon = <i className={ this.props.selectedIconClass }></i>;
+    } else {
+      icon = <i className={ this.props.iconClass } onClick={ this.props.onIconClick }></i>;
+    }
     return ( 
       <li className={ this.getClassName() } onClick={ this.props.onClick }>
         <div className="image-cropper">
@@ -28,7 +35,7 @@ let PartyListItem = React.createClass({
           <p>{ this.props.mainText }</p>
           { this.props.subText ? <p>{ this.props.subText }</p> : '' }
         </div>
-        <i className={ this.props.iconClass } onClick={ this.props.onIconClick }></i>
+        { icon }
       </li>
     );
   }
