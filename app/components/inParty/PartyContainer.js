@@ -22,13 +22,16 @@ let PartyContainer = React.createClass({
     removeSong: React.PropTypes.func,
     hasVetoed: React.PropTypes.bool,
     veto: React.PropTypes.func,
-    user: React.PropTypes.object
+    user: React.PropTypes.object,
+    startedPlaying: React.PropTypes.bool
   },
 
   getChildContext () {
     let nowPlaying = {};
+    let startedPlaying = false;
     if (this.state.partyMetaData && this.state.partyMetaData.nowPlaying) {
       nowPlaying = this.state.partyMetaData.nowPlaying;
+      startedPlaying = this.state.partyMetaData.startedPlaying
     }
 
     let mySongs = {};
@@ -53,7 +56,8 @@ let PartyContainer = React.createClass({
       removeSong: this.removeSong,
       veto: this.veto,
       hasVetoed: hasVetoed,
-      user: user
+      user: user,
+      startedPlaying: startedPlaying
     };
   },
   
@@ -65,7 +69,7 @@ let PartyContainer = React.createClass({
       partyMetaData: {},
       partyMembers: {},
       user: {},
-      hasVetoed: {} 
+      hasVetoed: {}
     };
   },
 
@@ -151,6 +155,7 @@ let PartyContainer = React.createClass({
     let vetos = vetoSn.val();
     if (vetos) { 
       if (Object.keys(vetos).length >= (Object.keys(this.state.partyMembers).length - 1) / 2) {
+        this.partyMetaDataRef.child('startedPlaying').remove();
         this.queryNextSong();
       }
     }
@@ -166,7 +171,7 @@ let PartyContainer = React.createClass({
   
   initializeParty (err) {
     if (err) {
-      console.log('ERROR authenticating with rhapsody', err);
+      //console.log('ERROR authenticating with rhapsody', err);
       return;
     }
 
@@ -176,16 +181,21 @@ let PartyContainer = React.createClass({
     
     rhapsodyUtil.registerListener('error', this.handleRhapsodyError);
     rhapsodyUtil.registerListener('unauthorized', (e) => {
-      console.log('unauthorized in component');
+      //console.log('unauthorized in component');
     });
     rhapsodyUtil.registerListener('playstopped', this.queryNextSong);
     rhapsodyUtil.registerListener('queueloaded', this.playFirstSong);
+    rhapsodyUtil.registerListener('playsessionexpired', this.handleSessionExpired);
     rhapsodyUtil.init(() => {
-      console.log('party started');
+      //console.log('party started');
     });
     rhapsodyUtil.registerListener('queuechanged', this.queryNextSong);
-    rhapsodyUtil.registerListener('playtimer', debounce(this.updatePlayTimer));
+    rhapsodyUtil.registerListener('playtimer', this.updatePlayTimer);
     
+  },
+
+  handleSessionExpired () {
+    this.authenticate(null, this.props.location.pathname, this.initializeParty);
   },
 
   playFirstSong () {
@@ -195,7 +205,9 @@ let PartyContainer = React.createClass({
         rhapsodyUtil.playTrack(
           rhapsodyMetaData.formatId(val.trackId),
           val.currentTime
-        );
+        ).then(() => {
+          this.partyMetaDataRef.update({ startedPlaying: true });
+        });
       } else {
         this.queryNextSong();
       }
@@ -203,14 +215,18 @@ let PartyContainer = React.createClass({
   },
 
   updatePlayTimer (e) {
-    this.partyMetaDataRef.child('nowPlaying').update({
-      currentTime: e.data.currentTime,
-      totalTime: e.data.totalTime
+    this.partyMetaDataRef.once('value', (pmdSn) => {
+      if (pmdSn.val().hasSongs) {
+        pmdSn.child('nowPlaying').ref().update({
+          currentTime: e.data.currentTime,
+          totalTime: e.data.totalTime
+        });
+      }
     });
   },
   
   queryNextSong () {
-    console.log('getting next song...');
+    //console.log('getting next song...');
     if (!this.state.pickingSong) {
       this.setState({ 
         pickingSong: true 
@@ -222,8 +238,10 @@ let PartyContainer = React.createClass({
 
           if (data.track === undefined) {
             this.hasSongsRef.set(false, () => {
+              this.partyMetaDataRef.child('nowPlaying').remove();
               rhapsodyUtil.pauseTrack();
               this.listenForSongs();
+              this.partyMetaDataRef.child('startedPlaying').remove();
             });
           } else {
             if (data.track) {
@@ -231,8 +249,18 @@ let PartyContainer = React.createClass({
                 if (this.state.vetoing) {
                   this.setState({ vetoing: false });
                 }
-                console.log('playing track');
-                rhapsodyUtil.playTrack(rhapsodyMetaData.formatId(data.track));
+                this.partyMetaDataRef.child('hasSongs').once('value', (hasSongsSn) => {
+                  if (hasSongsSn.val() === undefined || hasSongsSn.val() === true) {
+                    rhapsodyUtil.playTrack(rhapsodyMetaData.formatId(data.track)).then(() => {
+                      this.partyMetaDataRef.update({
+                        startedPlaying: true
+                      });
+                    });
+                  } else {
+                    this.partyMetaDataRef.child('startedPlaying').remove();
+                    rhapsodyUtil.pauseTrack();
+                  }
+                });
               }, 1000);
             }
           }
@@ -264,7 +292,7 @@ let PartyContainer = React.createClass({
   },
 
   handleRhapsodyError (err) {
-    console.log('error', err);
+    //console.log('error', err);
     // there was an unauthorized request
     if (err.data.code === 401) {
       rhapsodyUtil.destroyTokens();

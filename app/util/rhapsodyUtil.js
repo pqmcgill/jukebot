@@ -6,17 +6,17 @@ let log = (e) => {
   console.log(e, e.data);
 };
 
-Rhapsody.player.on('playEvent', log);
+//Rhapsody.player.on('playEvent', log);
 //Rhapsody.player.on('playtimer', log);
-Rhapsody.player.on('error', log);
-Rhapsody.player.on('metadata', log);
-Rhapsody.player.on('queueloaded', log);
-Rhapsody.player.on('queuechanged', log);
-Rhapsody.player.on('authenticated', log);
-Rhapsody.player.on('ready', log);
-Rhapsody.player.on('playsessionexpired', log);
-Rhapsody.player.on('playstopped', log);
-Rhapsody.player.on('playerframeready', log);
+//Rhapsody.player.on('error', log);
+//Rhapsody.player.on('metadata', log);
+//Rhapsody.player.on('queueloaded', log);
+//Rhapsody.player.on('queuechanged', log);
+//Rhapsody.player.on('authenticated', log);
+//Rhapsody.player.on('ready', log);
+//Rhapsody.player.on('playsessionexpired', log);
+//Rhapsody.player.on('playstopped', log);
+//Rhapsody.player.on('playerframeready', log);
 
 module.exports = {
   // allow a component to register callbacks with rhapsody player's events
@@ -146,19 +146,22 @@ module.exports = {
 
   // play a track by a given id
   playTrack (track_id, seekTime) {
-    let t = seekTime || 0;
-    setTimeout(() => {
-      Rhapsody.player.play(track_id);
-      if (seekTime) {
+    return new Promise((resolve, reject) => {
+      let t = seekTime || 0;
+      setTimeout(() => {
+        Rhapsody.player.play(track_id);
         var first = true;
         Rhapsody.player.on('playtimer', () => {
           if (first) {
             first = false;
-            Rhapsody.player.seek(seekTime);
+            if (seekTime) {
+              Rhapsody.player.seek(seekTime);
+            }
+            resolve();
           }
         });
-      }
-    }, 1000);
+      }, 1000);
+    });
   },
 
   pauseTrack () {
