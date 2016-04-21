@@ -36,5 +36,14 @@ module.exports = {
     return new Promise((resolve, reject) => {
       makeAjaxCall('/api/nextSong/' + partyId, 'GET').then(resolve, reject);
     });
+  },
+
+  leaveParty (partyId) {
+    return new Promise((resolve, reject) => {
+      makeAjaxCall('/api/leaveParty', 'POST', {
+        partyId: partyId,
+        uid: session.uid 
+      }).then(resolve, reject);
+    });
   }
 };

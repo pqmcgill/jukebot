@@ -2,7 +2,7 @@ let React = require('react');
 let rhapsodyUtil = require('../../util/rhapsodyUtil');
 let rhapsodyMetaData = require('../../util/rhapsodyMetaData');
 let firebaseUtil = require('../../util/firebaseUtil');
-let { nextSong } = require('../../util/api');
+let { nextSong, leaveParty } = require('../../util/api');
 let Link = require('react-router').Link;
 let ReactFireMixin = require('reactfire');
 let Firebase = require('firebase');
@@ -23,7 +23,9 @@ let PartyContainer = React.createClass({
     hasVetoed: React.PropTypes.bool,
     veto: React.PropTypes.func,
     user: React.PropTypes.object,
-    startedPlaying: React.PropTypes.bool
+    startedPlaying: React.PropTypes.bool,
+    logout: React.PropTypes.func,
+    leaveParty: React.PropTypes.func
   },
 
   getChildContext () {
@@ -57,7 +59,9 @@ let PartyContainer = React.createClass({
       veto: this.veto,
       hasVetoed: hasVetoed,
       user: user,
-      startedPlaying: startedPlaying
+      startedPlaying: startedPlaying,
+      logout: this.logout,
+      leaveParty: this.leaveParty
     };
   },
   
@@ -146,6 +150,19 @@ let PartyContainer = React.createClass({
     var obj = {};
     obj[this.state.user.uid] = true;
     this.vetosRef.update(obj);
+  },
+
+  logout () {
+    console.log('logout');
+  },
+
+  leaveParty () {
+    leaveParty(this.props.params.partyId).then(() => {
+
+      // set timeout required for some reason
+      this.context.router.replace('/home');
+
+    });
   },
   
   /*******************************

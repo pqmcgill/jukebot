@@ -15,7 +15,9 @@ let App = require('./components/App'),
   SearchContainer = require('./components/inParty/search/SearchContainer'),
   NowPlaying = require('./components/inParty/nowPlaying/NowPlaying'),
   MySongs = require('./components/inParty/mySongs/MySongs'),
-  ManageParty = require('./components/inParty/manageParty/ManageParty');
+  ManageParty = require('./components/inParty/manageParty/ManageParty'),
+  Menu = require('./components/inParty/menu/Menu');
+
 // other modules
 let { requireAuth, requireUnAuth } = require('./util/authenticate');
 
@@ -44,7 +46,7 @@ module.exports = (
         </Route>
         <Route path="nowPlaying" component={ NowPlaying }/>
         <Route path="mySongs" component={ MySongs }/>
-        <Route path="manage" component={ ManageParty }/>
+        <Route path="menu" component={ Menu }/>
       </Route>
       <Route path="create" component={ CreateParty } onEnter={ requireAuth }/>
     </Route>
