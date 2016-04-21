@@ -2,7 +2,7 @@ let React = require('react');
 let rhapsodyUtil = require('../../util/rhapsodyUtil');
 let rhapsodyMetaData = require('../../util/rhapsodyMetaData');
 let firebaseUtil = require('../../util/firebaseUtil');
-let { nextSong, leaveParty } = require('../../util/api');
+let { nextSong, leaveParty, endParty } = require('../../util/api');
 let Link = require('react-router').Link;
 let ReactFireMixin = require('reactfire');
 let Firebase = require('firebase');
@@ -25,7 +25,10 @@ let PartyContainer = React.createClass({
     user: React.PropTypes.object,
     startedPlaying: React.PropTypes.bool,
     logout: React.PropTypes.func,
-    leaveParty: React.PropTypes.func
+    logoutAndEndParty: React.PropTypes.func,
+    leaveParty: React.PropTypes.func,
+    endParty: React.PropTypes.func,
+    isOwner: React.PropTypes.bool
   },
 
   getChildContext () {
@@ -33,7 +36,7 @@ let PartyContainer = React.createClass({
     let startedPlaying = false;
     if (this.state.partyMetaData && this.state.partyMetaData.nowPlaying) {
       nowPlaying = this.state.partyMetaData.nowPlaying;
-      startedPlaying = this.state.partyMetaData.startedPlaying
+      startedPlaying = this.state.partyMetaData.startedPlaying;
     }
 
     let mySongs = {};
@@ -51,6 +54,13 @@ let PartyContainer = React.createClass({
       user = this.state.user;
     }
 
+    let isOwner = false;
+    if (this.state.partyMetaData) {
+      if (this.state.user) {
+        isOwner = this.state.user.uid === this.state.partyMetaData.owner;
+      }
+    }
+
     return {
       addSongToBucket: this.addSongToBucket,
       nowPlaying: nowPlaying,
@@ -61,7 +71,10 @@ let PartyContainer = React.createClass({
       user: user,
       startedPlaying: startedPlaying,
       logout: this.logout,
-      leaveParty: this.leaveParty
+      logoutAndEndParty: this.logoutAndEndParty,
+      leaveParty: this.leaveParty,
+      endParty: this.endParty,
+      isOwner: isOwner
     };
   },
   
@@ -153,21 +166,34 @@ let PartyContainer = React.createClass({
   },
 
   logout () {
-    console.log('logout');
+    rhapsodyUtil.clearTokens();
+    firebaseUtil.logout();
+    this.context.router.replace('/welcome');
   },
 
   leaveParty () {
     leaveParty(this.props.params.partyId).then(() => {
-
-      // set timeout required for some reason
       this.context.router.replace('/home');
-
     });
   },
   
   /*******************************
    ***** PARTY OWNER METHODS *****
    *******************************/
+  endParty () {
+    rhapsodyUtil.pauseTrack();
+    rhapsodyUtil.destroyPlayer();
+    endParty(this.props.params.partyId).then(() => {
+      this.context.router.replace('/home');
+    });
+  },
+
+  logoutAndEndParty () {
+    endParty(this.props.params.partyId).then(() => {
+      this.logout();
+    });
+  },
+
   handleVeto (vetoSn) {
     let vetos = vetoSn.val();
     if (vetos) { 

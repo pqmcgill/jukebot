@@ -166,6 +166,10 @@ module.exports = {
 
   pauseTrack () {
     Rhapsody.player.pause();
+  },
+
+  destroyPlayer () {
+    $('#player-frame').remove();
   }
 
 };

@@ -15,6 +15,8 @@ module.exports = function(app) {
   app.post('/api/join', require('./services/joinParty'));
   // Leave a Party
   app.post('/api/leaveParty', require('./services/leaveParty'));
+  // End a Party
+  app.post('/api/endParty', require('./services/endParty'));
 
   // Pick the next song
   app.get('/api/nextSong/:partyId', require('./services/nextSongPartyBits'));

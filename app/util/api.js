@@ -45,5 +45,15 @@ module.exports = {
         uid: session.uid 
       }).then(resolve, reject);
     });
+  },
+
+  endParty (partyId) {
+    console.log('hit');
+    return new Promise((resolve, reject) => {
+      makeAjaxCall('/api/endParty', 'POST', {
+        partyId: partyId,
+        uid: session.uid
+      }).then(resolve, reject);
+    });
   }
 };

@@ -19,16 +19,14 @@ module.exports = function(req, res) {
 
       if (member === owner) {
         // handle the case where an owner hits this endpoint
-      }
-
-      if (members[member]) {
+        res.json({ error: 'party owner can\'t leave without ending' });
+      } else if (members[member]) {
         partySn.child('members').child(member).ref().remove(function() {
           userRef.once('value', function(userSn) {
             var user = userSn.val();
 
             if (user.currentParty === req.body.partyId) {
               userSn.child('currentParty').ref().remove(function () {
-                console.log('resolved');
                 res.json({ success: 'woohoo' });
               });
             }
