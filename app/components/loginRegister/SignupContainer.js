@@ -79,6 +79,7 @@ let SignupContainer = React.createClass({
     
     // Determine the child w/ props to render based on the route
     let child;
+    console.log('location pathname: ', this.props.location.pathname);
     switch(this.props.location.pathname) {
       case '/login':
         child = <Login onLogin={ this.handleLogin } />;
