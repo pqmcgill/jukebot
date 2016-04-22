@@ -2,11 +2,19 @@ let Firebase = require('firebase');
 
 let forge = 'https://jukebot.firebaseio.com';
 let ref = new Firebase(forge);
-let session = ref.getAuth();
+let session;
+
+let setSession = () => {
+  session = ref.getAuth();
+};
+
+setSession();
 
 // Private Methods
-let addNewUser = (user) => {
-  ref.child('users').child(user.uid).set(user);
+let addNewUser = (user, cb) => {
+  ref.child('users').child(user.uid).set(user, () => {
+    cb();
+  });
 };
 
 // Public Interface
@@ -22,10 +30,9 @@ let firebaseUtil = {
   login (credentials, cb) {
     ref.authWithPassword(credentials, (err, authData) => {
       if (err) {
-        console.log('An Error occurred during login:', err);
         cb(err);
       } else {
-        session = authData;
+        setSession();
         this.onChange(this.isLoggedIn());
         cb(null, authData);
       }
@@ -46,8 +53,10 @@ let firebaseUtil = {
               email: credentials.email,
               uid: authData.uid,
               displayName: credentials.displayName
+            }, () => {
+              setSession();
+              cb(null, authData);
             });
-            cb(null, authData);
           }
         });
       }

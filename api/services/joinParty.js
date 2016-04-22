@@ -6,6 +6,7 @@ module.exports = function(req, res) {
 
   // authenticate
   userRef.authWithCustomToken(process.env.APP_SECRET, function(err) {
+    if (err) { console.log('error:', err); }
     if (err) { res.json({ error: err }); }
     
     // query party

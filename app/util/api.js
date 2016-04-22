@@ -1,5 +1,5 @@
 let $ = require('jquery');
-let session = require('./firebaseUtil').getSession();
+let session = require('./firebaseUtil').getSession;
 
 // Generic ajax wrapper to use for all api calls
 let makeAjaxCall = (path, method, payload) => {
@@ -9,7 +9,7 @@ let makeAjaxCall = (path, method, payload) => {
       method: method,
       headers: {
         'Content-Type': 'application/json',
-        firebasetoken: session.token
+        firebasetoken: session().token
       },
       error: reject,
       success: resolve
@@ -21,7 +21,6 @@ module.exports = {
   // calls the service to create a party 
   createParty (partyData) {
     return new Promise((resolve, reject) => {
-      console.log(partyData);
       makeAjaxCall('/api/party', 'POST', partyData).then(resolve, reject);
     });
   },
@@ -42,17 +41,16 @@ module.exports = {
     return new Promise((resolve, reject) => {
       makeAjaxCall('/api/leaveParty', 'POST', {
         partyId: partyId,
-        uid: session.uid 
+        uid: session().uid 
       }).then(resolve, reject);
     });
   },
 
   endParty (partyId) {
-    console.log('hit');
     return new Promise((resolve, reject) => {
       makeAjaxCall('/api/endParty', 'POST', {
         partyId: partyId,
-        uid: session.uid
+        uid: session().uid
       }).then(resolve, reject);
     });
   }
