@@ -81,13 +81,13 @@ let SignupContainer = React.createClass({
     let child;
     console.log('location pathname: ', this.props.location.pathname);
     switch(this.props.location.pathname) {
-      case '/login':
+      case 'login':
         child = <Login onLogin={ this.handleLogin } />;
         break;
-      case '/signup':
+      case 'signup':
         child = <Signup onSignup={ this.handleSignup } />;
         break;
-      case '/forgot':
+      case 'forgot':
         child = <ForgotLogin generateEmail={ this.handleGenerateEmail } updateUser={ this.handleUpdateUser } />;
         break;
       default:
