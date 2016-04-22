@@ -95,7 +95,12 @@ let SearchContainer = React.createClass({
     artistId = this.urlSafeString(artistId);
     albumId = this.urlSafeString(albumId);
     let child;
-    switch (this.props.location.pathname) {
+    let pathname = this.props.location.pathname;
+    if (pathname.charAt(0) !== '/') {
+      pathname = '/' + pathname;
+    }
+
+    switch (pathname) {
       case '/parties/' + partyId + '/search/all':
         child = (
           <SearchAll query={ this.state.query }
