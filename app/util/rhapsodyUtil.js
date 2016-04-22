@@ -95,6 +95,9 @@ module.exports = {
 
   // public method. Acts as rhapsody authentication controller
   authenticate (code, redirect_pathname, cb) {
+    if (redirect_pathname.charAt(0) !== '/') {
+      redirect_pathname = '/' + redirect_pathname;
+    }
     this.initTokens();
 
     // setup consumerKey with rhapsody sdk
