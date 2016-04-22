@@ -60,7 +60,7 @@ var config = {
       inject: true
     }),
     new webpack.DefinePlugin({
-      REDIRECT: JSON.stringify('http://morning-spire-97331.herokuapp.com')
+      REDIRECT: JSON.stringify('http://morning-spire-97331.herokuapp.com/')
     })
   ]
 };
