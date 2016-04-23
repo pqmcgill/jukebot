@@ -1,4 +1,6 @@
 let React = require('react'),
+  Overlay = require('../shared/Overlay'),
+  Spinner = require('../shared/Spinner'),
   firebaseUtil = require('../../util/firebaseUtil'),
   rhapsodyUtil = require('../../util/rhapsodyUtil'),
   { CLIENT_ID } = require('../../util/constants'),
@@ -17,16 +19,29 @@ let Home = React.createClass({
     location: React.PropTypes.object.isRequired
   },
 
+  getInitialState () {
+    return {
+      authenticating: false
+    };
+  },
+
   componentWillMount () {
     let code = this.props.location.query.code;
     if (code) {
-      rhapsodyUtil.authenticate(code, this.props.location.pathname, this.handleRhapsodyAuth);
+      this.setState({
+        authenticating: true
+      }, () => {
+        rhapsodyUtil.authenticate(code, this.props.location.pathname, this.handleRhapsodyAuth);
+      });
     }
   },
 
   handleRhapsodyAuth (err) {
     if (err) {
       console.log('ERROR with RHAPSODY');
+      this.setState({
+        authenticating: true
+      });
       return;
     }
     this.context.router.push('/create');
@@ -55,6 +70,7 @@ let Home = React.createClass({
   },
 
   render () {
+    console.log('authenticating', this.state.authenticating);
     return (
       <div className="component home no-padding">
         <div className="wrapper">
@@ -68,6 +84,9 @@ let Home = React.createClass({
             <p className="party-text">a party</p>
           </button>
         </div>
+        <Overlay visible={ this.state.authenticating }>
+          <Spinner className="loading-spinner" />
+        </Overlay>
       </div>
     );
   }

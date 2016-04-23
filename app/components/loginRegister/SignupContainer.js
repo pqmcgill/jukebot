@@ -22,14 +22,7 @@ let SignupContainer = React.createClass({
         // handle error...
         cb(err);
       } else {
-        let redirect = '/home';
-
-        // check if user got redirected due to unauthenticated call
-        // if so, then redirect to intended state
-        if (this.props.location.state && this.props.location.state.redirectTo) {
-          redirect = this.props.location.state.redirectTo;
-        }
-        this.context.router.push(redirect);
+        this.loginSignupSuccess();
       }
     });
   },
@@ -40,9 +33,19 @@ let SignupContainer = React.createClass({
         // handle error...
         cb(err);
       } else {
-        this.context.router.push('/home');
+        this.loginSignupSuccess();
       }
     });
+  },
+
+  // check if user got redirected due to unauthenticated call
+  // if so, then redirect to intended state
+  loginSignupSuccess () {
+    let redirect = '/home';
+    if (this.props.location.state && this.props.location.state.redirectTo) {
+      redirect = this.props.location.state.redirectTo;
+    }
+    this.context.router.push(redirect);
   },
   
   handleGenerateEmail (request, cb) {

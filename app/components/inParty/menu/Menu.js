@@ -10,11 +10,9 @@ let Menu = React.createClass({
   },
 
   handleLogout () {
-    if (this.context.isOwner) {
-      this.context.logoutAndEndParty();
-    } else {
+    this.context.isOwner ?
+      this.context.logoutAndEndParty() :
       this.context.logout();
-    }
   },
 
   render () {

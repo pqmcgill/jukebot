@@ -55,10 +55,8 @@ let PartyContainer = React.createClass({
     }
 
     let isOwner = false;
-    if (this.state.partyMetaData) {
-      if (this.state.user) {
-        isOwner = this.state.user.uid === this.state.partyMetaData.owner;
-      }
+    if (this.state.partyMetaData && this.state.user) {
+      isOwner = this.state.user.uid === this.state.partyMetaData.owner;
     }
 
     return {
