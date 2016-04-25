@@ -13,6 +13,12 @@ let App = require('./components/App'),
   PartyList = require('./components/partyList/PartyList'),
   PartyContainer = require('./components/inParty/PartyContainer'),
   SearchContainer = require('./components/inParty/search/SearchContainer'),
+  SearchArtists = require('./components/inParty/search/SearchArtists'),
+  SearchAll = require('./components/inParty/search/SearchAll'),
+  SearchTracks = require('./components/inParty/search/SearchTracks'),
+  SearchAlbum = require('./components/inParty/search/SearchAlbum'),
+  SearchAlbums = require('./components/inParty/search/SearchAlbums'),
+  SearchArtist = require('./components/inParty/search/SearchArtist'),
   NowPlaying = require('./components/inParty/nowPlaying/NowPlaying'),
   MySongs = require('./components/inParty/mySongs/MySongs'),
   ManageParty = require('./components/inParty/manageParty/ManageParty'),
@@ -37,12 +43,12 @@ module.exports = (
       <Route path="parties/:partyId" component={ PartyContainer } onEnter={ requireAuth }>
         <IndexRedirect to="nowPlaying" />
         <Route path="search" component={ SearchContainer }>
-          <Route path="all" />
-          <Route path="tracks" />
-          <Route path="artists" />
-          <Route path="artists/:artistId" />
-          <Route path="albums" />
-          <Route path="albums/:albumId" />
+          <Route path="all" component={ SearchAll } />
+          <Route path="tracks" component={ SearchTracks} />
+          <Route path="artists" component={ SearchArtists } />
+          <Route path="artists/:artistId" component={ SearchArtist }/>
+          <Route path="albums" component={ SearchAlbums }/>
+          <Route path="albums/:albumId" component={ SearchAlbum }/>
         </Route>
         <Route path="nowPlaying" component={ NowPlaying }/>
         <Route path="mySongs" component={ MySongs }/>

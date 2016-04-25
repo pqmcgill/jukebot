@@ -3,18 +3,12 @@ let React = require('react'),
   SearchItem = require('./SearchItem');
 
 let SearchAlbum = React.createClass({
-  mixins: [ SearchMixin ],
 
-  propTypes: {
-    updateRoute: React.PropTypes.func.isRequired,
-    router: React.PropTypes.object.isRequired,
-    addTrack: React.PropTypes.func.isRequired,
-    albumId: React.PropTypes.string.isRequired,
-    bucket: React.PropTypes.object
+  contextTypes: {
+    updateRoute: React.PropTypes.func,
+    goBack: React.PropTypes.func,
+    data: React.PropTypes.array
   },
-
-  searchType: 'albumsTracks',
-  options: {},
 
   render () {
     let tracks,
@@ -23,20 +17,20 @@ let SearchAlbum = React.createClass({
       albumUrl,
       albumId;
 
-    if (this.state.data.length > 0) {
-      tracks = this.state.data[0].data.map((d, i) => {
+    if (this.context.data.length > 0) {
+      tracks = this.context.data[0].data.map((d, i) => {
         return (
           <SearchItem key={i}
             data={ d }
             btnSrc="something.png"
-            onClick={ this.props.addTrack.bind(null, d.id) }
+            onClick={ () => {} }
             type="album-track"
           />
         );
       });
-      albumId = this.state.data[0].data[0].album.id;
-      albumName = this.state.data[0].data[0].name
-      artistName = this.state.data[0].data[0].artist.name;
+      albumId = this.context.data[0].data[0].album.id;
+      albumName = this.context.data[0].data[0].name
+      artistName = this.context.data[0].data[0].artist.name;
       albumUrl = `http://direct.rhapsody.com/imageserver/v2/albums/${albumId}/images/170x170.jpg`;
     }
     return (
@@ -51,7 +45,7 @@ let SearchAlbum = React.createClass({
         <div className="searchResults">
           <div className="searchListContainer">
             <span className="listHeader">Tracks</span>
-            <a className="navLink" onClick={ this.props.router.goBack }>{ '< Back' }</a>
+            <a className="navLink" onClick={ this.context.goBack }>{ '< Back' }</a>
             <ul className="list song-title-tile">
               { tracks }
             </ul>

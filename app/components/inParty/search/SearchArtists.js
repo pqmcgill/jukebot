@@ -3,27 +3,29 @@ let React = require('react'),
   SearchItem = require('./SearchItem');
 
 let SearchArtists = React.createClass({
-  mixins: [ SearchMixin ],
 
-  propTypes: {
-    updateRoute: React.PropTypes.func.isRequired,
-    router: React.PropTypes.object.isRequired,
-    bucket: React.PropTypes.object
+  contextTypes: {
+    getArtists: React.PropTypes.func,
+    data: React.PropTypes.array,
+    updateRoute: React.PropTypes.func,
+    goBack: React.PropTypes.func
   },
-
-  options: {limit: 25},
-  searchType: ['artist'],
+  
+  componentDidMount () {
+    this.context.getArtists();
+  },
 
   render () {
     let artists;
-    if (this.state.data.length > 0) {
-      artists = this.state.data[0].data.map((d, i) => {
+    console.log(this.context.data);
+    if (this.context.data.length > 0) {
+      artists = this.context.data.map((d, i) => {
         return (
           <SearchItem key={i}
             data={ d }
             btnSrc="something.png"
-            onClick={ this.props.updateRoute }
             type="artist"
+            onClick={ () => {} }
           />
         );
       });
@@ -31,7 +33,7 @@ let SearchArtists = React.createClass({
     return (
       <div className="searchResults">
         <div className="searchListContainer">
-          <a className="navLink" onClick={ this.props.router.goBack }>{ '< Back' }</a>
+          <a className="navLink" onClick={ this.context.goBack }>{ '< Back' }</a>
           <ul className="list artist-tile">
             { artists }
           </ul>

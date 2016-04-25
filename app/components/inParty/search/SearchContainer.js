@@ -1,5 +1,15 @@
 let React = require('react'),
-  { search, getTrackData } = require('../../../util/rhapsodyMetaData'),
+  _ = require('underscore'),
+  { debounce } = require('../../../util/util'),
+  { 
+    search, 
+    searchByType, 
+    getTrackData, 
+    getArtistData, 
+    formatId 
+  } = require('../../../util/rhapsodyMetaData'),
+  Overlay = require('../../shared/Overlay'),
+  Spinner = require('../../shared/Spinner'),
   SearchInput = require('../../shared/SearchInput'),
   SearchAll = require('./SearchAll'),
   SearchTracks = require('./SearchTracks'),
@@ -15,10 +25,36 @@ let SearchContainer = React.createClass({
     addSongToBucket: React.PropTypes.func,
     mySongs: React.PropTypes.object
   },
+  
+  childContextTypes: {
+    getArtists: React.PropTypes.func,
+    getArtist: React.PropTypes.func,
+    getAll: React.PropTypes.func,
+    getAlbums: React.PropTypes.func,
+    getTracks: React.PropTypes.func,
+    data: React.PropTypes.array,
+    updateRoute: React.PropTypes.func,
+    goBack: React.PropTypes.func
+  },
+  
+  getChildContext () {
+    return {
+      getArtists: this.getArtists,
+      getArtist: this.getArtist,
+      getAll: this.efficientGetAll,
+      getAlbums: this.getAlbums,
+      getTracks: this.getTracks,
+      data: this.state.data,
+      updateRoute: this.updateRoute,
+      goBack: this.goBack
+    }
+  },
 
   getInitialState () {
     return {
-      query: ''
+      query: '',
+      data: [],
+      loading: false
     };
   },
 
@@ -26,56 +62,139 @@ let SearchContainer = React.createClass({
     let query = this.props.location.query.q || '';
     this.setState({
       query: query
-    }, this.updateRoute);
-    this.context.router.listenBefore((obj) => {
-      if (obj.action === 'POP') {
-        let all = obj.pathname.indexOf('/all');
-        let album = obj.pathname.indexOf('/albums/Alb');
-        let artist = obj.pathname.indexOf('/artists/Art');
-        let path = obj.pathname.split('/');
-        let param = path[path.length - 1];
-        if (all >= 0) {
-          this.updateSearchType('all', null, true);
-        } else if (album >= 0) {
-          this.updateSearchType('albumId', param, true);
-        } else if (artist >= 0) {
-          this.updateSearchType('artistId', param, true);
-        } else {
-          this.updateSearchType(param, null, true);
-        }
+    });
+    
+    let efficientGetAll = _.debounce(this.getAll, 400);
+    this.efficientGetAll = efficientGetAll;
+    this.context.router.listenBefore(this.listenBefore);
+  },
+  
+  listenBefore (location) {
+    if (location.action === "POP") {
+      this.clearData(() => {
+        return;
+      });
+    }
+  },
+  
+  handleChange (e) {
+    this.setState({
+      loading: true,
+      query: e.target.value
+    }, () => {
+      if (this.state.query.length > 0) {
+        this.clearData(() => {
+          this.updateRoute('/all');
+          this.efficientGetAll();
+        });
+      } else {
+        this.clearData(() => {
+          this.updateRoute('/');
+          this.setState({
+            loading: false
+          });
+        });
       }
     });
   },
-
-  updateRoute () {
-    if (this.state.query.length > 0) {
-      this.context.router.replace('/parties/' + this.props.params.partyId + '/search/all?q=' + this.state.query);
-    } else {
-      this.context.router.push('/parties/' + this.props.params.partyId + '/search');
-    }	
+  
+  updateRoute (route) {
+    this.clearData(() => {
+      console.log(route);
+      let baseRoute = '/parties/' + this.props.params.partyId + '/search';
+      let pathArry = this.props.location.pathname.split('/');
+      if ('/' + pathArry[pathArry.length - 1] === route) {
+        this.context.router.replace(baseRoute + route + '?q=' + this.state.query);
+      } else {
+        this.context.router.push(baseRoute + route + '?q=' + this.state.query);
+      }
+    });
   },
-
-  handleChange (e) {
-    let q = e.target.value;
+  
+  goBack () {
+    this.clearData(() => {
+      this.context.router.goBack();
+    });
+  },
+  
+  clearData (cb) {
     this.setState({
-      query: q
-    }, this.updateRoute);
+      data: []
+    }, cb);
   },
-
-  updateSearchType (type, id, pop) {
-    let { partyId } = this.props.params;
-    if (id) {
-      id = this.urlSafeString(id);
-    }
-    let route = '/parties/' + partyId + '/search';
-    if (type === 'artistId') {
-      route += '/artists/' + id;
-    } else if (type === 'albumId') {
-      route += '/albums/' + id;
-    } else {
-      route += '/' + type;
-    }
-    this.context.router.push(route + '?q=' + this.state.query);
+  
+  getAll () {
+    this.setState({
+      loading: true
+    }, () => {
+       searchByType({
+        q: this.state.query,
+        limit: 5
+      }, ['track', 'album', 'artist']).then((data) => {
+        console.log('data', data);
+        this.setState({
+          data: data,
+          loading: false
+        });
+      }, () => {
+        this.setState({
+          loading: false
+        });
+      });
+    });
+  },
+  
+  getArtists () {
+    this.setState({
+      loading: true
+    }, () => {
+       searchByType({q: this.state.query}, 'artist').then((data) => {
+        this.setState({
+          data: data[0].data,
+          loading: false
+        });
+      });
+    });
+  },
+  
+  getArtist () {
+    this.setState({
+      loading: true
+    }, () => {
+      getArtistData(formatId(this.props.params.artistId)).then((data) => {
+        this.setState({
+          data: data,
+          loading: false
+        });
+      });
+    });
+  },
+  
+  getAlbums () {
+    this.setState({
+      loading: true
+    }, () => {
+      searchByType({q: this.state.query}, 'album').then((data) => {
+        this.setState({
+          data: data,
+          loading: false
+        });
+      });
+    });
+  },
+  
+  getTracks () {
+    this.setState({
+      loading: true
+    }, () => {
+      searchByType({q: this.state.query}, 'track').then((data) => {
+        console.log('track data', data);
+        this.setState({
+          data: data[0].data,
+          loading: false
+        });
+      });
+    });
   },
 
   addTrack (id) {
@@ -91,84 +210,22 @@ let SearchContainer = React.createClass({
   },
 
   render () {
-    let { partyId, artistId, albumId } = this.props.params;
-    artistId = this.urlSafeString(artistId);
-    albumId = this.urlSafeString(albumId);
-    let child;
-    let pathname = this.props.location.pathname;
-    if (pathname.charAt(0) !== '/') {
-      pathname = '/' + pathname;
-    }
-
-    switch (pathname) {
-      case '/parties/' + partyId + '/search/all':
-        child = (
-          <SearchAll query={ this.state.query }
-            addTrack={ this.addTrack }
-            updateRoute={ this.updateSearchType }
-            bucket={ this.context.mySongs }
-          />
-        );
-        break;
-      case '/parties/' + partyId + '/search/tracks':
-        child = (
-          <SearchTracks query={ this.state.query }
-            addTrack={ this.addTrack }
-            router={ this.context.router }
-            bucket={ this.context.mySongs }
-          />
-        );
-        break;
-      case '/parties/' + partyId + '/search/artists':
-        child = (
-          <SearchArtists query={ this.state.query }
-            updateRoute={ this.updateSearchType }
-            router={ this.context.router }
-            bucket={ this.context.mySongs }
-          />
-        );
-        break;
-      case '/parties/' + partyId + '/search/artists/' + artistId:
-        child = (
-          <SearchArtist
-            updateRoute={ this.updateSearchType }
-            router={ this.context.router }
-            addTrack={ this.addTrack }
-            artistId={ this.props.params.artistId }
-            bucket={ this.context.mySongs }
-          />
-        );
-        break;
-      case '/parties/' + partyId + '/search/albums':
-        child = (
-          <SearchAlbums query={ this.state.query }
-            updateRoute={ this.updateSearchType }
-            router={ this.context.router }
-            bucket={ this.context.mySongs }
-          />
-        );
-        break;
-      case '/parties/' + partyId + '/search/albums/' + albumId:
-        child = (
-          <SearchAlbum
-            updateRoute={ this.updateSearchType }
-            router={ this.context.router }
-            addTrack={ this.addTrack }
-            albumId={ this.props.params.albumId }
-            bucket={ this.context.mySongs }
-          />
-        );
-        break;
-      default:
-    }
-
-      return (
-        <div className="fixed-offset">
+    let display = this.state.loading ? {display: 'none'} : {display: 'block'},
+      bangDisplay = this.state.loading ? {display: 'block'} : {display: 'none'};
+    return (
+      <div className="fixed-offset">
+        <div className="search-box">
           <SearchInput placeholder="search..." onChange={ this.handleChange } value={ this.state.query }/>
-          { child }
         </div>
-      );
-    }
+        <div style={ bangDisplay }>
+          <Spinner className="search-spinner" />
+        </div>
+        <div style={ display }>
+          { this.props.children }
+        </div>
+      </div>
+    );
+  }
 });
 
 module.exports = SearchContainer;
