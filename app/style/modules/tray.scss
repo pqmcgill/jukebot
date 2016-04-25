@@ -1,16 +1,39 @@
 .tray {
   position: absolute;
-  height: 33%;
-  bottom: 0;
+  height: 140px;
+  bottom: 25px;
   width: 70%;
   left: 50%;
   margin-left: -35%;
-  -webkit-box-shadow: 0 0 37px -1px rgba(69,69,69,0.69);
-  -moz-box-shadow: 0 0 37px -1px rgba(69,69,69,0.69);
-  box-shadow: 0 0 37px -1px rgba(69,69,69,0.69);
-
+  -webkit-box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 10px 0px rgba(0, 0, 0, 0.3);
   transition: bottom .2s ease-out;
+
   &.hide {
-    bottom: -33%;
+    bottom: -140px;
+  }
+
+  h1 {
+    font-size: 1.5em;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  a {
+    margin: 15px auto 10px auto;
+    padding: 8px;
+    width: 80%;
+    max-width: 300px;
+    background-color: $jb-white;
+    border: 2px solid $jb-light-red;
+    color: $jb-light-red;
+    text-transform: uppercase;
+    font-size: $jb-font-larger;
+    text-decoration: none;
+    font-weight: bold;
+    display: block;
   }
 }

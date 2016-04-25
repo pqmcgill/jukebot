@@ -67,9 +67,7 @@ let CreateParty = React.createClass({
         </Vform>
         <Tray shown={ this.state.trayShown }>
           <h1>Success!</h1>
-          <p>You're almost ready to party!</p>
-          <p><a>Share the party link with friends</a></p>
-          <Link to={ '/parties/' + this.state.model.partyName }>Start the music!</Link>
+          <Link to={ '/parties/' + this.state.model.partyName }>Start the party</Link>
         </Tray>
       </div>
     );
@@ -77,3 +75,7 @@ let CreateParty = React.createClass({
 });
 
 module.exports = CreateParty;
+
+// Removed text from tray for now
+// <p>You're almost ready to party!</p>
+// <p><a>Share the party link with friends</a></p>
