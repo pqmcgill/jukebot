@@ -17,12 +17,12 @@ let Menu = React.createClass({
 
   render () {
     return (
-      <div className="fixed-offset">
+      <div className="fixed-offset menu">
         { this.context.isOwner ?
-          <button onClick={ this.context.endParty }>kill party</button> :
-          <button onClick={ this.context.leaveParty }>leave party</button>
+          <button className='btn-primary' onClick={ this.context.endParty }>kill party</button> :
+          <button className='btn-primary' onClick={ this.context.leaveParty }>leave party</button>
         }
-        <button onClick={ this.handleLogout }>logout</button>
+        <button className='btn-primary' onClick={ this.handleLogout }>logout</button>
       </div>
     );
   }

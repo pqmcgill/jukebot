@@ -156,3 +156,18 @@ body {
     }
   }
 }
+
+.menu {
+
+  button {
+    margin: 15px auto 10px auto;
+    padding: 8px;
+    width: 80%;
+    max-width: 300px;
+    background-color: $jb-dark-purple;
+    border: 1px solid $jb-white;
+    color: $jb-white;
+    text-transform: uppercase;
+    font-size: $jb-font-larger;
+  }
+}

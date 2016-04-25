@@ -52,7 +52,7 @@ let SearchAlbum = React.createClass({
           <div className="searchListContainer">
             <span className="listHeader">Tracks</span>
             <a className="navLink" onClick={ this.props.router.goBack }>{ '< Back' }</a>
-            <ul className="list song-full-tile">
+            <ul className="list song-title-tile">
               { tracks }
             </ul>
           </div>

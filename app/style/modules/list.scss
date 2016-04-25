@@ -130,6 +130,17 @@
     }
   }
 
+  &.song-title-tile {
+
+    .listItem .itemText {
+      width: calc(100% - 55px);
+
+      p {
+        margin: 0;
+      }
+    }
+  }
+
   /* &.album-tile {
     .listItem {
       height: 282px;
