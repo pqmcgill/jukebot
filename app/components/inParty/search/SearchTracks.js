@@ -8,7 +8,8 @@ let SearchTracks = React.createClass({
     updateRoute: React.PropTypes.func,
     goBack: React.PropTypes.func,
     data: React.PropTypes.array,
-    getTracks: React.PropTypes.func
+    getTracks: React.PropTypes.func,
+    addTrack: React.PropTypes.func
   },
   
   componentWillMount () {
@@ -24,7 +25,7 @@ let SearchTracks = React.createClass({
           <SearchItem key={i}
             data={ d }
             btnSrc="something.png"
-            onClick={ () => {} }
+            onClick={ this.context.addTrack.bind(null, d.id) }
             type="track"
           />
         );

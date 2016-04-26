@@ -7,7 +7,13 @@ let SearchAlbum = React.createClass({
   contextTypes: {
     updateRoute: React.PropTypes.func,
     goBack: React.PropTypes.func,
-    data: React.PropTypes.array
+    data: React.PropTypes.array,
+    addTrack: React.PropTypes.func,
+    getAlbum: React.PropTypes.func
+  },
+
+  componentWillMount () {
+    this.context.getAlbum();
   },
 
   render () {
@@ -17,13 +23,15 @@ let SearchAlbum = React.createClass({
       albumUrl,
       albumId;
 
+    console.log(this.context.data);
+
     if (this.context.data.length > 0) {
       tracks = this.context.data[0].data.map((d, i) => {
         return (
           <SearchItem key={i}
             data={ d }
             btnSrc="something.png"
-            onClick={ () => {} }
+            onClick={ this.context.addTrack.bind(null, d.id) }
             type="album-track"
           />
         );

@@ -1,5 +1,5 @@
 let React = require('react'),
-  SearchMixin = require('./SearchMixin'),
+  { parseId } = require('../../../util/rhapsodyMetaData'),
   SearchItem = require('./SearchItem');
 
 let SearchArtist = React.createClass({
@@ -8,7 +8,8 @@ let SearchArtist = React.createClass({
     updateRoute: React.PropTypes.func,
     getArtist: React.PropTypes.func,
     data: React.PropTypes.array,
-    goBack: React.PropTypes.func
+    goBack: React.PropTypes.func,
+    addTrack: React.PropTypes.func
   },
   
   componentWillMount () {
@@ -28,7 +29,7 @@ let SearchArtist = React.createClass({
           <SearchItem key={i}
             data={ d }
             btnSrc="something.png"
-            onClick={ () => {} }
+            onClick={ this.context.addTrack.bind(null, d.id) }
             type="track"
           />
         );
@@ -38,7 +39,7 @@ let SearchArtist = React.createClass({
           <SearchItem key={i}
             data={ d }
             btnSrc="something.png"
-            onClick={ this.context.updateRoute }
+            onClick={ this.context.updateRoute.bind(null, '/albums/' + parseId(d.id)) }
             type="album"
           />
         );

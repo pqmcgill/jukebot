@@ -6,6 +6,7 @@ let React = require('react'),
     searchByType, 
     getTrackData, 
     getArtistData, 
+    getAlbumTracks,
     formatId 
   } = require('../../../util/rhapsodyMetaData'),
   Overlay = require('../../shared/Overlay'),
@@ -31,10 +32,12 @@ let SearchContainer = React.createClass({
     getArtist: React.PropTypes.func,
     getAll: React.PropTypes.func,
     getAlbums: React.PropTypes.func,
+    getAlbum: React.PropTypes.func,
     getTracks: React.PropTypes.func,
     data: React.PropTypes.array,
     updateRoute: React.PropTypes.func,
-    goBack: React.PropTypes.func
+    goBack: React.PropTypes.func,
+    addTrack: React.PropTypes.func
   },
   
   getChildContext () {
@@ -43,10 +46,12 @@ let SearchContainer = React.createClass({
       getArtist: this.getArtist,
       getAll: this.efficientGetAll,
       getAlbums: this.getAlbums,
+      getAlbum: this.getAlbum,
       getTracks: this.getTracks,
       data: this.state.data,
       updateRoute: this.updateRoute,
-      goBack: this.goBack
+      goBack: this.goBack,
+      addTrack: this.addTrack
     }
   },
 
@@ -71,10 +76,19 @@ let SearchContainer = React.createClass({
   
   listenBefore (location) {
     if (location.action === "POP") {
-      this.clearData(() => {
-        return;
+      this.grabQuery(location.query, () => {
+        this.clearData(() => {
+          return;
+        });
       });
     }
+  },
+
+  grabQuery (queryObj, cb) {
+    console.log('WOO', queryObj);
+    this.setState({
+      query: queryObj.q
+    }, cb);
   },
   
   handleChange (e) {
@@ -100,7 +114,6 @@ let SearchContainer = React.createClass({
   
   updateRoute (route) {
     this.clearData(() => {
-      console.log(route);
       let baseRoute = '/parties/' + this.props.params.partyId + '/search';
       let pathArry = this.props.location.pathname.split('/');
       if ('/' + pathArry[pathArry.length - 1] === route) {
@@ -131,7 +144,6 @@ let SearchContainer = React.createClass({
         q: this.state.query,
         limit: 5
       }, ['track', 'album', 'artist']).then((data) => {
-        console.log('data', data);
         this.setState({
           data: data,
           loading: false
@@ -182,13 +194,26 @@ let SearchContainer = React.createClass({
       });
     });
   },
+
+  getAlbum () {
+    this.setState({
+      loading: true
+    }, () => {
+      getAlbumTracks(formatId(this.props.params.albumId)).then((data) => {
+        console.log('here', data);
+        this.setState({
+          data: data,
+          loading: false
+        });
+      });
+    });
+  },
   
   getTracks () {
     this.setState({
       loading: true
     }, () => {
       searchByType({q: this.state.query}, 'track').then((data) => {
-        console.log('track data', data);
         this.setState({
           data: data[0].data,
           loading: false
@@ -210,6 +235,7 @@ let SearchContainer = React.createClass({
   },
 
   render () {
+    console.log('in render:', this.state.query);
     let display = this.state.loading ? {display: 'none'} : {display: 'block'},
       bangDisplay = this.state.loading ? {display: 'block'} : {display: 'none'};
     return (

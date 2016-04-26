@@ -8,7 +8,8 @@ let SearchAll = React.createClass({
   contextTypes: {
     data: React.PropTypes.array,
     getAll: React.PropTypes.func,
-    updateRoute: React.PropTypes.func
+    updateRoute: React.PropTypes.func,
+    addTrack: React.PropTypes.func
   },
   
   componentWillMount () {
@@ -29,7 +30,7 @@ let SearchAll = React.createClass({
           <SearchItem key={i}
             data={ d }
             btnSrc="something.png"
-            onClick={ () => {} }
+            onClick={ this.context.addTrack.bind(null, d.id) }
             type="track"
           />
         );
@@ -39,7 +40,7 @@ let SearchAll = React.createClass({
           <SearchItem key={i}
             data={ d }
             btnSrc="something.png"
-            onClick={ () => {} }
+            onClick={ this.context.updateRoute.bind(null, '/albums/' + parseId(d.id)) }
             type="album"
           />
         );

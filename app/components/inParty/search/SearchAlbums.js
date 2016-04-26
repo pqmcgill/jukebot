@@ -1,6 +1,6 @@
 
 let React = require('react'),
-  SearchMixin = require('./SearchMixin'),
+  { parseId } = require('../../../util/rhapsodyMetaData'),
   SearchItem = require('./SearchItem');
 
 let SearchAlbums = React.createClass({
@@ -24,7 +24,7 @@ let SearchAlbums = React.createClass({
           <SearchItem key={i}
             data={ d }
             btnSrc="something.png"
-            onClick={ this.context.updateRoute }
+            onClick={ this.context.updateRoute.bind(null, '/albums/' + parseId(d.id)) }
             type="album"
           />
         );
