@@ -11,7 +11,6 @@ let PartyListItem = React.createClass({
     return {
       onMyClick: (e) => {
         e.preventDefault();
-        console.log('default click');
       }
     };
   },

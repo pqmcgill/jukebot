@@ -15,7 +15,6 @@ let PartyListItem = React.createClass({
 
   getClassName () {
     let className = 'listItem' + (this.props.selected ? ' selected' : '');
-    console.log('class', className);
     return className;
   },
 

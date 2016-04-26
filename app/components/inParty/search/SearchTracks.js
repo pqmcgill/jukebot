@@ -1,5 +1,4 @@
 let React = require('react'),
-  SearchMixin = require('./SearchMixin'),
   SearchItem = require('./SearchItem');
 
 let SearchTracks = React.createClass({
@@ -18,7 +17,6 @@ let SearchTracks = React.createClass({
 
   render () {
     let tracks;
-    console.log('tracks:', this.context.data);
     if (this.context.data.length > 0) {
       tracks = this.context.data.map((d, i) => {
         return (

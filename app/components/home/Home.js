@@ -70,7 +70,6 @@ let Home = React.createClass({
   },
 
   render () {
-    console.log('authenticating', this.state.authenticating);
     return (
       <div className="component home no-padding">
         <div className="wrapper">

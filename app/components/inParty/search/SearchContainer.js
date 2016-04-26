@@ -85,7 +85,6 @@ let SearchContainer = React.createClass({
   },
 
   grabQuery (queryObj, cb) {
-    console.log('WOO', queryObj);
     this.setState({
       query: queryObj.q
     }, cb);
@@ -200,7 +199,6 @@ let SearchContainer = React.createClass({
       loading: true
     }, () => {
       getAlbumTracks(formatId(this.props.params.albumId)).then((data) => {
-        console.log('here', data);
         this.setState({
           data: data,
           loading: false
@@ -235,7 +233,6 @@ let SearchContainer = React.createClass({
   },
 
   render () {
-    console.log('in render:', this.state.query);
     let display = this.state.loading ? {display: 'none'} : {display: 'block'},
       bangDisplay = this.state.loading ? {display: 'block'} : {display: 'none'};
     return (

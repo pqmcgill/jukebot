@@ -131,7 +131,6 @@ module.exports = {
       // callback after initialization is complete
       Rhapsody.player.on('ready', () => {
         this.setPlayer(this.accessToken, this.refreshToken, () => {
-          console.log('setting player');
           cb(null, true);
         });
       });

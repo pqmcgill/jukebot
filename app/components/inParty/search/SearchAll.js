@@ -1,5 +1,4 @@
 let React = require('react'),
-  SearchMixin = require('./SearchMixin'),
   SearchItem = require('./SearchItem'),
   { parseId } = require('../../../util/rhapsodyMetaData');
 
@@ -17,13 +16,11 @@ let SearchAll = React.createClass({
   },
   
   handleMore (route) {
-    console.log('clicked', route);
     this.context.updateRoute(route);
   },
 
   render () {
     let tracks, albums, artists;
-    console.log('data', this.context.data);
     if (this.context.data.length > 0) {
       tracks = this.context.data[0].data.map((d, i) => {
         return (

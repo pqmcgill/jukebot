@@ -1,4 +1,3 @@
-
 let React = require('react'),
   { parseId } = require('../../../util/rhapsodyMetaData'),
   SearchItem = require('./SearchItem');

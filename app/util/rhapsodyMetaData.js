@@ -116,7 +116,6 @@ let searchByType = (options, type) => {
     cloned_options.type = t;
     return new Promise((response, reject) => {
       search(cloned_options, url).then((data) => {
-        console.log('returned data', data);
         response({
           type: t,
           data: data

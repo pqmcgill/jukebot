@@ -31,7 +31,6 @@ let CreateParty = React.createClass({
       uid: firebaseUtil.getSession().uid
     }).then(
       (data) => {
-        console.log('here');
         this.setState({
           trayShown: true,
           model: model

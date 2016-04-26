@@ -1,5 +1,4 @@
 let React = require('react'),
-  SearchMixin = require('./SearchMixin'),
   SearchItem = require('./SearchItem');
 
 let SearchAlbum = React.createClass({
@@ -22,8 +21,6 @@ let SearchAlbum = React.createClass({
       artistName,
       albumUrl,
       albumId;
-
-    console.log(this.context.data);
 
     if (this.context.data.length > 0) {
       tracks = this.context.data[0].data.map((d, i) => {

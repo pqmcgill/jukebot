@@ -10,7 +10,6 @@ let Signup = React.createClass({
     this.props.onSignup(credentials, (err) => {
       if (err) { 
         console.log(err); 
-        console.log(err.code);
         switch(err.code) {
           case 'INVALID_USER' || 'INVALID_PASSWORD' || 'INVALID_EMAIL':
             cb({ form: { msg: 'The email or password you\'ve entered is incorrect'}});

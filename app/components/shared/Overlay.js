@@ -21,7 +21,6 @@ let Overlay = React.createClass({
       'overlay-wrapper' : 
       'overlay-wrapper hidden';
 
-    console.log(visible);
     return (
       <div className={ visible }>
         <div onClick={ this.preventDefault } className="overlay fa fa-overlay" />
