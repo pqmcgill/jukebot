@@ -90,6 +90,56 @@ body {
   }
 }
 
+@media (min-width: 600px) {
+  .now-playing {
+  
+    img {
+      margin-left: calc(50% - 315px);
+      position: absolute;
+      top: calc(50% - 200px);
+    }
+
+    button {
+      width: 300px;
+      max-width: 300px;
+      position: absolute;
+      left: calc(50% - 150px);
+      top: calc(50% + 120px);
+    }
+
+    p {
+      max-width: calc(50% - 50px);
+      text-align: left;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      position: absolute;
+      left: calc(50% + 15px);
+
+      &.track {
+        font-size: 25px;
+        position: absolute;
+        top: calc(50% - 130px);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+        width: 50%;
+        max-height: 96px;
+      }
+
+      &.artist {
+        font-size: 22px;
+        top: calc(50% - 30px);
+      }
+
+      &.selected-by {
+        font-size: 22px;
+        top: calc(50% - 0px);
+      }
+    }
+  }
+}
+
 .artist-header {
   height: 80px;
   margin-top: 15px;
