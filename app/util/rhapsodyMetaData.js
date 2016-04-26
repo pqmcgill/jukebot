@@ -91,12 +91,10 @@ let getArtistData = (artistId) => {
 };
 
 let getTrackData = (trackId) => {
-  console.log(trackId);
   let url = `https://api.rhapsody.com/v1/tracks/${trackId}`;
   return new Promise((resolve, reject) => {
     search({}, url)
       .then((data) => {
-        console.log(data);
         resolve(data);
       }, (err) => {
         reject(err);
@@ -118,6 +116,7 @@ let searchByType = (options, type) => {
     cloned_options.type = t;
     return new Promise((response, reject) => {
       search(cloned_options, url).then((data) => {
+        console.log('returned data', data);
         response({
           type: t,
           data: data

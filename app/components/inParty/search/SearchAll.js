@@ -1,52 +1,56 @@
 let React = require('react'),
   SearchMixin = require('./SearchMixin'),
-  SearchItem = require('./SearchItem');
+  SearchItem = require('./SearchItem'),
+  { parseId } = require('../../../util/rhapsodyMetaData');
 
 let SearchAll = React.createClass({
-  mixins: [ SearchMixin ],
 
-  propTypes: {
-    updateRoute: React.PropTypes.func.isRequired,
-    addTrack: React.PropTypes.func.isRequired,
-    bucket: React.PropTypes.object
+  contextTypes: {
+    data: React.PropTypes.array,
+    getAll: React.PropTypes.func,
+    updateRoute: React.PropTypes.func,
+    addTrack: React.PropTypes.func
   },
-
-  options: {limit: 5},
-  searchType: ['track', 'album', 'artist'],
-
-  handleRouteUpdate (type) {
-    this.props.updateRoute(type);
+  
+  componentWillMount () {
+    this.context.getAll();
+  },
+  
+  handleMore (route) {
+    console.log('clicked', route);
+    this.context.updateRoute(route);
   },
 
   render () {
     let tracks, albums, artists;
-    if (this.state.data.length > 0) {
-      tracks = this.state.data[0].data.map((d, i) => {
+    console.log('data', this.context.data);
+    if (this.context.data.length > 0) {
+      tracks = this.context.data[0].data.map((d, i) => {
         return (
           <SearchItem key={i}
             data={ d }
             btnSrc="something.png"
-            onClick={ this.props.addTrack }
+            onClick={ this.context.addTrack.bind(null, d.id) }
             type="track"
           />
         );
       });
-      albums = this.state.data[1].data.map((d, i) => {
+      albums = this.context.data[1].data.map((d, i) => {
         return (
           <SearchItem key={i}
             data={ d }
             btnSrc="something.png"
-            onClick={ this.props.updateRoute }
+            onClick={ this.context.updateRoute.bind(null, '/albums/' + parseId(d.id)) }
             type="album"
           />
         );
       });
-      artists = this.state.data[2].data.map((d, i) => {
+      artists = this.context.data[2].data.map((d, i) => {
         return (
           <SearchItem key={i}
             data={ d }
             btnSrc="something.png"
-            onClick={ this.props.updateRoute }
+            onClick={ this.context.updateRoute.bind(null, '/artists/' + parseId(d.id)) }
             type="artist"
           />
         );
@@ -57,21 +61,21 @@ let SearchAll = React.createClass({
       <div className="searchResults">
         <div className="searchListContainer">
           <span className="listHeader">Tracks</span>
-          <a className="navLink" onClick={ this.handleRouteUpdate.bind(null, 'tracks') }>more tracks ></a>
+          <a className="navLink" onClick={ this.handleMore.bind(null, '/tracks') }>more tracks ></a>
           <ul className="list song-full-tile">
             { tracks }
           </ul>
         </div>
         <div className="searchListContainer">
           <span className="listHeader">Albums</span>
-          <a className="navLink" onClick={ this.handleRouteUpdate.bind(null, 'albums') }>more albums ></a>
+          <a className="navLink" onClick={ this.handleMore.bind(null, '/albums') }>more albums ></a>
           <ul className="list album-tile">
             { albums }
           </ul>
         </div>
         <div className="searchListContainer">
           <span className="listHeader">Artists</span>
-          <a className="navLink" onClick={ this.handleRouteUpdate.bind(null, 'artists') }>more artists ></a>
+          <a className="navLink" onClick={ this.handleMore.bind(null, '/artists') }>more artists ></a>
           <ul className="list artist-tile">
             { artists }
           </ul>

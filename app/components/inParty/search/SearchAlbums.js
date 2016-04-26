@@ -1,29 +1,30 @@
 
 let React = require('react'),
-  SearchMixin = require('./SearchMixin'),
+  { parseId } = require('../../../util/rhapsodyMetaData'),
   SearchItem = require('./SearchItem');
 
 let SearchAlbums = React.createClass({
-  mixins: [ SearchMixin ],
 
-  propTypes: {
-    updateRoute: React.PropTypes.func.isRequired,
-    router: React.PropTypes.object.isRequired,
-    bucket: React.PropTypes.object
+  contextTypes: {
+    updateRoute: React.PropTypes.func,
+    goBack: React.PropTypes.func,
+    data: React.PropTypes.array,
+    getAlbums: React.PropTypes.func
   },
-
-  options: {limit: 25},
-  searchType: ['album'],
+  
+  componentWillMount () {
+    this.context.getAlbums();
+  },
 
   render () {
     let albums;
-    if (this.state.data.length > 0) {
-      albums = this.state.data[0].data.map((d, i) => {
+    if (this.context.data.length > 0) {
+      albums = this.context.data[0].data.map((d, i) => {
         return (
           <SearchItem key={i}
             data={ d }
             btnSrc="something.png"
-            onClick={ this.props.updateRoute }
+            onClick={ this.context.updateRoute.bind(null, '/albums/' + parseId(d.id)) }
             type="album"
           />
         );
@@ -32,7 +33,7 @@ let SearchAlbums = React.createClass({
     return (
       <div className="searchResults">
         <div className="searchListContainer">
-          <a className="navLink" onClick={ this.props.router.goBack }>{ '< Back' }</a>
+          <a className="navLink" onClick={ this.context.goBack }>{ '< Back' }</a>
           <ul className="list album-tile">
             { albums }
           </ul>

@@ -3,26 +3,29 @@ let React = require('react'),
   SearchItem = require('./SearchItem');
 
 let SearchTracks = React.createClass({
-  mixins: [ SearchMixin ],
 
-  propTypes: {
-    addTrack: React.PropTypes.func.isRequired,
-    router: React.PropTypes.object.isRequired,
-    bucket: React.PropTypes.object
+  contextTypes: {
+    updateRoute: React.PropTypes.func,
+    goBack: React.PropTypes.func,
+    data: React.PropTypes.array,
+    getTracks: React.PropTypes.func,
+    addTrack: React.PropTypes.func
   },
-
-  options: {limit: 25},
-  searchType: ['track'],
+  
+  componentWillMount () {
+    this.context.getTracks();
+  },
 
   render () {
     let tracks;
-    if (this.state.data.length > 0) {
-      tracks = this.state.data[0].data.map((d, i) => {
+    console.log('tracks:', this.context.data);
+    if (this.context.data.length > 0) {
+      tracks = this.context.data.map((d, i) => {
         return (
           <SearchItem key={i}
             data={ d }
             btnSrc="something.png"
-            onClick={ this.props.addTrack }
+            onClick={ this.context.addTrack.bind(null, d.id) }
             type="track"
           />
         );
@@ -31,7 +34,7 @@ let SearchTracks = React.createClass({
     return (
       <div className="searchResults">
         <div className="searchListContainer">
-          <a className="navLink" onClick={ this.props.router.goBack }>{ '< Back' }</a>
+          <a className="navLink" onClick={ this.context.goBack }>{ '< Back' }</a>
           <ul className="list song-full-tile">
             { tracks }
           </ul>
