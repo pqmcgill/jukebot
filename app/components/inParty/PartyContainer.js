@@ -28,7 +28,10 @@ let PartyContainer = React.createClass({
     logoutAndEndParty: React.PropTypes.func,
     leaveParty: React.PropTypes.func,
     endParty: React.PropTypes.func,
-    isOwner: React.PropTypes.bool
+    isOwner: React.PropTypes.bool,
+    lastSearchQuery: React.PropTypes.string,
+    lastSearchRoute: React.PropTypes.string,
+    updateLastSearch: React.PropTypes.func
   },
 
   getChildContext () {
@@ -72,7 +75,10 @@ let PartyContainer = React.createClass({
       logoutAndEndParty: this.logoutAndEndParty,
       leaveParty: this.leaveParty,
       endParty: this.endParty,
-      isOwner: isOwner
+      isOwner: isOwner,
+      lastSearchQuery: this.state.lastSearchQuery,
+      lastSearchRoute: this.state.lastSearchRoute,
+      updateLastSearch: this.updateLastSearch
     };
   },
   
@@ -84,7 +90,9 @@ let PartyContainer = React.createClass({
       partyMetaData: {},
       partyMembers: {},
       user: {},
-      hasVetoed: {}
+      hasVetoed: {},
+      lastSearchQuery: '',
+      lastSearchRoute: ''
     };
   },
 
@@ -123,6 +131,13 @@ let PartyContainer = React.createClass({
   goToSearch (e) {
     e.preventDefault();
     this.context.router.push('search');
+  },
+
+  updateLastSearch (route, query) {
+    this.setState({
+      lastSearchQuery: query,
+      lastSearchRoute: route
+    });
   },
 
   addSongToBucket (trackData) {
