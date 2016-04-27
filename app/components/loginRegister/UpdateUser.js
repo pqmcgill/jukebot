@@ -24,7 +24,7 @@ let UpdateUser = React.createClass({
           />
           <Vinput name="confirm"
             placeholder="confirm new password"
-            validation="match:newPassword"
+            validation="match:newPassword,required"
             type="password"
           />
         </Vform>
