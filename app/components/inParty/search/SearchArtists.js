@@ -1,4 +1,5 @@
 let React = require('react'),
+  { parseId } = require('../../../util/rhapsodyMetaData'),
   SearchItem = require('./SearchItem');
 
 let SearchArtists = React.createClass({
@@ -23,7 +24,7 @@ let SearchArtists = React.createClass({
             data={ d }
             btnSrc="something.png"
             type="artist"
-            onClick={ () => {} }
+            onClick={ this.context.updateRoute.bind(null, '/artists/' + parseId(d.id)) }
           />
         );
       });

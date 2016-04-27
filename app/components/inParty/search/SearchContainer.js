@@ -7,7 +7,8 @@ let React = require('react'),
     getTrackData, 
     getArtistData, 
     getAlbumTracks,
-    formatId 
+    formatId,
+    parseId
   } = require('../../../util/rhapsodyMetaData'),
   Overlay = require('../../shared/Overlay'),
   Spinner = require('../../shared/Spinner'),
@@ -73,7 +74,7 @@ let SearchContainer = React.createClass({
     this.efficientGetAll = efficientGetAll;
     this.context.router.listenBefore(this.listenBefore);
   },
-  
+
   listenBefore (location) {
     if (location.action === "POP") {
       this.grabQuery(location.query, () => {
@@ -85,7 +86,7 @@ let SearchContainer = React.createClass({
   },
 
   grabQuery (queryObj, cb) {
-    this.setState({
+    this.isMounted && this.setState({
       query: queryObj.q
     }, cb);
   },
@@ -111,7 +112,7 @@ let SearchContainer = React.createClass({
     });
   },
   
-  updateRoute (route) {
+  updateRoute (route, query) {
     this.clearData(() => {
       let baseRoute = '/parties/' + this.props.params.partyId + '/search';
       let pathArry = this.props.location.pathname.split('/');
@@ -130,9 +131,23 @@ let SearchContainer = React.createClass({
   },
   
   clearData (cb) {
-    this.setState({
+    this.isMounted && this.setState({
       data: []
     }, cb);
+  },
+
+  checkMySongs (data) {
+    return data.map((dataSet) => {
+      if (dataSet.type === 'track') {
+        dataSet.data = dataSet.data.map((track) => {
+          if (parseId(track.id) in this.context.mySongs) {
+            track.checked = true;
+          }
+          return track;
+        });
+      }
+      return dataSet;
+    });
   },
   
   getAll () {
@@ -144,7 +159,7 @@ let SearchContainer = React.createClass({
         limit: 5
       }, ['track', 'album', 'artist']).then((data) => {
         this.setState({
-          data: data,
+          data: this.checkMySongs(data),
           loading: false
         });
       }, () => {
@@ -174,7 +189,7 @@ let SearchContainer = React.createClass({
     }, () => {
       getArtistData(formatId(this.props.params.artistId)).then((data) => {
         this.setState({
-          data: data,
+          data: this.checkMySongs(data),
           loading: false
         });
       });
@@ -200,7 +215,7 @@ let SearchContainer = React.createClass({
     }, () => {
       getAlbumTracks(formatId(this.props.params.albumId)).then((data) => {
         this.setState({
-          data: data,
+          data: this.checkMySongs(data),
           loading: false
         });
       });
@@ -213,16 +228,42 @@ let SearchContainer = React.createClass({
     }, () => {
       searchByType({q: this.state.query}, 'track').then((data) => {
         this.setState({
-          data: data[0].data,
+          data: this.checkMySongs(data)[0].data,
           loading: false
         });
       });
     });
   },
 
+  checkNewSong (id) {
+    if (this.state.data[0].data) {
+      return this.state.data.map((dataSet) => {
+        if (dataSet.type === 'track') {
+          dataSet.data = dataSet.data.map((track) => {
+            if (parseId(track.id) === parseId(id)) {
+              track.checked = true;
+            }
+            return track;
+          });
+        }
+        return dataSet;
+      });
+    } else {
+      return this.state.data.map((track) => {
+        if (parseId(track.id) === parseId(id)) {
+          track.checked = true;
+        }
+        return track;
+      });
+    }
+  },
+
   addTrack (id) {
     getTrackData(id).then((trackData) => {
       this.context.addSongToBucket( trackData );
+      this.setState({
+        data: this.checkNewSong(id)
+      });
     });
   },
 

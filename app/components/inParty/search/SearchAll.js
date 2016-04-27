@@ -8,7 +8,8 @@ let SearchAll = React.createClass({
     data: React.PropTypes.array,
     getAll: React.PropTypes.func,
     updateRoute: React.PropTypes.func,
-    addTrack: React.PropTypes.func
+    addTrack: React.PropTypes.func,
+    query: React.PropTypes.string
   },
   
   componentWillMount () {

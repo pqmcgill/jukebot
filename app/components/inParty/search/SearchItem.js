@@ -28,7 +28,7 @@ let SearchItem = React.createClass({
     if (this.props.type === 'track') {
       listItem = (
         <PartyListItem mainText={ this.props.data.name }
-          selected={ this.props.data.selected }
+          selected={ this.props.data.checked }
           subText={ this.props.data.artist.name + ' - ' + this.props.data.album.name}
           onClick={ this.props.onClick.bind(null, this.props.data.id) }
           iconClass="fa fa-plus"
@@ -40,7 +40,7 @@ let SearchItem = React.createClass({
       listItem = (
         <PartyListItem mainText={ this.props.data.name }
           onClick={ this.props.onClick.bind(null, 'artistId', this.props.data.id) }
-          selected={ this.props.data.selected }
+          selected={ this.props.data.checked }
           iconClass="fa fa-chevron-right"
           imageClass="artist-pic"
           imgSrc={ this.loadArtistImg(this.props.data.id) }
@@ -49,14 +49,16 @@ let SearchItem = React.createClass({
     } else if (this.props.type === 'album-track') {
       listItem = (
         <PartyListItem mainText={ this.props.data.name }
+          selected={ this.props.data.checked }
           onClick={ this.props.onClick.bind(null, this.props.data.id) }
+          selectedIconClass="fa fa-check"
           iconClass="fa fa-plus" />
       );
     } else {
       listItem = (
         <PartyListItem mainText={ this.props.data.name }
           subText={ this.props.data.artist.name }
-          selected={ this.props.data.selected }
+          selected={ this.props.data.checked }
           onClick={ this.props.onClick.bind(null, 'albumId', this.props.data.id) }
           iconClass="fa fa-chevron-right"
           imgSrc={ this.loadAlbumImg(this.props.data.id) }
