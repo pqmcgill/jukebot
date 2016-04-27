@@ -11,6 +11,7 @@ let UpdateUser = React.createClass({
   render () {
     return (
       <div>
+        <span className="jb-input-error-lg">Check your email for the temporary password.</span>
         <Vform submit={ this.props.create } submitBtnTxt="Login">
           <Vinput name="token"
             placeholder="temporary password"
