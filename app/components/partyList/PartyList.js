@@ -74,9 +74,9 @@ let PartyList = React.createClass({
     } 
 
     return (
-      <div className="component loginSignup">
+      <div className="component inParty">
         <SearchInput onChange={ this.filterParties } query={ this.state.query }/>
-        <ul>
+        <ul className="party-list">
           { parties }
         </ul>
       </div>
