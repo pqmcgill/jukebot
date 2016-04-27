@@ -105,10 +105,11 @@
     li {
       list-style: none;
       text-align: left;
-      margin: 10px 0 0 0;
+      margin: 20px 0 0 0;
 
       span {
         display: block;
+        max-width: calc(100% - 55px);
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
