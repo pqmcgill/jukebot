@@ -46,13 +46,6 @@
   height: 50px;
   background: white;
   animation: ripple-animation 2s;
-  
-  &.ripple-red { background-color: $jb-light-red; }
-  &.ripple-white { background-color: $jb-white; }
-  &.ripple-orange { background-color: $jb-orange; }
-  &.ripple-red { background-color: $jb-red }
-  &.ripple-dark-purple { background-color: $jb-dark-purple; }
-  &.ripple-light-purple { background-color: $jb-light-purple; }
 }
 
 @keyframes ripple-animation {

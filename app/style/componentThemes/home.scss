@@ -76,4 +76,12 @@
     padding: 0;
     margin: 0;
   }
+
+  .ripple-effect-primary-color {
+    background-color: $home-primary;
+  }
+
+  .ripple-effect-secondary-color {
+    background-color: $home-secondary;
+  }
 }
