@@ -1,5 +1,7 @@
 let React = require('react'),
   ReactDOM = require('react-dom'),
+  { generateMouseEventRipple } = require('../../util/rippleGenerator'),
+
   $ = require('jquery');
 
 let Button = React.createClass({
@@ -18,24 +20,11 @@ let Button = React.createClass({
   },
 
   handleClick (e) {
-    let $div = $('<div/>'),
-      el = ReactDOM.findDOMNode(this),
-      btnOffset = $(el).offset(),
-      xPos = e.pageX - btnOffset.left,
-      yPos = e.pageY - btnOffset.top;
-
-      $div.addClass('ripple-effect');
-      $div.css('height', $(el).height());
-      $div.css('width', $(el).height());
-      $div.css({
-        top: yPos - ($div.height() / 2),
-        left: xPos - ($div.width() / 2)
-      }).appendTo($(el));
-
-      window.setTimeout(function() {
-        $div.remove();
-      }, 2000);
-      
+    let el = ReactDOM.findDOMNode(this);
+    generateMouseEventRipple(el, e, {
+      timeout: 2000,
+      rippleSpeed: 'slow'
+    });
     this.props.onClick(e);
   },
 

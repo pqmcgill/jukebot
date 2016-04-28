@@ -22,6 +22,7 @@ body {
 
 .logout {
   position: absolute;
+  z-index: 999;
   top: 0;
   left: 0;
   padding: 5px;
@@ -63,6 +64,9 @@ body {
       border: 1px solid $jb-white;
       color: $jb-white;
       opacity: 0.5;
+    }
+    &:focused, &:active {
+      outline: none;
     }
   }
 

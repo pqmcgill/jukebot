@@ -1,5 +1,7 @@
-let React = require('react');
-let { formatId } = require('../../../util/rhapsodyMetaData');
+let React = require('react'),
+  ReactDOM = require('react-dom'),
+  { generateMouseEventRipple } = require('../../../util/rippleGenerator'),
+  { formatId } = require('../../../util/rhapsodyMetaData');
 
 let NowPlaying = React.createClass({
   contextTypes: {
@@ -23,13 +25,22 @@ let NowPlaying = React.createClass({
     return !this.context.startedPlaying && !this.context.hasVetoed;
   },
 
+  handleClick (e) {
+    generateMouseEventRipple(document.getElementById('vetoBtn'), e, {
+      timeout: 500,
+      rippleSpeed: 'fast'
+    }, () => {
+      this.context.veto();
+    });
+  },
+
   render () {
     return (
       Object.keys(this.context.nowPlaying).length > 0 ?
         <div className="tab-content fixed-offset now-playing">
           <img src={ this.getAlbumArt(this.context.nowPlaying.albumId) }/>
 
-          <button disabled={ this.buttonDisabled() } onClick={ this.context.veto }>
+          <button id="vetoBtn" disabled={ this.buttonDisabled() } onClick={ this.handleClick }>
             { this.buttonDisabled() ? 
             (this.loadingTrack() ? 'Loading Track...' : 'Voted!') 
             : 'Vote to Veto' }

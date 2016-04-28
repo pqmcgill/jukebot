@@ -1,9 +1,11 @@
 let React = require('react'),
+  ReactDOM = require('react-dom'),
   Overlay = require('../shared/Overlay'),
   Spinner = require('../shared/Spinner'),
   firebaseUtil = require('../../util/firebaseUtil'),
   rhapsodyUtil = require('../../util/rhapsodyUtil'),
   { CLIENT_ID } = require('../../util/constants'),
+  { generateMouseEventRipple } = require('../../util/rippleGenerator'),
   $ = require('jquery');
 
 let start_img = require('../../images/start.png');
@@ -56,17 +58,27 @@ let Home = React.createClass({
   },
 
   // navigate to the list of available parties
-  goToPartyList () {
-    this.context.router.push('/parties');
+  goToPartyList (e) {
+    generateMouseEventRipple(document.getElementById('join'), e, {
+      timeout: 1000,
+      rippleSpeed: 'slow'
+    }, () => {
+      this.context.router.push('/parties');
+    });
   },
 
   // navigate to the party creation page
-  goToCreate () {
+  goToCreate (e) {
     let { pathname } = this.props.location;
     if (pathname[0] !== '/') {
       pathname = '/' + pathname;
     }
-    rhapsodyUtil.authenticate(null, pathname, this.handleRhapsodyAuth);
+    generateMouseEventRipple(document.getElementById('create'), e, {
+      timeout: 500,
+      rippleSpeed: 'slow'
+    }, () => {
+      rhapsodyUtil.authenticate(null, pathname, this.handleRhapsodyAuth);
+    });
   },
 
   render () {
@@ -74,11 +86,11 @@ let Home = React.createClass({
       <div className="component home no-padding">
         <div className="wrapper">
           <a className="logout" onClick={ this.logout }>logout</a>
-          <button className="btn-jumbo link" onClick={ this.goToCreate }>
+          <button id="create" className="btn-jumbo link ripple ripple-medium" onClick={ this.goToCreate }>
             <img src={ start_img }/>
             <p className="party-text">a party</p>
           </button>
-          <button className="btn-jumbo link" onClick={ this.goToPartyList }>
+          <button id="join" className="btn-jumbo link ripple ripple-medium" onClick={ this.goToPartyList }>
             <img src={ join_img }/>
             <p className="party-text">a party</p>
           </button>
