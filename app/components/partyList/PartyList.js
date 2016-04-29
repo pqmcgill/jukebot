@@ -17,7 +17,6 @@ let PartyList = React.createClass({
   getInitialState () {
     return {
       parties: [],
-      filteredParties: [],
       user: {},
       query: ''
     };
@@ -28,17 +27,6 @@ let PartyList = React.createClass({
     let userRef = new Firebase('https://jukebot.firebaseio.com/users/' + firebaseUtil.getSession().uid);
     this.bindAsArray(partiesRef, 'parties');
     this.bindAsObject(userRef, 'user');
-  },
-
-  first: true,
-
-  componentWillUpdate (prevProps, prevState) {
-    if (this.first) {
-      this.first = false;
-      this.setState({
-        filteredParties: this.state.parties.slice()
-      });
-    }
   },
 
   joinParty (partyId) {
@@ -52,10 +40,7 @@ let PartyList = React.createClass({
   filterParties (e) {
     let val = e.target.value;
     this.setState({
-      query: val,
-      filteredParties: this.state.parties.filter((party) => {
-        return val.length > 0 ? party['.key'].indexOf(val) >= 0 : true;
-      })
+      query: val
     });
   },
 
@@ -64,7 +49,9 @@ let PartyList = React.createClass({
     if (this.state.parties.length === 0) {
       parties = '';
     } else {
-      parties = this.state.filteredParties.map((party, i) => {
+      parties = this.state.parties.filter((party) => {
+        return this.state.query.length > 0 ? party['.key'].indexOf(this.state.query) >= 0 : true;
+      }).map((party, i) => {
         return <PartyListItem key={i} 
           partyId={ party['.key'] }
           name={ party['.key'] } 
