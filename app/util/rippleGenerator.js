@@ -10,7 +10,7 @@ module.exports = {
     }
     let timeout = options.timeout !== undefined ? options.timeout : 2000;
     let rippleSpeed = options.rippleSpeed ? options.rippleSpeed : 'fast';
-    let rippleColor = options.color ? options.color : 'white';
+    let rippleColor = options.colorType ? options.colorType : 'primary';
     $(elem).addClass('ripple');
 
     console.log(timeout, options.timeout === true);
@@ -20,7 +20,7 @@ module.exports = {
       yPos = mouseEvent.pageY - elemOffset.top;
 
     let speedClass = 'ripple-' + rippleSpeed;
-    let colorClass = 'ripple-' + rippleColor;
+    let colorClass = 'ripple-effect-color-' + rippleColor;
     $div.addClass('ripple-effect');
     $div.addClass(speedClass);
     $div.addClass(colorClass);
